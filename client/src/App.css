@@ -1,5 +1,13 @@
-.Title {
-  text-align: center;
+.Header {
+  margin: 1em;
+  display: inline-block;
+}
+
+.Submit {
+  position:absolute;
+  right:0px;
+  top: 30px;
+  margin: 1em;
 }
 
 .Form {
