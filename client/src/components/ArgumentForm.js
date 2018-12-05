@@ -1,6 +1,7 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 
 import Header from './Header'
 
@@ -12,11 +13,16 @@ class ArgumentForm extends React.Component {
       circumstance: "",
       action: "",
       goal: "",
-      value: ""
+      value: "",
+      redirect: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  static contextTypes = {
+    router: PropTypes.object
   }
 
   handleInputChange(event) {
@@ -29,8 +35,11 @@ class ArgumentForm extends React.Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault()
     axios.post('http://localhost:3001/argument', {...this.state})
-    event.preventDefault();
+      .then(() => {
+        this.context.router.history.push('/')
+      })
   }
 
   render() {
@@ -64,7 +73,7 @@ class ArgumentForm extends React.Component {
           </label><br/>
           <input type="submit" value="Submit" />
         </form>
-        <NavLink to="/">Go back home</NavLink>
+        <Link to="/">Go back home</Link>
       </div>
     );
   }
