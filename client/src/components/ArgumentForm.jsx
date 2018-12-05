@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 class ArgumentForm extends React.Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class ArgumentForm extends React.Component {
   }
 
   handleSubmit(event) {
+    axios.post('http://localhost:3001/argument', {...this.state})
+
     alert('submitted');
     event.preventDefault();
   }
