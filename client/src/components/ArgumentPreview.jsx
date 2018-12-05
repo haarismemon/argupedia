@@ -1,25 +1,34 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const ArgumentPreview = (argument) => (
+const ArgumentPreview = (props) => (
   <div className="ArgumentPreview">
     <div className="scheme-name">
-      Scheme: {argument.scheme}
+      Scheme: {props.scheme}
     </div>
     <div className="value-name">
       <div>
-        Circumstance: {argument.circumstance}
+        Circumstance: {props.circumstance}
       </div>
       <div>
-        Action: {argument.action}
+        Action: {props.action}
       </div>
       <div>
-        Goal: {argument.goal}
+        Goal: {props.goal}
       </div>
       <div>
-        Value: {argument.value}
+        Value: {props.value}
       </div>
     </div>
   </div>
 )
+
+ArgumentPreview.propTypes = {
+  scheme: PropTypes.string.isRequired,
+  circumstance: PropTypes.string,
+  action: PropTypes.string,
+  goal: PropTypes.string,
+  value: PropTypes.string
+}
 
 export default ArgumentPreview

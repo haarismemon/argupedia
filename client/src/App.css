@@ -1,5 +1,10 @@
-.App {
+.Title {
   text-align: center;
+}
+
+.Form {
+  margin: 1em;
+  padding: 0.25em 0.5em;
 }
 
 .ArgumentPreview {

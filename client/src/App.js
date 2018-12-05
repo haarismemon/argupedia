@@ -22,9 +22,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Argupedia</h1>
-        <ArgumentForm />
+      <div>
+        <h1 className="Title">Argupedia</h1>
+        <ArgumentForm className="Form"/>
         {this.state.arguments.map (argument =>
           <ArgumentPreview key={argument._id} {...argument} />
         )}
