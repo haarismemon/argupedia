@@ -39,6 +39,17 @@ router.get('/argument', (req, res) => {
     })
 })
 
+// get a list of all arguments
+router.get('/argument/list', (req, res) => {
+  ArgumentModel.find({})
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 // update argument
 router.put('/argument', (req, res) => {
   if(!req.query.id) {
