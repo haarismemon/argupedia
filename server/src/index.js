@@ -11,6 +11,10 @@ app.use(bodyParser.json())
 // adds the requests made to the server to the logs
 app.use((req, res, next) => {
   console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
+
+  // server responds with CORS headers
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next()
 })
 
