@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Haaris Memon",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mongodb": "^3.1.10"
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
   }
 }
