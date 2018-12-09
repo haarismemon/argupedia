@@ -1,6 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
+import ActionDetailScheme from './argumentDetailSchemes/ActionDetailScheme'
+import ExpertDetailScheme from './argumentDetailSchemes/ExpertDetailScheme'
+import PopularDetailScheme from './argumentDetailSchemes/PopularDetailScheme'
 import CriticalQuestion from './CriticalQuestion'
 
 class Argument extends React.Component {
@@ -36,11 +39,13 @@ class Argument extends React.Component {
             )
             : null
           }
-          <div>Circumstance: {this.state.argument.circumstance}</div>
-          <div>Action: {this.state.argument.action}</div>
-          <div>New circumstance: {this.state.argument.newCircumstance}</div>
-          <div>Goal: {this.state.argument.goal}</div>
-          <div>Value: {this.state.argument.value}</div>
+          {
+            {
+              action: <ActionDetailScheme {...this.state.argument}/>,
+              expert: <ExpertDetailScheme {...this.state.argument}/>,
+              popular: <PopularDetailScheme {...this.state.argument}/>
+            }[this.state.argument.scheme]
+          }
           <hr/>
           <h4>Critical Questions</h4>
           <ul>

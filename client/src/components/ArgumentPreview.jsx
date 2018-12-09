@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import ActionDetailScheme from './argumentDetailSchemes/ActionDetailScheme'
+import ExpertDetailScheme from './argumentDetailSchemes/ExpertDetailScheme'
+import PopularDetailScheme from './argumentDetailSchemes/PopularDetailScheme'
+
 class ArgumentPreview extends React.Component {
   handleClick = () => {
     this.props.onClick(this.props._id)
@@ -12,23 +16,13 @@ class ArgumentPreview extends React.Component {
         <div className="scheme-name">
           Scheme: {this.props.scheme}
         </div>
-        <div className="value-name">
-          <div>
-            Circumstance: {this.props.circumstance}
-          </div>
-          <div>
-            Action: {this.props.action}
-          </div>
-          <div>
-            New circumstance: {this.props.newCircumstance}
-          </div>
-          <div>
-            Goal: {this.props.goal}
-          </div>
-          <div>
-            Value: {this.props.value}
-          </div>
-        </div>
+        {
+          {
+            action: <ActionDetailScheme {...this.props}/>,
+            expert: <ExpertDetailScheme {...this.props}/>,
+            popular: <PopularDetailScheme {...this.props}/>
+          }[this.props.scheme]
+        }
       </div>
     )
   }
