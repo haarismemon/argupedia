@@ -38,7 +38,7 @@ class ArgumentForm extends React.Component {
 
     axios.post('http://localhost:3001/argument', {...this.state})
       .then(() => {
-        this.props.history.push('/')
+        this.props.history.goBack()
       })
   }
 
@@ -83,7 +83,8 @@ class ArgumentForm extends React.Component {
 
 ArgumentForm.propTypes = {
   criticalQuestion: PropTypes.string,
-  agree: PropTypes.bool
+  agree: PropTypes.bool,
+  parentId: PropTypes.string
 };
 
 export default withRouter(ArgumentForm)

@@ -19,27 +19,29 @@ class Argument extends React.Component {
   }
 
   render() {
+    const argumentNotRoot = this.state.argument.criticalQuestion
+    const isArgumentPositive = this.state.argument.agree ? "Positive" : "Negative"
+
     return (
       <div className="ArgumentDetails">
         <div className="scheme-name">
-          Scheme: {this.state.argument.scheme}
+          Scheme: {this.state.argument.scheme} {argumentNotRoot ? `(${isArgumentPositive})` : null }
         </div>
         <div className="value-name">
-          <div>
-            Circumstance: {this.state.argument.circumstance}
-          </div>
-          <div>
-            Action: {this.state.argument.action}
-          </div>
-          <div>
-            New circumstance: {this.state.argument.newCircumstance}
-          </div>
-          <div>
-            Goal: {this.state.argument.goal}
-          </div>
-          <div>
-            Value: {this.state.argument.value}
-          </div><hr/>
+          {argumentNotRoot ?
+            (
+              <div>
+                <div>Critical Question: {this.state.argument.criticalQuestion}</div><br/>
+              </div>
+            )
+            : null
+          }
+          <div>Circumstance: {this.state.argument.circumstance}</div>
+          <div>Action: {this.state.argument.action}</div>
+          <div>New circumstance: {this.state.argument.newCircumstance}</div>
+          <div>Goal: {this.state.argument.goal}</div>
+          <div>Value: {this.state.argument.value}</div>
+          <hr/>
           <h4>Critical Questions</h4>
           <ul>
             <li><CriticalQuestion question={`Is the current circumstance '${this.state.argument.circumstance}' true?`} argumentId={this.state.argument._id}/></li>
