@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
-import ArgumentPreview from './ArgumentPreview'
-import Header from './Header'
+import ArgumentPreview from '../ArgumentPreview'
+import Header from '../Header'
 
 class ArgumentList extends React.Component {
   state = {

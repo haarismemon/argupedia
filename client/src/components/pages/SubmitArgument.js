@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-import Header from './Header'
-import ArgumentForm from './ArgumentForm'
+import Header from '../Header'
+import ArgumentForm from '../ArgumentForm'
 
 const SubmitArgument = () => {
   return (

@@ -12,6 +12,7 @@ class ArgumentForm extends React.Component {
       action: "",
       goal: "",
       value: "",
+      parentId: null,
       redirect: false
     }
 
