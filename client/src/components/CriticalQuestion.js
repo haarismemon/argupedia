@@ -4,21 +4,20 @@ import {withRouter} from 'react-router'
 
 class CriticalQuestion extends React.Component {
   agreeArgumentClick = event => {
-    this.props.history.push({
-      pathname: '/submit',
-      state: {
-        criticalQuestion: this.props.question,
-        agree: true
-       }
-    })
+    this.handleClick(true)
   }
 
   disagreeArgumentClick = event => {
+    this.handleClick(false)
+  }
+
+  handleClick(isAgree) {
     this.props.history.push({
       pathname: '/submit',
       state: {
         criticalQuestion: this.props.question,
-        agree: false
+        agree: isAgree,
+        parentId: this.props.argumentId
        }
     })
   }
@@ -28,8 +27,8 @@ class CriticalQuestion extends React.Component {
       <div>
         <p style={{display: 'inline'}}>{this.props.question}</p>
         <span>
-          <Button onClick={this.agreeArgumentClick}>Y</Button>
-          <Button onClick={this.disagreeArgumentClick}>N</Button>
+          <Button id="yesButton" onClick={this.agreeArgumentClick}>Y</Button>
+          <Button id="noButton" onClick={this.disagreeArgumentClick}>N</Button>
         </span>
       </div>
     )

@@ -8,20 +8,20 @@ class ArgumentForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      criticalQuestion: this.props.criticalQuestion,
+      agree: this.props.agree,
       scheme: "action",
       circumstance: "",
       action: "",
       newCircumstance: "",
       goal: "",
       value: "",
-      parentId: null,
+      parentId: this.props.parentId,
       redirect: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    console.log(this.props)
   }
 
   handleInputChange(event) {
@@ -35,6 +35,7 @@ class ArgumentForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+
     axios.post('http://localhost:3001/argument', {...this.state})
       .then(() => {
         this.props.history.push('/')
