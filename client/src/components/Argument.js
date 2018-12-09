@@ -1,52 +1,51 @@
 import React from 'react'
 import axios from 'axios'
-import {Button} from 'react-bootstrap'
+
+import CriticalQuestion from './CriticalQuestion'
 
 class Argument extends React.Component {
   state = {
-    parentArgument: {}
+    argument: {}
   }
 
   componentDidMount() {
     axios.get(`http://localhost:3001/argument?id=${this.props.argumentId}`, {crossdomain: true})
     .then(resp => {
       this.setState({
-          parentArgument: resp.data
+          argument: resp.data
       })
     })
     .catch(console.error)
-  }
-
-  handleClick() {
-    console.log("Button clicked!")
   }
 
   render() {
     return (
       <div className="ArgumentDetails">
         <div className="scheme-name">
-          Scheme: {this.state.parentArgument.scheme}
+          Scheme: {this.state.argument.scheme}
         </div>
         <div className="value-name">
           <div>
-            Circumstance: {this.state.parentArgument.circumstance}
+            Circumstance: {this.state.argument.circumstance}
           </div>
           <div>
-            Action: {this.state.parentArgument.action}
+            Action: {this.state.argument.action}
           </div>
           <div>
-            New circumstance: {this.state.parentArgument.newCircumstance}
+            New circumstance: {this.state.argument.newCircumstance}
           </div>
           <div>
-            Goal: {this.state.parentArgument.goal}
+            Goal: {this.state.argument.goal}
           </div>
           <div>
-            Value: {this.state.parentArgument.value}
-          </div>
-        </div>
-        <div>
-          <Button onClick={this.handleClick}>↑</Button>
-          <Button onClick={this.handleClick}>↓</Button>
+            Value: {this.state.argument.value}
+          </div><hr/>
+          <h4>Critical Questions</h4>
+          <ul>
+            <li><CriticalQuestion question={`Is the current circumstance '${this.state.argument.circumstance}' true?`} argumentId={this.state.argument._id}/></li>
+            <li><CriticalQuestion question={`Does the action '${this.state.argument.action}' achieve the goal of '${this.state.argument.goal}'?`} argumentId={this.state.argument._id}/></li>
+            <li><CriticalQuestion question={`Is there an alternative action that achieves the goal '${this.state.argument.goal}'?`} argumentId={this.state.argument._id}/></li>
+          </ul>
         </div>
       </div>
     );

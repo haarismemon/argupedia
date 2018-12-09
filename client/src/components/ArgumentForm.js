@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 class ArgumentForm extends React.Component {
 
@@ -19,6 +20,8 @@ class ArgumentForm extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    console.log(this.props)
   }
 
   handleInputChange(event) {
@@ -41,6 +44,7 @@ class ArgumentForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="Form">
+        {this.props.criticalQuestion ? <h4>{this.props.criticalQuestion} {this.props.agree ? "Agree" : "Disagree"}</h4> : null}
         <label>
           Choose argument scheme:
           <select name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
@@ -75,5 +79,10 @@ class ArgumentForm extends React.Component {
   }
 
 }
+
+ArgumentForm.propTypes = {
+  criticalQuestion: PropTypes.string,
+  agree: PropTypes.bool
+};
 
 export default withRouter(ArgumentForm)
