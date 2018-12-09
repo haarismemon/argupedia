@@ -2,18 +2,14 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 import Header from '../Header'
-import Argument from '../Argument'
+import ArgumentNest from '../ArgumentNest'
 
 class ArgumentDetails extends React.Component {
-  state = {
-    parentArgument: {}
-  }
-
   render() {
     return (
       <div>
         <Header title="Argument" />
-        <Argument parentId={this.props.match.params.id}/>
+        <ArgumentNest level={0} rootId={this.props.match.params.id}/>
         <Link to="/">Go back home</Link>
       </div>
     );

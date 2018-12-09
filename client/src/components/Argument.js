@@ -7,7 +7,7 @@ class Argument extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3001/argument?id=${this.props.parentId}`, {crossdomain: true})
+    axios.get(`http://localhost:3001/argument?id=${this.props.argumentId}`, {crossdomain: true})
     .then(resp => {
       this.setState({
           parentArgument: resp.data
