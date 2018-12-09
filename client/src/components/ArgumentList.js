@@ -19,12 +19,16 @@ class ArgumentList extends React.Component {
     .catch(console.error)
   }
 
+  handleClick(argumentId) {
+    this.props.history.push(`/argument/${argumentId}`)
+  }
+
   render() {
     return (
       <div>
         <Header title="Arguments List" />
         {this.state.arguments.map (argument =>
-          <ArgumentPreview key={argument._id} {...argument} />
+          <ArgumentPreview key={argument._id} {...argument} onClick={this.handleClick.bind(this)}/>
         )}
       </div>
     );

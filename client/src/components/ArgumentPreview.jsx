@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 class ArgumentPreview extends React.Component {
   handleClick = () => {
-    console.log(this.props.action)
+    this.props.onClick(this.props._id)
   }
 
   render() {

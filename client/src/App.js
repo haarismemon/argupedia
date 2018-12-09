@@ -10,13 +10,12 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Switch>
-            <Route path="/" component={ArgumentList} exact />
-            <Route path="/submit" component={SubmitArgument} />
-            <Route component={Error} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/" component={ArgumentList} exact />
+          <Route path="/argument/:id" component={SubmitArgument} exact />
+          <Route path="/submit" component={SubmitArgument} />
+          <Route component={Error} />
+        </Switch>
       </BrowserRouter>
     );
   }

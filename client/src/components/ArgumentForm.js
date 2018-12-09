@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import PropTypes from 'prop-types'
+import {withRouter} from 'react-router-dom'
 
 class ArgumentForm extends React.Component {
 
@@ -19,10 +19,6 @@ class ArgumentForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  static contextTypes = {
-    router: PropTypes.object
-  }
-
   handleInputChange(event) {
     const target = event.target;
     const name = target.name;
@@ -36,7 +32,7 @@ class ArgumentForm extends React.Component {
     event.preventDefault()
     axios.post('http://localhost:3001/argument', {...this.state})
       .then(() => {
-        this.context.router.history.push('/')
+        this.props.history.push('/')
       })
   }
 
@@ -74,4 +70,4 @@ class ArgumentForm extends React.Component {
 
 }
 
-export default ArgumentForm
+export default withRouter(ArgumentForm)
