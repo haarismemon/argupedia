@@ -2,7 +2,7 @@ import './App.css'
 import React, { Component } from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
-import ArgumentForm from './components/ArgumentForm'
+import SubmitArgument from './components/SubmitArgument'
 import ArgumentList from './components/ArgumentList'
 import Error from './components/Error'
 
@@ -13,7 +13,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/" component={ArgumentList} exact />
-            <Route path="/submit" component={ArgumentForm} />
+            <Route path="/submit" component={SubmitArgument} />
             <Route component={Error} />
           </Switch>
         </div>
