@@ -8,8 +8,8 @@ const SubmitArgument = (props) => {
   return (
     <div>
       <Header title="Submit an argument" />
-      <ArgumentForm {...props.location.state} />
       <Link className="GoBackHomeLink" to="/">Go back home</Link>
+      <ArgumentForm {...props.location.state} />
     </div>
   )
 }

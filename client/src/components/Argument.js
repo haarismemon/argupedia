@@ -25,10 +25,26 @@ class Argument extends React.Component {
     const argumentNotRoot = this.state.argument.criticalQuestion
     const isArgumentPositive = this.state.argument.agree ? "Positive" : "Negative"
 
+    let schemeName = this.state.argument.scheme;
+    switch(schemeName) {
+      case("action"):
+        schemeName = "Argument for Action"
+        break
+      case("expert"):
+        schemeName = "Argument from Expert Opinion"
+        break
+      case("popular"):
+        schemeName = "Argument from Popular Opinion"
+        break
+      default:
+        schemeName = this.state.argument.scheme
+        break
+    }
+
     return (
       <div className="ArgumentDetails">
         <div className="scheme-name">
-          Scheme: {this.state.argument.scheme} {argumentNotRoot ? `(${isArgumentPositive})` : null }
+          {argumentNotRoot ? `${isArgumentPositive} : ` : null }{schemeName} 
         </div>
         <div className="value-name">
           {argumentNotRoot ?
@@ -37,15 +53,12 @@ class Argument extends React.Component {
                 <div>Critical Question: {this.state.argument.criticalQuestion}</div><br/>
               </div>
             )
-            : null
-          }
-          {
-            {
+            : null}
+          {{
               action: <ActionDetailScheme {...this.state.argument}/>,
               expert: <ExpertDetailScheme {...this.state.argument}/>,
               popular: <PopularDetailScheme {...this.state.argument}/>
-            }[this.state.argument.scheme]
-          }
+            }[this.state.argument.scheme]}
           <hr/>
           <h4>Critical Questions</h4>
           <ul>

@@ -8,8 +8,8 @@ const ArgumentDetails = (props) => {
   return (
     <div>
       <Header title="Argument" />
-      <ArgumentNest level={0} rootId={props.match.params.id}/>
       <Link className="GoBackHomeLink" to="/">Go back home</Link>
+      <ArgumentNest level={0} rootId={props.match.params.id}/>
     </div>
   )
 }

@@ -11,10 +11,26 @@ class ArgumentPreview extends React.Component {
   }
 
   render() {
+    let schemeName = this.props.scheme;
+    switch(schemeName) {
+      case("action"):
+        schemeName = "Argument for Action"
+        break
+      case("expert"):
+        schemeName = "Argument from Expert Opinion"
+        break
+      case("popular"):
+        schemeName = "Argument from Popular Opinion"
+        break
+      default:
+        schemeName = this.props.scheme
+        break
+    }
+
     return (
       <div className="ArgumentPreview" onClick={this.handleClick}>
         <div className="scheme-name">
-          Scheme: {this.props.scheme}
+          Scheme: {schemeName}
         </div>
         {
           {
