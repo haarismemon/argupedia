@@ -39,9 +39,11 @@ router.get('/argument', (req, res) => {
     })
 })
 
-// get a list of all arguments
+// get a list of all root arguments
 router.get('/argument/list', (req, res) => {
-  ArgumentModel.find({})
+  let query = { parentId: null }
+
+  ArgumentModel.find(query)
     .then(doc => {
       res.json(doc)
     })
