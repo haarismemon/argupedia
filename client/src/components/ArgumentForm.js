@@ -3,6 +3,8 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 
+import ActionScheme from './argumentSchemes/ActionScheme'
+
 class ArgumentForm extends React.Component {
 
   constructor(props) {
@@ -11,13 +13,7 @@ class ArgumentForm extends React.Component {
       criticalQuestion: this.props.criticalQuestion,
       agree: this.props.agree,
       scheme: "action",
-      circumstance: "",
-      action: "",
-      newCircumstance: "",
-      goal: "",
-      value: "",
-      parentId: this.props.parentId,
-      redirect: false
+      parentId: this.props.parentId
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,6 +29,10 @@ class ArgumentForm extends React.Component {
     });
   }
 
+  handleChildClick(state) {
+    this.setState(state)
+  }
+
   handleSubmit(event) {
     event.preventDefault()
 
@@ -40,6 +40,7 @@ class ArgumentForm extends React.Component {
       .then(() => {
         this.props.history.goBack()
       })
+
   }
 
   render() {
@@ -54,27 +55,7 @@ class ArgumentForm extends React.Component {
             <option value="popular">Argument from popular opinion</option>
           </select>
         </label><br/>
-        <label>
-          In current circumstance R:
-          <input type="text" name="circumstance" value={this.state.circumstance} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          We should perform action A:
-          <input type="text" name="action" value={this.state.action} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          Which will result in a new circumstance S:
-          <input type="text" name="newCircumstance" value={this.state.newCircumstance} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          Which will achieve goal G:
-          <input type="text" name="goal" value={this.state.goal} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          That will promote value V:
-          <input type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
-        </label><br/>
-        <input type="submit" value="Submit" />
+        <ActionScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/><br/>
       </form>
     )
   }
