@@ -20,10 +20,10 @@ class ArgumentNest extends React.Component {
 
   render() {
     return (
-      <div style={this.props.level != 0 ? {marginLeft: '60px'} : {}}>
+      <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}}>
         <Argument argumentId={this.props.rootId}/>
         {this.state.childrenArguments.map(argument =>
-          <ArgumentNest level={this.props.level + 1} rootId={argument._id} />
+          <ArgumentNest level={this.props.level + 1} key={argument._id} rootId={argument._id} />
         )}
       </div>
     );

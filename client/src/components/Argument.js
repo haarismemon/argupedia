@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Button} from 'react-bootstrap'
 
 class Argument extends React.Component {
   state = {
@@ -16,6 +17,10 @@ class Argument extends React.Component {
     .catch(console.error)
   }
 
+  handleClick() {
+    console.log("Button clicked!")
+  }
+
   render() {
     return (
       <div className="ArgumentDetails">
@@ -30,11 +35,18 @@ class Argument extends React.Component {
             Action: {this.state.parentArgument.action}
           </div>
           <div>
+            New circumstance: {this.state.parentArgument.newCircumstance}
+          </div>
+          <div>
             Goal: {this.state.parentArgument.goal}
           </div>
           <div>
             Value: {this.state.parentArgument.value}
           </div>
+        </div>
+        <div>
+          <Button onClick={this.handleClick}>↑</Button>
+          <Button onClick={this.handleClick}>↓</Button>
         </div>
       </div>
     );

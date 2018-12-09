@@ -3,6 +3,10 @@
   display: inline-block;
 }
 
+.GoBackHomeLink {
+  margin: 1em;
+}
+
 .Submit {
   position:absolute;
   right:0px;

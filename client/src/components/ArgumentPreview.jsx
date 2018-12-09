@@ -20,6 +20,9 @@ class ArgumentPreview extends React.Component {
             Action: {this.props.action}
           </div>
           <div>
+            New circumstance: {this.props.newCircumstance}
+          </div>
+          <div>
             Goal: {this.props.goal}
           </div>
           <div>

@@ -11,6 +11,7 @@ let ArgumentSchema = new mongoose.Schema({
   scheme: { type: String, required: true },
   circumstance: String,
   action: String,
+  newCircumstance: String,
   goal: String,
   value: String,
   parentId: String

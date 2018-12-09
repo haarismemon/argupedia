@@ -10,7 +10,7 @@ class ArgumentDetails extends React.Component {
       <div>
         <Header title="Argument" />
         <ArgumentNest level={0} rootId={this.props.match.params.id}/>
-        <Link to="/">Go back home</Link>
+        <Link className="GoBackHomeLink" to="/">Go back home</Link>
       </div>
     );
   }

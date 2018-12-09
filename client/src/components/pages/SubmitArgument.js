@@ -9,7 +9,7 @@ const SubmitArgument = () => {
     <div>
       <Header title="Submit an argument" />
       <ArgumentForm />
-      <Link to="/">Go back home</Link>
+      <Link className="GoBackHomeLink" to="/">Go back home</Link>
     </div>
   )
 }

@@ -10,6 +10,7 @@ class ArgumentForm extends React.Component {
       scheme: "action",
       circumstance: "",
       action: "",
+      newCircumstance: "",
       goal: "",
       value: "",
       parentId: null,
@@ -49,19 +50,23 @@ class ArgumentForm extends React.Component {
           </select>
         </label><br/>
         <label>
-          In circumstance, S:
+          In current circumstance R:
           <input type="text" name="circumstance" value={this.state.circumstance} onChange={this.handleInputChange} />
         </label><br/>
         <label>
-          Doing action, A:
+          We should perform action A:
           <input type="text" name="action" value={this.state.action} onChange={this.handleInputChange} />
         </label><br/>
         <label>
-          Will achieve goal, G:
+          Which will result in a new circumstance S:
+          <input type="text" name="newCircumstance" value={this.state.newCircumstance} onChange={this.handleInputChange} />
+        </label><br/>
+        <label>
+          Which will achieve goal G:
           <input type="text" name="goal" value={this.state.goal} onChange={this.handleInputChange} />
         </label><br/>
         <label>
-          That promote value, V:
+          That will promote value V:
           <input type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
         </label><br/>
         <input type="submit" value="Submit" />
