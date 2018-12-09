@@ -8,17 +8,20 @@ mongoose.connect(`${server}/${database}`, (err) => {
 })
 
 let ArgumentSchema = new mongoose.Schema({
+  parentId: String,
   criticalQuestion: String,
   agree: Boolean,
   scheme: { type: String, required: true },
-  circumstance: String,
-  action: String,
-  newCircumstance: String,
-  goal: String,
-  value: String,
-  parentId: String
+  circumstance: String, //action
+  action: String, //action
+  newCircumstance: String, //action
+  goal: String, //action
+  value: String, //action
+  source: String, //expert
+  domain: String, //expert
+  assertion: String, //expert
+  proposition: String //popular
 })
-
 ArgumentSchema.set('timestamps', true)
 
 module.exports = mongoose.model('Argument', ArgumentSchema)
