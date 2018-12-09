@@ -12,7 +12,8 @@ let ArgumentSchema = new mongoose.Schema({
   circumstance: String,
   action: String,
   goal: String,
-  value: String
+  value: String,
+  parentId: String
 })
 
 ArgumentSchema.set('timestamps', true)

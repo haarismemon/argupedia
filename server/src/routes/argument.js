@@ -50,6 +50,23 @@ router.get('/argument/list', (req, res) => {
     })
 })
 
+// get a list of children of an argument
+router.get('/argument/children', (req, res) => {
+  if(!req.query.id) {
+    return res.status(400).send('Missing URL parameter: id')
+  }
+
+  let query = { parentId: req.query.id }
+
+  ArgumentModel.find(query)
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 // update argument
 router.put('/argument', (req, res) => {
   if(!req.query.id) {
