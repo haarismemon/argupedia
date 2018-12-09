@@ -3,7 +3,9 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 
-import ActionScheme from './argumentSchemes/ActionScheme'
+import ActionFormScheme from './argumentFormSchemes/ActionFormScheme'
+import ExpertFormScheme from './argumentFormSchemes/ExpertFormScheme'
+import PopularFormScheme from './argumentFormSchemes/PopularFormScheme'
 
 class ArgumentForm extends React.Component {
 
@@ -55,7 +57,14 @@ class ArgumentForm extends React.Component {
             <option value="popular">Argument from popular opinion</option>
           </select>
         </label><br/>
-        <ActionScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/><br/>
+        {
+          {
+            action: <ActionFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
+            expert: <ExpertFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
+            popular: <PopularFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>
+          }[this.state.scheme]
+        }
+        <br/>
       </form>
     )
   }

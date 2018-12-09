@@ -49,7 +49,7 @@ class ActionScheme extends React.Component {
         <label>
           That will promote value V:
           <input type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
-        </label>
+        </label><br/>
         <input type="submit" value="Submit" onClick={this.handleClick.bind(this)}/>
       </div>
     )
