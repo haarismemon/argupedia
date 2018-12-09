@@ -4,7 +4,6 @@ import axios from 'axios'
 import ActionDetailScheme from './argumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './argumentDetailSchemes/ExpertDetailScheme'
 import PopularDetailScheme from './argumentDetailSchemes/PopularDetailScheme'
-import CriticalQuestion from './CriticalQuestion'
 
 class Argument extends React.Component {
   state = {
@@ -44,7 +43,7 @@ class Argument extends React.Component {
     return (
       <div className="ArgumentDetails">
         <div className="scheme-name">
-          {argumentNotRoot ? `${isArgumentPositive} : ` : null }{schemeName} 
+          {argumentNotRoot ? `${isArgumentPositive} : ` : null }{schemeName}
         </div>
         <div className="value-name">
           {argumentNotRoot ?
@@ -55,17 +54,10 @@ class Argument extends React.Component {
             )
             : null}
           {{
-              action: <ActionDetailScheme {...this.state.argument}/>,
-              expert: <ExpertDetailScheme {...this.state.argument}/>,
-              popular: <PopularDetailScheme {...this.state.argument}/>
+              action: <ActionDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
+              expert: <ExpertDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
+              popular: <PopularDetailScheme showCriticalQuestions={true} {...this.state.argument}/>
             }[this.state.argument.scheme]}
-          <hr/>
-          <h4>Critical Questions</h4>
-          <ul>
-            <li><CriticalQuestion question={`Is the current circumstance '${this.state.argument.circumstance}' true?`} argumentId={this.state.argument._id}/></li>
-            <li><CriticalQuestion question={`Does the action '${this.state.argument.action}' achieve the goal of '${this.state.argument.goal}'?`} argumentId={this.state.argument._id}/></li>
-            <li><CriticalQuestion question={`Is there an alternative action that achieves the goal '${this.state.argument.goal}'?`} argumentId={this.state.argument._id}/></li>
-          </ul>
         </div>
       </div>
     );

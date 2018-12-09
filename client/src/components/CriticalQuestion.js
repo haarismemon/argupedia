@@ -27,8 +27,8 @@ class CriticalQuestion extends React.Component {
       <div>
         <p style={{display: 'inline'}}>{this.props.question}</p>
         <span>
-          <Button id="yesButton" onClick={this.agreeArgumentClick}>Y</Button>
-          <Button id="noButton" onClick={this.disagreeArgumentClick}>N</Button>
+          <Button className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>Y</Button>
+          <Button className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>N</Button>
         </span>
       </div>
     )
