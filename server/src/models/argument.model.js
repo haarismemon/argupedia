@@ -8,6 +8,8 @@ mongoose.connect(`${server}/${database}`, (err) => {
 })
 
 let ArgumentSchema = new mongoose.Schema({
+  criticalQuestion: String,
+  agree: Boolean,
   scheme: { type: String, required: true },
   circumstance: String,
   action: String,
