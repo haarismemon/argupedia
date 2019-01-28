@@ -44,3 +44,9 @@
 .cq-button {
   margin-left: 0.5em
 }
+
+#argument-network {
+  height: 700px;
+  border: 2px solid black;
+  margin: 30px;
+}
