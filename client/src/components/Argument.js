@@ -13,6 +13,10 @@ class Argument extends React.Component {
   componentDidMount() {
     axios.get(`http://localhost:3001/argument?id=${this.props.argumentId}`, {crossdomain: true})
     .then(resp => {
+      if(resp.data.originalId == null) {
+        resp.data.originalId = resp.data._id;
+      }
+
       this.setState({
           argument: resp.data
       })

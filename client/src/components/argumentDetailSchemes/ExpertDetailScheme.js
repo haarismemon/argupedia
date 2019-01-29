@@ -15,9 +15,9 @@ const ExpertDetailScheme = (props) => {
           <hr/>
           <h4>Critical Questions</h4>
           <ul>
-            <li><CriticalQuestion question={`How credible is '${props.source}' an expert?`} argumentId={props._id}/></li>
-            <li><CriticalQuestion question={`Is '${props.source}' an expert in the field that the assertion '${props.assertion}' is in?`} argumentId={props._id}/></li>
-            <li><CriticalQuestion question={`Is the assertion '${props.assertion}' consistent with what other experts assert?`} argumentId={props._id}/></li>
+            <li><CriticalQuestion question={`How credible is '${props.source}' an expert?`} argumentId={props._id} originalId={props.originalId}/></li>
+            <li><CriticalQuestion question={`Is '${props.source}' an expert in the field that the assertion '${props.assertion}' is in?`} argumentId={props._id} originalId={props.originalId}/></li>
+            <li><CriticalQuestion question={`Is the assertion '${props.assertion}' consistent with what other experts assert?`} argumentId={props._id} originalId={props.originalId}/></li>
           </ul>
         </div>
         : null

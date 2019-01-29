@@ -8,6 +8,7 @@ mongoose.connect(`${server}/${database}`, (err) => {
 })
 
 let ArgumentSchema = new mongoose.Schema({
+  originalId: String,
   parentId: String,
   criticalQuestion: String,
   agree: Boolean,

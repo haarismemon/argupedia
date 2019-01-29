@@ -17,7 +17,8 @@ class CriticalQuestion extends React.Component {
       state: {
         criticalQuestion: this.props.question,
         agree: isAgree,
-        parentId: this.props.argumentId
+        parentId: this.props.argumentId,
+        originalId: this.props.originalId
        }
     })
   }

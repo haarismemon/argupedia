@@ -15,7 +15,8 @@ class ArgumentForm extends React.Component {
       criticalQuestion: this.props.criticalQuestion,
       agree: this.props.agree,
       scheme: "action",
-      parentId: this.props.parentId
+      parentId: this.props.parentId,
+      originalId: this.props.originalId
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -74,7 +75,8 @@ class ArgumentForm extends React.Component {
 ArgumentForm.propTypes = {
   criticalQuestion: PropTypes.string,
   agree: PropTypes.bool,
-  parentId: PropTypes.string
+  parentId: PropTypes.string,
+  originalId: PropTypes.string
 };
 
 export default withRouter(ArgumentForm)
