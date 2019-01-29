@@ -103,4 +103,40 @@ router.delete('/argument', (req, res) => {
     })
 })
 
+router.get('/argument/network', (req, res) => {
+  if(!req.query.id) {
+    return res.status(400).send('Missing URL parameter: id')
+  }
+
+  let query = { "$or": [
+      { _id: req.query.id },
+      { originalId: req.query.id }
+    ]
+  }
+
+  ArgumentModel.find(query, (err, arguments) => {
+    var data = {
+      nodes: [],
+      edges: []
+    };
+    
+    arguments.forEach(argument => {
+      data.nodes.push({ 
+        id: argument._id, 
+        label: argument.title 
+      })
+
+      if(argument.parentId != null) {
+        data.edges.push({ 
+          from: argument._id, 
+          to: argument.parentId,
+          label: argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')'
+        })
+      }
+    })
+
+    return res.json(data)
+  })
+})
+
 module.exports = router
