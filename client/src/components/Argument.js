@@ -47,7 +47,7 @@ class Argument extends React.Component {
     return (
       <div className="ArgumentDetails">
         <div className="scheme-name">
-          {argumentNotRoot ? `${isArgumentPositive} : ` : null }{schemeName}
+          {this.state.argument.title} ({argumentNotRoot ? `${isArgumentPositive} = ` : null }{schemeName})
         </div>
         <div className="value-name">
           {argumentNotRoot ?

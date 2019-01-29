@@ -15,6 +15,7 @@ class ArgumentForm extends React.Component {
       criticalQuestion: this.props.criticalQuestion,
       agree: this.props.agree,
       scheme: "action",
+      title: '',
       parentId: this.props.parentId,
       originalId: this.props.originalId
     }
@@ -39,11 +40,14 @@ class ArgumentForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
 
+    if(this.state.title == null) {
+      alert("Title field should be field out")
+    } else {
     axios.post('http://localhost:3001/argument', {...this.state})
       .then(() => {
         this.props.history.goBack()
       })
-
+    }
   }
 
   render() {
@@ -58,6 +62,10 @@ class ArgumentForm extends React.Component {
             <option value="popular">Argument from popular opinion</option>
           </select>
         </label><br/>
+        <label>
+          Title:
+          <input type="text" name="title" value={this.state.title} onChange={this.handleInputChange}/>
+        </label>
         {
           {
             action: <ActionFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,

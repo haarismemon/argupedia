@@ -30,7 +30,7 @@ class ArgumentPreview extends React.Component {
     return (
       <div className="ArgumentPreview" onClick={this.handleClick}>
         <div className="scheme-name">
-          Scheme: {schemeName}
+          {this.props.title} ({schemeName})
         </div>
         {
           {

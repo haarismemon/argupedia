@@ -13,6 +13,7 @@ let ArgumentSchema = new mongoose.Schema({
   criticalQuestion: String,
   agree: Boolean,
   scheme: { type: String, required: true },
+  title: { type: String, required: true },
   circumstance: String, //action
   action: String, //action
   newCircumstance: String, //action
