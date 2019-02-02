@@ -2,6 +2,8 @@ import React from 'react'
 import {Button} from 'react-bootstrap'
 import {withRouter} from 'react-router'
 
+import * as ROUTES from '../../constants/routes'
+
 class CriticalQuestion extends React.Component {
   agreeArgumentClick = event => {
     this.handleClick(true)
@@ -13,7 +15,7 @@ class CriticalQuestion extends React.Component {
 
   handleClick(isAgree) {
     this.props.history.push({
-      pathname: '/submit',
+      pathname: ROUTES.SUBMIT_ARGUMENT,
       state: {
         criticalQuestion: this.props.question,
         agree: isAgree,

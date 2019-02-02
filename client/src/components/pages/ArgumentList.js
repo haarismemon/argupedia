@@ -1,8 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-import ArgumentPreview from '../ArgumentPreview'
-import Header from '../Header'
+import ArgumentPreview from '../ArgumentItem/ArgumentPreview'
 
 class ArgumentList extends React.Component {
   state = {
@@ -26,7 +25,7 @@ class ArgumentList extends React.Component {
   render() {
     return (
       <div>
-        <Header title="Arguments List" />
+        <h1>Arguments List</h1>
         {this.state.arguments.map (argument =>
           <ArgumentPreview key={argument._id} {...argument} onClick={this.handleClick.bind(this)}/>
         )}

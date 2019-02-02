@@ -1,14 +1,11 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
-import Header from '../Header'
-import ArgumentForm from '../ArgumentForm'
+import ArgumentForm from '../ArgumentItem/ArgumentForm'
 
 const SubmitArgument = (props) => {
   return (
     <div>
-      <Header title="Submit an argument" />
-      <Link className="GoBackHomeLink" to="/">Go back home</Link>
+      <h1>Submit an argument</h1>
       <ArgumentForm {...props.location.state} />
     </div>
   )

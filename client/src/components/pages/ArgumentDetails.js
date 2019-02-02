@@ -1,10 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
 import Graph from 'vis-react'
 
-import Header from '../Header'
-import ArgumentNest from '../ArgumentNest'
+import ArgumentNest from '../ArgumentItem/ArgumentNest'
 
 class ArgumentDetails extends React.Component {
   state = {
@@ -50,8 +48,7 @@ class ArgumentDetails extends React.Component {
 
     return (
       <div>
-        <Header title="Argument" />
-        <Link className="GoBackHomeLink" to="/">Go back home</Link>
+        <h1>Argument</h1>
         <button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</button>
         {this.state.showNetwork ?
           <div id="argument-network">

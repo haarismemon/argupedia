@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
-import ActionDetailScheme from './argumentDetailSchemes/ActionDetailScheme'
-import ExpertDetailScheme from './argumentDetailSchemes/ExpertDetailScheme'
-import PopularDetailScheme from './argumentDetailSchemes/PopularDetailScheme'
+import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
+import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
+import PopularDetailScheme from './ArgumentDetailSchemes/PopularDetailScheme'
 
 class Argument extends React.Component {
   state = {
