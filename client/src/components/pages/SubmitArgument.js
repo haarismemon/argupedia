@@ -1,13 +1,18 @@
 import React from 'react'
 
-import ArgumentForm from '../ArgumentItem/ArgumentForm'
+import ArgumentForm from './ArgumentForm'
 import { withAuthorisation } from '../Session';
+import { AuthUserContext } from "../Session";
 
 const SubmitArgument = (props) => {
   return (
     <div>
       <h1>Submit an argument</h1>
-      <ArgumentForm {...props.location.state} />
+      <AuthUserContext.Consumer>
+        {authUser =>
+          <ArgumentForm {...props.location.state} authUser={authUser}/>
+        }
+      </AuthUserContext.Consumer>
     </div>
   )
 }

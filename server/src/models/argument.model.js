@@ -10,6 +10,7 @@ mongoose.connect(`${server}/${database}`, (err) => {
 let ArgumentSchema = new mongoose.Schema({
   originalId: String,
   parentId: String,
+  uid: { type: String, required: true },
   criticalQuestion: String,
   agree: Boolean,
   scheme: { type: String, required: true },

@@ -17,7 +17,8 @@ class ArgumentForm extends React.Component {
       scheme: "action",
       title: '',
       parentId: this.props.parentId,
-      originalId: this.props.originalId
+      originalId: this.props.originalId,
+      uid: this.props.authUser.uid
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
