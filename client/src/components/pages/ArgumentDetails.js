@@ -30,6 +30,8 @@ class ArgumentDetails extends React.Component {
         edges: []
       }
     }
+
+    this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
   }
   
   componentDidMount() {
@@ -63,14 +65,37 @@ class ArgumentDetails extends React.Component {
     })
   }
 
+  nodeSelectHandler = event => {
+    var { nodes, edges } = event;
+
+    const mode = constants.nest.mode
+
+    this.setState({
+      showNetwork: mode == constants.network.mode,
+      networkToggleText: mode == constants.network.mode ? constants.nest.string : constants.network.string,
+    });
+    
+    this.props.history.push({
+      search: '?mode=' + constants.nest.mode + "#" + nodes[0]
+    })
+  }
+
   render() {
-    var options = {};
+    var options = {
+      physics: {
+        solver: 'repulsion',
+        repulsion: {
+          centralGravity: 0.6,
+          springLength: 200,
+          springConstant: 0.05,
+          nodeDistance: 150,
+          damping: 0.15
+        }
+      }
+    };
 
     var events = {
-        select: function(event) {
-            var { nodes, edges } = event;
-            console.log(nodes, edges);
-        }
+        select: this.nodeSelectHandler
     }
 
     return (
