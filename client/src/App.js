@@ -14,7 +14,7 @@ import ArgumentDetails from './components/Pages/ArgumentDetails'
 import SignUpPage from './components/Pages/SignUpPage'
 import SignInPage from './components/Pages/SignInPage'
 import ForgotPasswordPage from './components/Pages/ForgotPasswordPage'
-import Account from './components/Pages/Account'
+import AccountPage from './components/Pages/AccountPage'
 import Error from './components/Pages/Error'
 
 import { withAuthentication } from './components/Session/index'
@@ -32,7 +32,7 @@ const App = () => (
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
         <Route path={ROUTES.SIGN_IN} component={SignInPage} />
         <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPasswordPage} />
-        <Route path={ROUTES.ACCOUNT} component={Account} />
+        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route component={Error} />
       </Switch>
     </div>
