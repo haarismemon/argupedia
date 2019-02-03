@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { AuthUserContext } from './context';
+import AuthUserContext from './context';
 
 const withAuthorization = (condition, message) => Component => {
   class WithAuthorization extends React.Component {

@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
-const INITIAL_STATE = {
+var INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
+  passwordChanged: false
 };
 
 class PasswordChangeForm extends Component {
@@ -21,6 +22,7 @@ class PasswordChangeForm extends Component {
     this.props.firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
+        INITIAL_STATE['passwordChanged'] = true
         this.setState({ ...INITIAL_STATE });
       })
       .catch(error => {
@@ -35,7 +37,7 @@ class PasswordChangeForm extends Component {
   };
 
   render() {
-    const { passwordOne, passwordTwo, error } = this.state;
+    const { passwordOne, passwordTwo, error, passwordChanged } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo || passwordOne === '';
@@ -63,6 +65,7 @@ class PasswordChangeForm extends Component {
         </button>
 
         {error && <p>{error.message}</p>}
+        {passwordChanged && <p>Password has been successfully changed.</p>}
       </form>
     );
   }
