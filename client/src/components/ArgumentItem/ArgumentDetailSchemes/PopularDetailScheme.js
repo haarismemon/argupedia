@@ -13,8 +13,8 @@ const PopularDetailScheme = (props) => {
           <hr/>
           <h4>Critical Questions</h4>
           <ul>
-            <li><CriticalQuestion question={`What evidence do we have for believing that '${props.proposition}' is generally accepted?`} argumentId={props._id} originalId={props.originalId}/></li>
-            <li><CriticalQuestion question={`Are there good reasons for doubting the accuracy of '${props.proposition}'?`} argumentId={props._id} originalId={props.originalId}/></li>
+            <li><CriticalQuestion question={`What evidence do we have for believing that '${props.proposition}' is generally accepted?`} {...props}/></li>
+            <li><CriticalQuestion question={`Are there good reasons for doubting the accuracy of '${props.proposition}'?`} {...props}/></li>
           </ul>
         </div>
         : null
