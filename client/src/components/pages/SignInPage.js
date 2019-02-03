@@ -9,9 +9,8 @@ const SignInPage = () => (
   <div>
     <h1>Sign In</h1>
     <SignInForm></SignInForm>
-    <p>
-      Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-    </p>
+    <ForgotPasswordLink />
+    <SignUpLink />
   </div>
 )
 
@@ -80,6 +79,18 @@ class SignInFormBase extends Component {
     )
   }
 }
+
+const SignUpLink = () => (
+  <p>
+    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+  </p>
+);
+
+const ForgotPasswordLink = () => (
+  <p>
+    <Link to={ROUTES.FORGOT_PASSWORD}>Forgot Password?</Link>
+  </p>
+);
 
 const SignInForm = compose(
   withRouter,
