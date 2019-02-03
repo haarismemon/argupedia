@@ -12,7 +12,7 @@ import SubmitArgument from './components/Pages/SubmitArgument'
 import ArgumentList from './components/Pages/ArgumentList'
 import ArgumentDetails from './components/Pages/ArgumentDetails'
 import SignUpPage from './components/Pages/SignUpPage'
-import SignIn from './components/Pages/SignIn'
+import SignInPage from './components/Pages/SignInPage'
 import ForgotPassword from './components/Pages/ForgotPassword'
 import Account from './components/Pages/Account'
 import Error from './components/Pages/Error'
@@ -30,7 +30,7 @@ const App = () => {
           <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
           <Route path={ROUTES.SUBMIT_ARGUMENT} component={SubmitArgument} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-          <Route path={ROUTES.SIGN_IN} component={SignIn} />
+          <Route path={ROUTES.SIGN_IN} component={SignInPage} />
           <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
           <Route path={ROUTES.ACCOUNT} component={Account} />
           <Route component={Error} />
