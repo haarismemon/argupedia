@@ -121,16 +121,22 @@ router.get('/argument/network', (req, res) => {
     };
     
     arguments.forEach(argument => {
+      let nodeTitle = argument.title ;
+      nodeTitle = nodeTitle.split(/((?:\w+ ){5})/g).filter(Boolean).join("\n");
+
       data.nodes.push({ 
         id: argument._id, 
-        label: argument.title 
+        label: nodeTitle
       })
+
+      let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
+      argumentLabel = argumentLabel.split(/((?:\w+ ){5})/g).filter(Boolean).join("\n");
 
       if(argument.parentId != null) {
         data.edges.push({ 
           from: argument._id, 
           to: argument.parentId,
-          label: argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')'
+          label: argumentLabel
         })
       }
     })
