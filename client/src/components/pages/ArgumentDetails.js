@@ -4,11 +4,32 @@ import Graph from 'vis-react'
 
 import ArgumentNest from '../ArgumentItem/ArgumentNest'
 
+const constants = {
+  network: {
+    mode: 'network',
+    string: 'Show Argument Network'
+  },
+  nest: {
+    mode: 'nest',
+    string: 'Show Nested Arguments'
+  }
+}
+
 class ArgumentDetails extends React.Component {
-  state = {
-    showNetwork: false,
-    networkToggleText: 'Show Argument Network',
-    data: {}
+  constructor(props) {
+    super(props);
+    
+    const params = new URLSearchParams(this.props.location.search)
+    const mode = params.get('mode')
+
+    this.state = {
+      showNetwork: mode == constants.network.mode,
+      networkToggleText: mode == constants.network.mode ? constants.nest.string : constants.network.string,
+      data: {
+        nodes: [],
+        edges: []
+      }
+    }
   }
   
   componentDidMount() {
@@ -25,9 +46,15 @@ class ArgumentDetails extends React.Component {
     var newToggleText = null;
 
     if(this.state.showNetwork) {
-      newToggleText = 'Show Argument Network'
+      newToggleText = constants.network.string
+      this.props.history.push({
+        search: '?mode=' + constants.nest.mode
+      })
     } else {
-      newToggleText = 'Show Nested Arguments'
+      newToggleText = constants.nest.string
+      this.props.history.push({
+        search: '?mode=' + constants.network.mode
+      })
     }
 
     this.setState({
