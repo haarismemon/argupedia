@@ -11,7 +11,7 @@ import Navigation from './components/Navigation'
 import SubmitArgument from './components/Pages/SubmitArgument'
 import ArgumentList from './components/Pages/ArgumentList'
 import ArgumentDetails from './components/Pages/ArgumentDetails'
-import SignUp from './components/Pages/SignUp'
+import SignUpPage from './components/Pages/SignUpPage'
 import SignIn from './components/Pages/SignIn'
 import ForgotPassword from './components/Pages/ForgotPassword'
 import Account from './components/Pages/Account'
@@ -29,7 +29,7 @@ const App = () => {
           <Route path={ROUTES.HOME} component={ArgumentList} exact />
           <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
           <Route path={ROUTES.SUBMIT_ARGUMENT} component={SubmitArgument} />
-          <Route path={ROUTES.SIGN_UP} component={SignUp} />
+          <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
           <Route path={ROUTES.SIGN_IN} component={SignIn} />
           <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPassword} />
           <Route path={ROUTES.ACCOUNT} component={Account} />

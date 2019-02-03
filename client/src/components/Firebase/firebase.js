@@ -10,6 +10,15 @@ const config = {
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 };
 
+// const config = {
+//     apiKey: "AIzaSyBqYf41qFzBDvTuhYwXIBnqN8FTnzDqdCc",
+//     authDomain: "debatably-5f3b4.firebaseapp.com",
+//     databaseURL: "https://debatably-5f3b4.firebaseio.com",
+//     projectId: "debatably-5f3b4",
+//     storageBucket: "debatably-5f3b4.appspot.com",
+//     messagingSenderId: "148710591281"
+// };
+
 class Firebase {
     constructor() {
         app.initializeApp(config)
@@ -20,7 +29,7 @@ class Firebase {
     // *** Auth API *** (Asynchronous endpoints)
 
     doSignUp = (email, password) =>
-        this.auth.createUserAndRetrieveDataWithEmailAndPassword(email, password)
+        this.auth.createUserWithEmailAndPassword(email, password)
 
     doSignIn = (email, password) =>
         this.auth.signInAndRetrieveDataWithEmailAndPassword(email, password)
