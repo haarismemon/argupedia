@@ -53,21 +53,21 @@ router.get('/argument/list', (req, res) => {
 })
 
 // get a list of children of an argument
-router.get('/argument/children', (req, res) => {
-  if(!req.query.id) {
-    return res.status(400).send('Missing URL parameter: id')
-  }
+// router.get('/argument/children', (req, res) => {
+//   if(!req.query.id) {
+//     return res.status(400).send('Missing URL parameter: id')
+//   }
 
-  let query = { parentId: req.query.id }
+//   let query = { parentId: req.query.id }
 
-  ArgumentModel.find(query)
-    .then(doc => {
-      res.json(doc)
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
-})
+//   ArgumentModel.find(query)
+//     .then(doc => {
+//       res.json(doc)
+//     })
+//     .catch(err => {
+//       res.status(500).json(err)
+//     })
+// })
 
 // update argument
 router.put('/argument', (req, res) => {
@@ -115,7 +115,7 @@ router.get('/argument/network', (req, res) => {
   }
 
   ArgumentModel.find(query, (err, arguments) => {
-    var data = {
+    let data = {
       nodes: [],
       edges: []
     };
@@ -132,6 +132,45 @@ router.get('/argument/network', (req, res) => {
           to: argument.parentId,
           label: argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')'
         })
+      }
+    })
+
+    return res.json(data)
+  })
+})
+
+// get all arguments with their children as a key value, where the _id is the key
+router.get('/argument/children', (req, res) => {
+  if(!req.query.id) {
+    return res.status(400).send('Missing URL parameter: id')
+  }
+
+  let query = { "$or": [
+      { _id: req.query.id },
+      { originalId: req.query.id }
+    ]
+  }
+
+  ArgumentModel.find(query, (err, arguments) => {
+    let data = arguments.reduce((obj, argument) => {
+      argument = argument.toJSON()
+      argument.children = []
+
+      obj[argument._id] = argument
+      return obj
+    }, {})
+
+    arguments.forEach(argument => {
+      let parentArgument = data[argument.parentId]
+
+      if(parentArgument) {
+        let childrenList = parentArgument.children
+        
+        if(childrenList) {
+          childrenList.push(argument._id)
+        } else {
+          childrenList = [ argument._id ]
+        }        
       }
     })
 
