@@ -23,22 +23,33 @@ class ArgumentDetails extends React.Component {
     const mode = params.get('mode')
 
     this.state = {
-      showNetwork: mode == constants.network.mode,
-      networkToggleText: mode == constants.network.mode ? constants.nest.string : constants.network.string,
+      showNetwork: mode === constants.network.mode,
+      networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
       data: {
         nodes: [],
         edges: []
-      }
+      },
+      argumentData: {}
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
   }
   
   componentDidMount() {
-    axios.get(`http://localhost:3001/argument/network?id=${this.props.match.params.id}`, {crossdomain: true})
+    const rootId = this.props.match.params.id;
+
+    axios.get(`http://localhost:3001/argument/network?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       this.setState({
         data: resp.data
+      })
+    })
+    .catch(console.error)
+
+    axios.get(`http://localhost:3001/argument/children?id=${rootId}`, {crossdomain: true})
+    .then(resp => {
+      this.setState({
+          argumentData: resp.data
       })
     })
     .catch(console.error)
@@ -66,13 +77,13 @@ class ArgumentDetails extends React.Component {
   }
 
   nodeSelectHandler = event => {
-    var { nodes, edges } = event;
+    var { nodes } = event;
 
     const mode = constants.nest.mode
 
     this.setState({
-      showNetwork: mode == constants.network.mode,
-      networkToggleText: mode == constants.network.mode ? constants.nest.string : constants.network.string,
+      showNetwork: mode === constants.network.mode,
+      networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
     });
     
     this.props.history.push({
@@ -88,15 +99,24 @@ class ArgumentDetails extends React.Component {
           centralGravity: 0.6,
           springLength: 200,
           springConstant: 0.05,
-          nodeDistance: 150,
+          nodeDistance: 300,
           damping: 0.15
+        },
+        barnesHut: {
+          avoidOverlap: 1
         }
+      },
+      interaction: {
+        zoomView: false
       }
     };
 
     var events = {
         select: this.nodeSelectHandler
     }
+
+    const argumentRootId = this.props.match.params.id;
+    const rootArgument = this.state.argumentData[argumentRootId]
 
     return (
       <div>
@@ -107,7 +127,11 @@ class ArgumentDetails extends React.Component {
             <Graph graph={this.state.data} options={options} events={events} />
           </div>
           :
-          <ArgumentNest level={0} rootId={this.props.match.params.id}/>
+          (this.state.argumentData && rootArgument !== undefined &&
+            <ArgumentNest 
+              level={0} 
+              rootId={argumentRootId} 
+              argumentData={this.state.argumentData}/>)
         }
       </div>
     )
