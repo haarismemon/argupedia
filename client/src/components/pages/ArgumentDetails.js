@@ -49,7 +49,7 @@ class ArgumentDetails extends React.Component {
     })
     .catch(console.error)
 
-    axios.get(`http://localhost:3001/argument/children?id=${rootId}`, {crossdomain: true})
+    axios.get(`http://localhost:3001/argument/descendents?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       this.setState({
           argumentData: resp.data
