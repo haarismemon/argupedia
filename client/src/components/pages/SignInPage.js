@@ -34,7 +34,7 @@ class SignInFormBase extends Component {
       .doSignIn(email, password)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE })
-        this.props.history.push(ROUTES.HOME)
+        this.props.history.goBack()
       })
       .catch(error => {
         this.setState({ error })
