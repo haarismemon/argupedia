@@ -33,11 +33,14 @@ class ArgumentDetails extends React.Component {
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
+    this.updateData = this.updateData.bind(this)
   }
   
   componentDidMount() {
-    const rootId = this.props.match.params.id;
+    this.updateData(this.props.match.params.id)
+  }
 
+  updateData(rootId) {
     axios.get(`http://localhost:3001/argument/network?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       this.setState({
@@ -86,9 +89,16 @@ class ArgumentDetails extends React.Component {
       networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
     });
     
-    this.props.history.push({
-      search: '?mode=' + constants.nest.mode + "#" + nodes[0]
-    })
+    this.props.history.push('/')
+    this.props.history.push(`/argument/${nodes[0]}`)
+  }
+
+  originalArgumentLinkHandler() {
+    const rootId = this.props.match.params.id
+    const argument = this.state.argumentData[rootId]
+
+    this.props.history.push(`/argument/${argument.originalId}`)
+    this.updateData(argument.originalId)
   }
 
   render() {
@@ -116,12 +126,17 @@ class ArgumentDetails extends React.Component {
     }
 
     const argumentRootId = this.props.match.params.id;
+    const originalId = this.state.argumentData[argumentRootId] ? 
+      this.state.argumentData[argumentRootId].originalId : undefined;
     const rootArgument = this.state.argumentData[argumentRootId]
 
     return (
       <div>
         <h1>Argument</h1>
         <button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</button>
+        { originalId !== undefined &&
+          <button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</button>
+        }
         {this.state.showNetwork ?
           <div id="argument-network">
             <Graph graph={this.state.data} options={options} events={events} />
