@@ -118,6 +118,7 @@ class ArgumentDetails extends React.Component {
         }
       },
       interaction: {
+        navigationButtons: true,
         zoomView: false
       }
     };
