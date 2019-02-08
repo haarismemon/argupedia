@@ -7,16 +7,26 @@ class ArgumentList extends React.Component {
   state = {
     arguments: []
   }
+  _isMounted = false;
 
   componentDidMount() {
+    this._isMounted = true;
+
     axios.get('http://localhost:3001/argument/list', {crossdomain: true})
     .then(resp => {
-      this.setState({
-          arguments: resp.data
-      })
+      if(this._isMounted) {
+        this.setState({
+            arguments: resp.data
+        })
+      }
     })
     .catch(console.error)
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  
 
   handleClick(argumentId) {
     this.props.history.push(`/argument/${argumentId}`)

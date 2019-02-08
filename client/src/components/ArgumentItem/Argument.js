@@ -9,19 +9,28 @@ class Argument extends React.Component {
   state = {
     argument: {}
   }
+  _isMounted = false;
 
   componentDidMount() {
+    this._isMounted = true;
+
     axios.get(`http://localhost:3001/argument?id=${this.props.argumentId}`, {crossdomain: true})
     .then(resp => {
       if(resp.data.originalId == null) {
         resp.data.originalId = resp.data._id;
       }
 
-      this.setState({
-          argument: resp.data
-      })
+      if(this._isMounted) {
+        this.setState({
+            argument: resp.data
+        })
+      }
     })
     .catch(console.error)
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
