@@ -35,26 +35,38 @@ class ArgumentDetails extends React.Component {
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
     this.updateData = this.updateData.bind(this)
+
+    this._isMounted = false;
   }
   
   componentDidMount() {
+    this._isMounted = true;
     this.updateData(this.props.match.params.id)
   }
+  
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  
 
   updateData(rootId) {
     axios.get(`http://localhost:3001/argument/network?id=${rootId}`, {crossdomain: true})
     .then(resp => {
-      this.setState({
-        data: resp.data
-      })
+      if(this._isMounted) {
+        this.setState({
+          data: resp.data
+        })
+      }
     })
     .catch(console.error)
-
+    
     axios.get(`http://localhost:3001/argument/descendents?id=${rootId}`, {crossdomain: true})
     .then(resp => {
-      this.setState({
-          argumentData: resp.data
-      })
+      if(this._isMounted) {
+        this.setState({
+            argumentData: resp.data
+        })
+      }
     })
     .catch(console.error)
   }
@@ -103,13 +115,24 @@ class ArgumentDetails extends React.Component {
   }
 
   render() {
+    // after the nodes have been settled and after 2 seconds, make the network fit the screen
+    if(this.state.network) {
+      setTimeout(() => {
+        this.state.network.fit({
+          animation: {
+            duration: 4000
+          }
+        })
+      }, 2000);
+    }
+
     var options = {
       physics: {
         solver: 'repulsion',
         repulsion: {
           centralGravity: 0.8,
           springLength: 200,
-          springConstant: 0.05,
+          springConstant: 0.03,
           nodeDistance: 350,
           damping: 0.15
         },
