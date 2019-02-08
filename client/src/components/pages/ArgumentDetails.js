@@ -110,7 +110,7 @@ class ArgumentDetails extends React.Component {
           centralGravity: 0.8,
           springLength: 200,
           springConstant: 0.05,
-          nodeDistance: 300,
+          nodeDistance: 350,
           damping: 0.15
         },
         barnesHut: {
@@ -124,7 +124,7 @@ class ArgumentDetails extends React.Component {
     };
 
     var events = {
-        select: this.nodeSelectHandler
+        doubleClick: this.nodeSelectHandler
     }
 
     const argumentRootId = this.props.match.params.id;
@@ -144,12 +144,15 @@ class ArgumentDetails extends React.Component {
           <button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</button>
         }
         {this.state.showNetwork ?
-          <div id="argument-network">
-            <Graph 
-              graph={this.state.data} 
-              options={options} 
-              events={events} 
-              getNetwork={network => this.setState({network})} />
+          <div>
+            <p>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
+            <div id="argument-network">
+              <Graph 
+                graph={this.state.data} 
+                options={options} 
+                events={events} 
+                getNetwork={network => this.setState({network})} />
+            </div>
           </div>
           :
           (this.state.argumentData && rootArgument !== undefined &&
