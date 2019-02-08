@@ -109,7 +109,7 @@ router.get('/argument/network', (req, res) => {
     
     arguments.forEach(argument => {
       let nodeTitle = argument.title ;
-      nodeTitle = nodeTitle.split(/((?:\w+ ){5})/g).filter(Boolean).join("\n");
+      nodeTitle = addNewlineInLabel(nodeTitle);
 
       data.nodes.push({ 
         id: argument._id, 
@@ -117,7 +117,7 @@ router.get('/argument/network', (req, res) => {
       })
 
       let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
-      argumentLabel = argumentLabel.split(/((?:\w+ ){5})/g).filter(Boolean).join("\n");
+      argumentLabel = addNewlineInLabel(argumentLabel);
 
       if(argument.parentId != null) {
         data.edges.push({ 
@@ -131,6 +131,25 @@ router.get('/argument/network', (req, res) => {
     return res.json(data)
   })
 })
+
+function addNewlineInLabel(label) {
+  var result = "";
+  var words = label.split(' ');
+  var count = 0;
+
+  words.forEach(word => {
+    count += 1;
+
+    if(count == 5) {
+      result += word + "\n";
+      count = 0;
+    } else {
+      result += word + " ";
+    }
+  })
+
+  return result;
+}
 
 // get all arguments with their children as a key value, where the _id is the key
 router.get('/argument/descendents', (req, res) => {
