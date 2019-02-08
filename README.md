@@ -1,1 +1,1 @@
-# Argupedia
+# Debatably

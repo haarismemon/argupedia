@@ -1,7 +1,7 @@
 let mongoose = require('mongoose')
 
 const server = 'mongodb://localhost:27017'
-const database = 'argupedia-db'
+const database = 'debatably-db'
 
 mongoose.connect(`${server}/${database}`, (err) => {
   console.log('Successfully connected')
