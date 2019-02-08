@@ -95,7 +95,7 @@ router.get('/argument/network', (req, res) => {
       { _id: req.query.id },
       {"$or": [ 
         { originalId: req.query.id },
-        { parentId: req.query.id }
+        { ancestorIds: req.query.id }
       ]
     }
     ]
@@ -161,7 +161,7 @@ router.get('/argument/descendents', (req, res) => {
       { _id: req.query.id },
       {"$or": [ 
           { originalId: req.query.id },
-          { parentId: req.query.id }
+          { ancestorIds: req.query.id }
         ]
       }
     ]
