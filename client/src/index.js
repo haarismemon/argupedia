@@ -11,13 +11,7 @@ require('dotenv').config();
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
-        <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script> 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
-        </head>
-        <body>
-            <App />
-        </body>
+        <App />
     </FirebaseContext.Provider>, 
     document.getElementById('root'));
 
