@@ -176,22 +176,26 @@ router.get('/argument/descendents', (req, res) => {
       return obj
     }, {})
 
-    arguments.forEach(argument => {
-      let parentArgument = data[argument.parentId]
-
-      if(parentArgument) {
-        let childrenList = parentArgument.children
-        
-        if(childrenList) {
-          childrenList.push(argument._id)
-        } else {
-          childrenList = [ argument._id ]
-        }        
-      }
-    })
+    updateDataWithCalculatedDescendents(data, arguments)
 
     return res.json(data)
   })
 })
+
+function updateDataWithCalculatedDescendents(data, arguments) {
+  arguments.forEach(argument => {
+    let parentArgument = data[argument.parentId]
+
+    if(parentArgument) {
+      let childrenList = parentArgument.children
+      
+      if(childrenList) {
+        childrenList.push(argument._id)
+      } else {
+        childrenList = [ argument._id ]
+      }        
+    }
+  })
+}
 
 module.exports = router
