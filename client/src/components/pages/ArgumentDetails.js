@@ -23,6 +23,7 @@ class ArgumentDetails extends React.Component {
     const mode = params.get('mode')
 
     this.state = {
+      network: null,
       showNetwork: mode === constants.network.mode,
       networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
       data: {
@@ -106,7 +107,7 @@ class ArgumentDetails extends React.Component {
       physics: {
         solver: 'repulsion',
         repulsion: {
-          centralGravity: 0.6,
+          centralGravity: 0.8,
           springLength: 200,
           springConstant: 0.05,
           nodeDistance: 300,
@@ -130,6 +131,10 @@ class ArgumentDetails extends React.Component {
       this.state.argumentData[argumentRootId].originalId : undefined;
     const rootArgument = this.state.argumentData[argumentRootId]
 
+    if(this.state.network !== null) {
+      this.state.network.fit()
+    }
+
     return (
       <div>
         <h1>Argument</h1>
@@ -139,7 +144,11 @@ class ArgumentDetails extends React.Component {
         }
         {this.state.showNetwork ?
           <div id="argument-network">
-            <Graph graph={this.state.data} options={options} events={events} />
+            <Graph 
+              graph={this.state.data} 
+              options={options} 
+              events={events} 
+              getNetwork={network => this.setState({network})} />
           </div>
           :
           (this.state.argumentData && rootArgument !== undefined &&
