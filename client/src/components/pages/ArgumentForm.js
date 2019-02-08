@@ -18,7 +18,8 @@ class ArgumentForm extends React.Component {
       title: '',
       parentId: this.props.parentId,
       originalId: this.props.originalId,
-      uid: this.props.authUser.uid
+      uid: this.props.authUser.uid,
+      ancestorIds: this.props.ancestorIds
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -44,10 +45,18 @@ class ArgumentForm extends React.Component {
     if(this.state.title == null) {
       alert("Title field should be field out")
     } else {
-    axios.post('http://localhost:3001/argument', {...this.state})
-      .then(() => {
-        this.props.history.goBack()
-      })
+      // adds the parent id to the list of ancestors
+      if(this.state.ancestorIds === undefined) {
+        this.setState({ ancestorIds: [] });
+      } else {
+        const newAncestorIds = this.props.ancestorIds.push(this.props.parentId)
+        this.setState({ ancestorIds: newAncestorIds });
+      }
+
+      axios.post('http://localhost:3001/argument', {...this.state})
+        .then(() => {
+          this.props.history.goBack()
+        });
     }
   }
 
@@ -85,7 +94,8 @@ ArgumentForm.propTypes = {
   criticalQuestion: PropTypes.string,
   agree: PropTypes.bool,
   parentId: PropTypes.string,
-  originalId: PropTypes.string
+  originalId: PropTypes.string,
+  ancestorIds: PropTypes.array
 };
 
 export default withRouter(ArgumentForm)
