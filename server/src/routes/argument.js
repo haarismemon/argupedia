@@ -102,35 +102,40 @@ router.get('/argument/network', (req, res) => {
   }
 
   ArgumentModel.find(query, (err, arguments) => {
-    let data = {
-      nodes: [],
-      edges: []
-    };
-    
-    arguments.forEach(argument => {
-      let nodeTitle = argument.title ;
-      nodeTitle = addNewlineInLabel(nodeTitle);
-
-      data.nodes.push({ 
-        id: argument._id, 
-        label: nodeTitle
-      })
-
-      let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
-      argumentLabel = addNewlineInLabel(argumentLabel);
-
-      if(argument.parentId != null) {
-        data.edges.push({ 
-          from: argument._id, 
-          to: argument.parentId,
-          label: argumentLabel
-        })
-      }
-    })
-
-    return res.json(data)
+    let nodesAndAttacks = generateNodesAndAttacks(arguments);
+    return res.json(nodesAndAttacks)
   })
 })
+
+function generateNodesAndAttacks(arguments) {
+  let nodesAndAttacks = {
+    nodes: [],
+    edges: []
+  };
+
+  arguments.forEach(argument => {
+    let nodeTitle = argument.title ;
+    nodeTitle = addNewlineInLabel(nodeTitle);
+
+    nodesAndAttacks.nodes.push({ 
+      id: argument._id, 
+      label: nodeTitle
+    })
+
+    let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
+    argumentLabel = addNewlineInLabel(argumentLabel);
+
+    if(argument.parentId != null) {
+      nodesAndAttacks.edges.push({ 
+        from: argument._id, 
+        to: argument.parentId,
+        label: argumentLabel
+      })
+    }
+  })
+
+  return nodesAndAttacks;
+}
 
 function addNewlineInLabel(label) {
   var result = "";
