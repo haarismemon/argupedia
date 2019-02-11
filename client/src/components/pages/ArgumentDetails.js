@@ -165,7 +165,7 @@ class ArgumentDetails extends React.Component {
       <div>
         <h1>Argument</h1>
         <button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</button>
-        { originalId !== undefined &&
+        { originalId !== undefined && originalId !== argumentRootId &&
           <button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</button>
         }
         {this.state.showNetwork ?
