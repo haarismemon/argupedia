@@ -26,11 +26,11 @@ class ArgumentDetails extends React.Component {
       network: null,
       showNetwork: mode === constants.network.mode,
       networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
-      data: {
+      networkData: {
         nodes: [],
         edges: []
       },
-      argumentData: {}
+      argumentNestData: {}
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
@@ -41,7 +41,9 @@ class ArgumentDetails extends React.Component {
   
   componentDidMount() {
     this._isMounted = true;
-    this.updateData(this.props.match.params.id)
+    if(this.state.networkData !== {}) {
+      this.updateData(this.props.match.params.id)
+    }
   }
   
   componentWillUnmount() {
@@ -54,7 +56,7 @@ class ArgumentDetails extends React.Component {
     .then(resp => {
       if(this._isMounted) {
         this.setState({
-          data: resp.data
+          networkData: resp.data
         })
       }
     })
@@ -64,7 +66,7 @@ class ArgumentDetails extends React.Component {
     .then(resp => {
       if(this._isMounted) {
         this.setState({
-            argumentData: resp.data
+            argumentNestData: resp.data
         })
       }
     })
@@ -108,7 +110,7 @@ class ArgumentDetails extends React.Component {
 
   originalArgumentLinkHandler() {
     const rootId = this.props.match.params.id
-    const argument = this.state.argumentData[rootId]
+    const argument = this.state.argumentNestData[rootId]
 
     this.props.history.push(`/argument/${argument.originalId}`)
     this.updateData(argument.originalId)
@@ -151,9 +153,9 @@ class ArgumentDetails extends React.Component {
     }
 
     const argumentRootId = this.props.match.params.id;
-    const originalId = this.state.argumentData[argumentRootId] ? 
-      this.state.argumentData[argumentRootId].originalId : undefined;
-    const rootArgument = this.state.argumentData[argumentRootId]
+    const originalId = this.state.argumentNestData[argumentRootId] ? 
+      this.state.argumentNestData[argumentRootId].originalId : undefined;
+    const rootArgument = this.state.argumentNestData[argumentRootId]
 
     if(this.state.network !== null) {
       this.state.network.fit()
@@ -171,18 +173,18 @@ class ArgumentDetails extends React.Component {
             <p>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
             <div id="argument-network">
               <Graph 
-                graph={this.state.data} 
+                graph={this.state.networkData} 
                 options={options} 
                 events={events} 
                 getNetwork={network => this.setState({network})} />
             </div>
           </div>
           :
-          (this.state.argumentData && rootArgument !== undefined &&
+          (this.state.argumentNestData && rootArgument !== undefined &&
             <ArgumentNest 
               level={0} 
               rootId={argumentRootId} 
-              argumentData={this.state.argumentData}/>)
+              argumentData={this.state.argumentNestData}/>)
         }
       </div>
     )

@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
@@ -13,20 +12,17 @@ class Argument extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
+    let argument = this.props.argument;
 
-    axios.get(`http://localhost:3001/argument?id=${this.props.argumentId}`, {crossdomain: true})
-    .then(resp => {
-      if(resp.data.originalId == null) {
-        resp.data.originalId = resp.data._id;
-      }
+    if(this.props.argument.originalId == null) {
+      argument.originalId = argument._id;
+    }
 
-      if(this._isMounted) {
-        this.setState({
-            argument: resp.data
-        })
-      }
-    })
-    .catch(console.error)
+    if(this._isMounted) {
+      this.setState({
+          argument: argument
+      })
+    }
   }
 
   componentWillUnmount() {

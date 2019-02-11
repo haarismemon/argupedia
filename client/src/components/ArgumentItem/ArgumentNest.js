@@ -21,9 +21,11 @@ class ArgumentNest extends React.Component {
   }
   
   render() {
+    const rootArgument = this.props.argumentData[this.props.rootId];
+
     return (
       <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}}>
-        <Argument argumentId={this.props.rootId}/>
+        <Argument argument={rootArgument}/>
         {this.state.childrenArguments.map(argument =>
           <ArgumentNest 
             key={argument._id} 
