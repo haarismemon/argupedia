@@ -107,7 +107,6 @@ router.get('/argument/network', (req, res) => {
     const labelledNodes = groundedLabellingAlgorithm(nodesAndAttacks);
 
     console.log(labelledNodes);
-    
 
     return res.json(nodesAndAttacks)
   })
@@ -116,28 +115,23 @@ router.get('/argument/network', (req, res) => {
 function groundedLabellingAlgorithm(nodesAndAttacks) {
   const allNodes = nodesAndAttacks.nodes;
 
-  // let previousLabelling = null;
   // start of with all labels being empty
   let currentLabelling = {
     in: [],
-    out: [],
-    undec: []
+    out: []
   }
 
-  // TODO: if all arguments are being attacked then all arguments are undecided
+  let breakLoop = false;
 
   // keep repeating until previous iteration labelling = current iteration labelling
-  let breakLoop = false;
   while(!breakLoop) {
     let newLabelling = {
-      in: [],
-      out: [],
-      undec: []
+      in: [...currentLabelling.in],
+      out: [...currentLabelling.out]
     }
 
     const unlabelledArguments = calculateUnlabelledArguments(currentLabelling, allNodes);
 
-    // in(Li+1) = in(Li) ∪ {x | x is not labelled in Li, and ∀y : if yRx then y ∈ out(Li) }
     // label x IN if it is not labelled, and all arguments that attack x are out
     unlabelledArguments.forEach(node => {
       // get all arguments that attack the current node
@@ -156,7 +150,6 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
       }
     });
 
-    // out(Li+1) = out(Li) ∪ {x | x is not labelled in Li, and ∃y : yRx and y ∈ in(Li+1) }
     // label x OUT if it is not labelled, and there is an argument that attacks it that is IN (in current iteration)
     unlabelledArguments.forEach(node => {
       // get all arguments that attack the current node
@@ -175,19 +168,15 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
       }
     });
 
-    const newIn = currentLabelling.in.concat(newLabelling.in);
-    const newOut = currentLabelling.out.concat(newLabelling.out);
-
-    if(newIn.length === currentLabelling.in.length && newOut.length == currentLabelling.out.length) {
+    if(newLabelling.in.length === currentLabelling.in.length && 
+        newLabelling.out.length === currentLabelling.out.length) {
       breakLoop = true;
     }
     
-    currentLabelling.in = newIn;
-    currentLabelling.out = newOut;
-    // console.log(currentLabelling);
-    
+    currentLabelling = newLabelling;
   }
-  // LG = (in(Li), out(Li), A − (in(Li) ∪ out(Li) )
+
+  // assign remaining arguments to the undecided label
   currentLabelling.undec = calculateUnlabelledArguments(currentLabelling, allNodes);
 
   return currentLabelling;
