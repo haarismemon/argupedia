@@ -86,6 +86,37 @@ router.delete('/argument', (req, res) => {
     })
 })
 
+// get all arguments with their children as a key value, where the _id is the key
+router.get('/argument/descendents', (req, res) => {
+  if(!req.query.id) {
+    return res.status(400).send('Missing URL parameter: id')
+  }
+
+  let query = { "$or": [
+      { _id: req.query.id },
+      {"$or": [ 
+          { originalId: req.query.id },
+          { ancestorIds: req.query.id }
+        ]
+      }
+    ]
+  }
+
+  ArgumentModel.find(query, (err, arguments) => {
+    let data = arguments.reduce((obj, argument) => {
+      argument = argument.toJSON()
+      argument.children = []
+
+      obj[argument._id] = argument
+      return obj
+    }, {})
+
+    updateDataWithCalculatedDescendents(data, arguments)
+
+    return res.json(data)
+  })
+})
+
 router.get('/argument/network', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
@@ -104,13 +135,39 @@ router.get('/argument/network', (req, res) => {
   ArgumentModel.find(query, (err, arguments) => {
     let nodesAndAttacks = generateNodesAndAttacks(arguments);
 
+    // categorises the arguments into labels: IN, OUT, and UNDEC
     const labelledNodes = groundedLabellingAlgorithm(nodesAndAttacks);
 
-    console.log(labelledNodes);
+    // update the nodes with label colours
+    nodesAndAttacks.nodes = colourArgumentNodes(labelledNodes);
 
     return res.json(nodesAndAttacks)
   })
 })
+
+function colourArgumentNodes(labelledNodes) {
+  let colouredNodes = []
+
+  labelledNodes.in.forEach(inNode => {
+    inNode.color = {
+      background: "limeGreen",
+      border: "darkGreen"
+    };
+    colouredNodes.push(inNode);
+  });
+  
+  labelledNodes.out.forEach(outNode => {
+    outNode.color = {
+      background: "red",
+      border: "maroon"
+    };
+    colouredNodes.push(outNode);
+  });
+  
+  colouredNodes = colouredNodes.concat(labelledNodes.undec);
+
+  return colouredNodes;
+}
 
 function groundedLabellingAlgorithm(nodesAndAttacks) {
   const allNodes = nodesAndAttacks.nodes;
@@ -252,37 +309,6 @@ function addNewlineInLabel(label) {
 
   return result;
 }
-
-// get all arguments with their children as a key value, where the _id is the key
-router.get('/argument/descendents', (req, res) => {
-  if(!req.query.id) {
-    return res.status(400).send('Missing URL parameter: id')
-  }
-
-  let query = { "$or": [
-      { _id: req.query.id },
-      {"$or": [ 
-          { originalId: req.query.id },
-          { ancestorIds: req.query.id }
-        ]
-      }
-    ]
-  }
-
-  ArgumentModel.find(query, (err, arguments) => {
-    let data = arguments.reduce((obj, argument) => {
-      argument = argument.toJSON()
-      argument.children = []
-
-      obj[argument._id] = argument
-      return obj
-    }, {})
-
-    updateDataWithCalculatedDescendents(data, arguments)
-
-    return res.json(data)
-  })
-})
 
 function updateDataWithCalculatedDescendents(data, arguments) {
   arguments.forEach(argument => {
