@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
 import PopularDetailScheme from './ArgumentDetailSchemes/PopularDetailScheme'
+import { Card } from 'react-bootstrap';
 
 class ArgumentPreview extends React.Component {
   handleClick = () => {
@@ -28,18 +29,21 @@ class ArgumentPreview extends React.Component {
     }
 
     return (
-      <div className="ArgumentPreview" onClick={this.handleClick}>
-        <div className="scheme-name">
-          {this.props.title} ({schemeName})
-        </div>
-        {
-          {
-            action: <ActionDetailScheme {...this.props}/>,
-            expert: <ExpertDetailScheme {...this.props}/>,
-            popular: <PopularDetailScheme {...this.props}/>
-          }[this.props.scheme]
-        }
-      </div>
+      <Card onClick={this.handleClick}>
+        <Card.Body>
+          <Card.Title>{this.props.title}</Card.Title>
+          <Card.Subtitle>{schemeName}</Card.Subtitle>
+          <Card.Text>
+            {
+              {
+                action: <ActionDetailScheme {...this.props}/>,
+                expert: <ExpertDetailScheme {...this.props}/>,
+                popular: <PopularDetailScheme {...this.props}/>
+              }[this.props.scheme]
+            }
+          </Card.Text>
+        </Card.Body>
+      </Card>
     )
   }
 }

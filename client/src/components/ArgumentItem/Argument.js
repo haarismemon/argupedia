@@ -1,4 +1,5 @@
 import React from 'react'
+import Card from 'react-bootstrap/Card'
 
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
@@ -50,25 +51,27 @@ class Argument extends React.Component {
     }
 
     return (
-      <div className="ArgumentDetails" id={this.state.argument._id}>
-        <div className="scheme-name">
-          {this.state.argument.title} ({argumentNotRoot ? `${isArgumentPositive} = ` : null }{schemeName})
-        </div>
-        <div className="value-name">
-          {argumentNotRoot ?
-            (
-              <div>
-                <div>Critical Question: {this.state.argument.criticalQuestion}</div><br/>
-              </div>
-            )
-            : null}
-          {{
-              action: <ActionDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
-              expert: <ExpertDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
-              popular: <PopularDetailScheme showCriticalQuestions={true} {...this.state.argument}/>
-            }[this.state.argument.scheme]}
-        </div>
-      </div>
+      <Card id={this.state.argument._id}>
+        <Card.Body>
+          <Card.Title>{this.state.argument.title}</Card.Title>
+          <Card.Subtitle>{argumentNotRoot ? `${isArgumentPositive} = ` : null }{schemeName}</Card.Subtitle>
+          <br/>
+          <Card.Text>
+            {argumentNotRoot ?
+              (
+                <div>
+                  Critical Question: {this.state.argument.criticalQuestion}
+                </div>
+              )
+              : null}
+            {{
+                action: <ActionDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
+                expert: <ExpertDetailScheme showCriticalQuestions={true} {...this.state.argument}/>,
+                popular: <PopularDetailScheme showCriticalQuestions={true} {...this.state.argument}/>
+              }[this.state.argument.scheme]}
+          </Card.Text>
+        </Card.Body>
+      </Card>
     );
   }
 }

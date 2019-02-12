@@ -5,7 +5,7 @@ import CriticalQuestion from '../CriticalQuestion'
 const ActionDetailScheme = (props) => {
   return (
     <div>
-      <div className="value-name">
+      <div>
         <div>In current circumstance R: {props.circumstance}</div>
         <div>We should perform action A: {props.action}</div>
         <div>Which will result in a new circumstance S: {props.newCircumstance}</div>
@@ -15,7 +15,7 @@ const ActionDetailScheme = (props) => {
       {props.showCriticalQuestions ?
         <div>
           <hr/>
-          <h4>Critical Questions</h4>
+          <h6>Critical Questions</h6>
           <ul>
             <li><CriticalQuestion question={`Is the current circumstance '${props.circumstance}' true?`} {...props}/></li>
             <li><CriticalQuestion question={`Does the action '${props.action}' achieve the goal of '${props.goal}'?`} {...props}/></li>

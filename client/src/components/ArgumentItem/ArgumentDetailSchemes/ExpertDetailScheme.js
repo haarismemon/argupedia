@@ -5,7 +5,7 @@ import CriticalQuestion from '../CriticalQuestion'
 const ExpertDetailScheme = (props) => {
   return (
     <div>
-      <div className="value-name">
+      <div>
         <div>There is a source E: {props.source}</div>
         <div>Who is an expert in subject domain D: {props.domain}</div>
         <div>The source makes the assestion A that: {props.assertion}</div>
@@ -13,7 +13,7 @@ const ExpertDetailScheme = (props) => {
       {props.showCriticalQuestions ?
         <div>
           <hr/>
-          <h4>Critical Questions</h4>
+          <h6>Critical Questions</h6>
           <ul>
             <li><CriticalQuestion question={`How credible is '${props.source}' an expert?`} {...props}/></li>
             <li><CriticalQuestion question={`Is '${props.source}' an expert in the field that the assertion '${props.assertion}' is in?`} {...props}/></li>
