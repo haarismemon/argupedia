@@ -19,21 +19,24 @@ import Error from './components/Pages/Error'
 
 import { withAuthentication } from './components/Session/index'
 import * as ROUTES from './constants/routes'
+import { Container } from 'react-bootstrap';
 
 const App = () => (
   <BrowserRouter>
     <div>
       <Navigation />
-      <Switch>
-        <Route path={ROUTES.HOME} component={ArgumentList} exact />
-        <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
-        <Route path={ROUTES.SUBMIT_ARGUMENT} component={SubmitArgument} />
-        <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-        <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-        <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPasswordPage} />
-        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        <Route component={Error} />
-      </Switch>
+      <Container>
+        <Switch>
+          <Route path={ROUTES.HOME} component={ArgumentList} exact />
+          <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
+          <Route path={ROUTES.SUBMIT_ARGUMENT} component={SubmitArgument} />
+          <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+          <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+          <Route path={ROUTES.FORGOT_PASSWORD} component={ForgotPasswordPage} />
+          <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+          <Route component={Error} />
+        </Switch>
+      </Container>
     </div>
   </BrowserRouter>
 )
