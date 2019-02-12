@@ -29,10 +29,12 @@ class ArgumentPreview extends React.Component {
     }
 
     return (
-      <Card onClick={this.handleClick}>
-        <Card.Body>
+      <Card onClick={this.handleClick} className="argument-preview">
+        <Card.Header>
           <Card.Title>{this.props.title}</Card.Title>
           <Card.Subtitle>{schemeName}</Card.Subtitle>
+        </Card.Header>
+        <Card.Body>
           <Card.Text>
             {
               {

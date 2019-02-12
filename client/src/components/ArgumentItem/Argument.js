@@ -51,11 +51,12 @@ class Argument extends React.Component {
     }
 
     return (
-      <Card id={this.state.argument._id}>
-        <Card.Body>
+      <Card id={this.state.argument._id} className="argument-view">
+        <Card.Header>
           <Card.Title>{this.state.argument.title}</Card.Title>
           <Card.Subtitle>{argumentNotRoot ? `${isArgumentPositive} = ` : null }{schemeName}</Card.Subtitle>
-          <br/>
+          </Card.Header>
+        <Card.Body>
           <Card.Text>
             {argumentNotRoot ?
               (
