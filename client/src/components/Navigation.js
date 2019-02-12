@@ -16,10 +16,18 @@ const Navigation = () => {
             </LinkContainer>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="mr-auto">
+                    <LinkContainer to={ROUTES.HOME} exact>
+                        <NavLink>Home</NavLink>
+                    </LinkContainer>
+                    <LinkContainer to={ROUTES.SUBMIT_ARGUMENT}>
+                        <NavLink>Submit Argument</NavLink>
+                    </LinkContainer>
+                </Nav>
                 <AuthUserContext.Consumer>
-                { authUser => 
-                    authUser ? <NavigationAuth /> : <NavigationNonAuth />
-                }
+                    { authUser => 
+                        authUser ? <NavigationAuth /> : <NavigationNonAuth />
+                    }
                 </AuthUserContext.Consumer>
             </Navbar.Collapse>
         </Navbar>
@@ -27,25 +35,16 @@ const Navigation = () => {
 };
 
 const NavigationAuth = () => (
-    <Nav className="mr-auto">
-        <LinkContainer to={ROUTES.HOME} exact>
-            <NavLink>Home</NavLink>
-        </LinkContainer>
-        <LinkContainer to={ROUTES.SUBMIT_ARGUMENT}>
-            <NavLink>Submit Argument</NavLink>
+    <Nav>
+        <LinkContainer to={ROUTES.ACCOUNT} exact>
+            <NavLink>Account</NavLink>
         </LinkContainer>
         <SignOutButton />
     </Nav>
 )
 
 const NavigationNonAuth = () => (
-    <Nav className="mr-auto">
-        <LinkContainer to={ROUTES.HOME} exact>
-            <NavLink>Home</NavLink>
-        </LinkContainer>
-        <LinkContainer to={ROUTES.SUBMIT_ARGUMENT}>
-            <NavLink>Submit Argument</NavLink>
-        </LinkContainer>
+    <Nav>
         <LinkContainer to={ROUTES.SIGN_IN}>
             <NavLink>Sign In</NavLink>
         </LinkContainer>
