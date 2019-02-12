@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Graph from 'vis-react'
+import Button from 'react-bootstrap/Button'
 
 import ArgumentNest from '../ArgumentItem/ArgumentNest'
 
@@ -164,9 +165,9 @@ class ArgumentDetails extends React.Component {
     return (
       <div>
         <h1>Argument</h1>
-        <button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</button>
+        <Button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
         { originalId !== undefined && originalId !== argumentRootId &&
-          <button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</button>
+          <Button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
         }
         {this.state.showNetwork ?
           <div>
