@@ -150,7 +150,7 @@ function colourArgumentNodes(labelledNodes) {
 
   labelledNodes.in.forEach(inNode => {
     inNode.color = {
-      background: "limeGreen",
+      background: "lime",
       border: "darkGreen"
     };
     colouredNodes.push(inNode);
@@ -161,6 +161,9 @@ function colourArgumentNodes(labelledNodes) {
       background: "red",
       border: "maroon"
     };
+    outNode.font = {
+      color: "white"
+    }
     colouredNodes.push(outNode);
   });
   
