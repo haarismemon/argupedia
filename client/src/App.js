@@ -24,7 +24,6 @@ const App = () => (
   <BrowserRouter>
     <div>
       <Navigation />
-      <hr/>
       <Switch>
         <Route path={ROUTES.HOME} component={ArgumentList} exact />
         <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
