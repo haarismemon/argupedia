@@ -11,7 +11,7 @@ import { withFirebase } from '../../Firebase';
 import './SignInPage.css'
 
 const SignInPage = () => (
-  <div className="row">
+  <div className="row sign-in-page">
     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <Card className="card-signin my-5 text-center">
         <h1 className="card-title">Sign In</h1>

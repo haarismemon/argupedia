@@ -1,4 +1,4 @@
-.card {
+.sign-in-page .card {
     border-radius: 1em;
 }
 
@@ -11,14 +11,11 @@
     margin-bottom: 30px;
 }
 
-.form-control {
+.form-signin .form-control {
     height: 50px;
-}
-
-.btn {
-    margin-bottom: 30px;
-}
-
-.form-control {
     margin: 5px;
+}
+
+.form-signin .btn {
+    margin-bottom: 30px;
 }

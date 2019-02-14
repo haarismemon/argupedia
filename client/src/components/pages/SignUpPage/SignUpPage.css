@@ -1,0 +1,17 @@
+.sign-up-page .card {
+    border-radius: 1em;
+}
+
+.card-signup {
+    padding: 2rem;
+    width: 100%;
+}
+
+.card-signup .card-title, h1 {
+    margin-bottom: 30px;
+}
+
+.form-signup .form-control {
+    height: 50px;
+    margin: 5px;
+}
