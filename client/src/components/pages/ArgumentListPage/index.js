@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
-import ArgumentView from '../ArgumentItem/ArgumentView'
+import ArgumentView from '../ArgumentDetailsPage/ArgumentView'
 
-class ArgumentList extends React.Component {
+class ArgumentListPage extends React.Component {
   state = {
     arguments: []
   }
@@ -48,4 +48,4 @@ class ArgumentList extends React.Component {
   }
 }
 
-export default ArgumentList;
+export default ArgumentListPage;

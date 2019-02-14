@@ -3,9 +3,9 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 
-import ActionFormScheme from '../ArgumentFormSchemes/ActionFormScheme'
-import ExpertFormScheme from '../ArgumentFormSchemes/ExpertFormScheme'
-import PopularFormScheme from '../ArgumentFormSchemes/PopularFormScheme'
+import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
+import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
+import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
 
 class ArgumentForm extends React.Component {
 

@@ -3,8 +3,8 @@ import {Button} from 'react-bootstrap'
 import {withRouter} from 'react-router'
 import { compose } from 'recompose'
 
-import * as ROUTES from '../../constants/routes'
-import { withFirebase } from "../Firebase";
+import * as ROUTES from '../../../constants/routes'
+import { withFirebase } from "../../Firebase";
 
 class CriticalQuestion extends React.Component {
   agreeArgumentClick = event => {

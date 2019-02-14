@@ -4,11 +4,11 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavLink from 'react-bootstrap/NavLink';
 
-import * as ROUTES from '../constants/routes'
+import * as ROUTES from '../../constants/routes'
 import SignOutButton from './SignOutButton'
-import { AuthUserContext } from './Session';
+import { AuthUserContext } from '../Session';
 
-const Navigation = () => {
+const NavigationBar = () => {
     return (
         <Navbar bg="dark" variant="dark" expand="sm">
             <LinkContainer to={ROUTES.HOME}>
@@ -54,4 +54,4 @@ const NavigationNonAuth = () => (
     </Nav>
 )
 
-export default Navigation
+export default NavigationBar

@@ -3,7 +3,8 @@ import axios from 'axios'
 import Graph from 'vis-react'
 import Button from 'react-bootstrap/Button'
 
-import ArgumentNest from '../ArgumentItem/ArgumentNest'
+import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
+import './ArgumentDetailsPage.css'
 
 const constants = {
   network: {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Error = () => {
+const ErrorPage = () => {
   return (
     <div>
       <p>Error: Path does not exist</p>
@@ -8,4 +8,4 @@ const Error = () => {
   )
 }
 
-export default Error
+export default ErrorPage

@@ -1,10 +1,10 @@
 import React from 'react'
 
 import ArgumentForm from './ArgumentForm'
-import { withAuthorisation } from '../Session';
-import { AuthUserContext } from "../Session";
+import { withAuthorisation } from '../../Session';
+import { AuthUserContext } from "../../Session";
 
-const SubmitArgument = (props) => {
+const SubmitArgumentPage = (props) => {
   return (
     <div>
       <h1>Submit an argument</h1>
@@ -20,4 +20,4 @@ const SubmitArgument = (props) => {
 const condition = authUser => !!authUser;
 const message = "You must be signed in before you can submit."
 
-export default withAuthorisation(condition, message)(SubmitArgument)
+export default withAuthorisation(condition, message)(SubmitArgumentPage)
