@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 
-import * as ROUTES from '../../constants/routes'
-import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../../constants/routes'
+import { withFirebase } from '../../Firebase';
+
+import './SignInPage.css'
 
 const SignInPage = () => (
-  <div>
-    <h1>Sign In</h1>
-    <SignInForm></SignInForm>
-    <ForgotPasswordLink />
-    <SignUpLink />
+  <div className="row">
+    <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <Card className="card-signin my-5 text-center">
+        <h1 className="card-title">Sign In</h1>
+        <SignInForm></SignInForm>
+        <ForgotPasswordLink />
+        <SignUpLink />
+      </Card>
+    </div>
   </div>
 )
 
@@ -56,29 +65,42 @@ class SignInFormBase extends Component {
 
     return (
       <div>
-        {this.props.location.state && this.props.location.state.authMessage
-          ? <p>{this.props.location.state.authMessage}</p> : null}
+        {error && 
+          <Alert variant="warning">
+            {error.message}
+          </Alert>
+        }
+        {this.props.location.state && this.props.location.state.authMessage ?
+          <Alert variant="danger">
+            {this.props.location.state.authMessage}
+          </Alert> 
+          : null
+        }
 
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} className="form-signin">
           <input 
             type="email" 
             name="email" 
             value={email} 
             onChange={this.onChange}
             placeholder="Email Address"
-          /><br/>
+            className="form-control"
+          />
           <input 
             type="password" 
             name="password" 
             value={password}
             onChange={this.onChange}
             placeholder="Password"
-          /><br/>
-          <button type="submit"  disabled={isInvalid}>
+            className="form-control"
+          />
+          <br/>
+          <Button 
+            type="submit" 
+            disabled={isInvalid}
+            className="btn btn-lg btn-primary btn-block">
             Sign In
-          </button>
-
-          {error && <p>{error.message}</p>}
+          </Button>
         </form>
       </div>
     )
