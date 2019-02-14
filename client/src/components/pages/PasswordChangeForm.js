@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
-var INITIAL_STATE = {
+let INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,

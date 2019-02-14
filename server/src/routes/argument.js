@@ -295,9 +295,9 @@ function generateNodesAndAttacks(arguments) {
 }
 
 function addNewlineInLabel(label) {
-  var result = "";
-  var words = label.split(' ');
-  var count = 0;
+  let result = "";
+  let words = label.split(' ');
+  let count = 0;
 
   words.forEach(word => {
     count += 1;

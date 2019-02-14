@@ -75,7 +75,7 @@ class ArgumentDetails extends React.Component {
   }
 
   handleNetworkToggle() {
-    var newToggleText = null;
+    let newToggleText = null;
 
     if(this.state.showNetwork) {
       newToggleText = constants.network.string
@@ -96,7 +96,7 @@ class ArgumentDetails extends React.Component {
   }
 
   nodeSelectHandler = event => {
-    var { nodes } = event;
+    let { nodes } = event;
 
     const mode = constants.nest.mode
 
@@ -123,17 +123,17 @@ class ArgumentDetails extends React.Component {
       setTimeout(() => {
         this.state.network.fit({
           animation: {
-            duration: 2000
+            duration: 5000
           }
         })
-      }, 2000);
+      }, 3000);
     }
 
-    var options = {
+    let options = {
       physics: {
         solver: 'repulsion',
         repulsion: {
-          centralGravity: 0.01,
+          centralGravity: 0.001,
           springLength: 250,
           springConstant: 0.03,
           nodeDistance: 350,
@@ -149,7 +149,7 @@ class ArgumentDetails extends React.Component {
       }
     };
 
-    var events = {
+    let events = {
         doubleClick: this.nodeSelectHandler
     }
 
