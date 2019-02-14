@@ -133,7 +133,7 @@ class ArgumentDetails extends React.Component {
       physics: {
         solver: 'repulsion',
         repulsion: {
-          centralGravity: 0.8,
+          centralGravity: 0.001,
           springLength: 250,
           springConstant: 0.03,
           nodeDistance: 350,

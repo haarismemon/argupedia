@@ -10,7 +10,7 @@ import { AuthUserContext } from './Session';
 
 const Navigation = () => {
     return (
-        <Navbar bg="light" expand="sm">
+        <Navbar bg="dark" variant="dark" expand="sm">
             <LinkContainer to={ROUTES.HOME}>
                 <Navbar.Brand>Debatably</Navbar.Brand>
             </LinkContainer>
