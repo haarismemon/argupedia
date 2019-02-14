@@ -123,17 +123,17 @@ class ArgumentDetails extends React.Component {
       setTimeout(() => {
         this.state.network.fit({
           animation: {
-            duration: 4000
+            duration: 2000
           }
         })
-      }, 5000);
+      }, 2000);
     }
 
     var options = {
       physics: {
         solver: 'repulsion',
         repulsion: {
-          centralGravity: 0.001,
+          centralGravity: 0.01,
           springLength: 250,
           springConstant: 0.03,
           nodeDistance: 350,
