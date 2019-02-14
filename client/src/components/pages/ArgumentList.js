@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-import ArgumentPreview from '../ArgumentItem/ArgumentPreview'
+import ArgumentView from '../ArgumentItem/ArgumentView'
 
 class ArgumentList extends React.Component {
   state = {
@@ -37,7 +37,11 @@ class ArgumentList extends React.Component {
       <div>
         <h1>Arguments List</h1>
         {this.state.arguments.map (argument =>
-          <ArgumentPreview key={argument._id} {...argument} onClick={this.handleClick.bind(this)}/>
+          <ArgumentView 
+            key={argument._id} 
+            argument={argument} 
+            onClick={this.handleClick.bind(this)}
+            isPreview={true} />
         )}
       </div>
     );

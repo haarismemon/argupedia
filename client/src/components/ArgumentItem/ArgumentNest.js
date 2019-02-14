@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Argument from './Argument'
+import ArgumentView from './ArgumentView'
 
 class ArgumentNest extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class ArgumentNest extends React.Component {
 
     return (
       <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}}>
-        <Argument argument={rootArgument}/>
+        <ArgumentView argument={rootArgument} />
         {this.state.childrenArguments.map(argument =>
           <ArgumentNest 
             key={argument._id} 
