@@ -23,35 +23,35 @@ const NavigationBar = () => {
                     <LinkContainer to={ROUTES.SUBMIT_ARGUMENT}>
                         <NavLink>Submit Argument</NavLink>
                     </LinkContainer>
+                    <AuthUserContext.Consumer>
+                        { authUser => 
+                            authUser ? <NavigationAuth /> : <NavigationNonAuth />
+                        }
+                    </AuthUserContext.Consumer>
                 </Nav>
-                <AuthUserContext.Consumer>
-                    { authUser => 
-                        authUser ? <NavigationAuth /> : <NavigationNonAuth />
-                    }
-                </AuthUserContext.Consumer>
             </Navbar.Collapse>
         </Navbar>
     );
 };
 
 const NavigationAuth = () => (
-    <Nav>
-        <LinkContainer to={ROUTES.ACCOUNT} exact>
+    <div className="navbar-right">
+        <LinkContainer to={ROUTES.ACCOUNT}>
             <NavLink>Account</NavLink>
         </LinkContainer>
         <SignOutButton />
-    </Nav>
+    </div>
 )
 
 const NavigationNonAuth = () => (
-    <Nav>
+    <div className="navbar-right">
         <LinkContainer to={ROUTES.SIGN_IN}>
             <NavLink>Sign In</NavLink>
         </LinkContainer>
         <LinkContainer to={ROUTES.SIGN_UP}>
             <NavLink>Sign Up</NavLink>
         </LinkContainer>
-    </Nav>
+    </div>
 )
 
 export default NavigationBar

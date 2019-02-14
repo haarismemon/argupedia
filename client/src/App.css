@@ -1,3 +1,12 @@
 .page-content {
   margin-top: 30px;
 }
+
+.navbar-right .nav-link {
+  display: inline-block;
+}
+
+.navbar-right {
+  position: absolute;
+  right: 0px;
+}
