@@ -3,6 +3,9 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 
+import Form from 'react-bootstrap/Form'
+import Alert from 'react-bootstrap/Alert'
+
 import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
 import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
@@ -14,12 +17,13 @@ class ArgumentForm extends React.Component {
     this.state = {
       criticalQuestion: this.props.criticalQuestion,
       agree: this.props.agree,
-      scheme: "action",
+      scheme: '',
       title: '',
       parentId: this.props.parentId,
       originalId: this.props.originalId,
       uid: this.props.authUser.uid,
-      ancestorIds: this.props.ancestorIds
+      ancestorIds: this.props.ancestorIds,
+      validated: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -40,17 +44,18 @@ class ArgumentForm extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
+    const form = event.currentTarget;
 
-    if(this.state.title == null) {
-      alert("Title field should be field out")
+    if(form.checkValidity() === false) {
+      event.preventDefault();
     } else {
       // adds the parent id to the list of ancestors
       if(this.state.ancestorIds === undefined) {
-        this.setState({ ancestorIds: [] });
+        this.setState({ ancestorIds: [], validated: true });
       } else {
         const newAncestorIds = this.props.ancestorIds.push(this.props.parentId)
-        this.setState({ ancestorIds: newAncestorIds });
+        this.setState({ ancestorIds: newAncestorIds, validated: true });
       }
 
       axios.post('http://localhost:3001/argument', {...this.state})
@@ -61,21 +66,40 @@ class ArgumentForm extends React.Component {
   }
 
   render() {
+    const { validated } = this.state;
+
     return (
-      <form onSubmit={this.handleSubmit} className="Form">
+      <Form onSubmit={this.handleSubmit} validated={validated}>
         {this.props.criticalQuestion ? <h4>{this.props.criticalQuestion} {this.props.agree ? "Agree" : "Disagree"}</h4> : null}
-        <label>
-          Choose argument scheme:
-          <select name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
-            <option value="action">Argument for action</option>
-            <option value="expert">Argument from expert opinion</option>
-            <option value="popular">Argument from popular opinion</option>
-          </select>
-        </label><br/>
-        <label>
-          Title:
-          <input type="text" name="title" value={this.state.title} onChange={this.handleInputChange}/>
-        </label>
+        <Form.Group>
+          <Form.Label>
+            Argument scheme
+          </Form.Label>
+          <Form.Control required as="select" name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
+            <option value="" disabled hidden>Select your argument scheme option</option>
+            <option value="action">Argument for Action</option>
+            <option value="expert">Argument from Expert Opinion</option>
+            <option value="popular">Argument from Popular Opinion</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>
+            Title
+          </Form.Label>
+          <Form.Control 
+            required
+            type="text" 
+            name="title" 
+            value={this.state.title} 
+            onChange={this.handleInputChange}
+            placeholder="e.g. Debate for use of renewable energy to prevent global warming"/>
+        </Form.Group>
+        {this.state.scheme === '' && 
+          <div>
+            <br/>
+            <Alert variant="info">Please select an argument scheme above to continue.</Alert>
+          </div>  
+        }        
         {
           {
             action: <ActionFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
@@ -83,8 +107,7 @@ class ArgumentForm extends React.Component {
             popular: <PopularFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>
           }[this.state.scheme]
         }
-        <br/>
-      </form>
+      </Form>
     )
   }
 

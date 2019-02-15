@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 class ExpertScheme extends React.Component {
   constructor(props) {
@@ -26,11 +28,16 @@ class ExpertScheme extends React.Component {
   render() {
     return (
       <div>
-        <label>
-          Proposition A is generally accepted as being true, that gives a reason in favour of A: 
-          <input type="text" name="proposition" value={this.state.proposition} onChange={this.handleInputChange} />
-        </label><br/>
-        <input type="submit" value="Submit" onClick={this.handleClick.bind(this)}/>
+        <Form.Group>
+          <Form.Label>
+            Proposition A is generally accepted as being true, that gives a reason in favour of A:
+          </Form.Label> 
+          <Form.Control required type="text" name="proposition" value={this.state.proposition} onChange={this.handleInputChange} />
+        </Form.Group>
+        
+        <Button variant="primary" type="submit" onClick={this.handleClick.bind(this)}>
+          Submit
+        </Button>
       </div>
     )
   }

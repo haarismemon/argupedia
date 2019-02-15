@@ -1,4 +1,6 @@
 import React from 'react'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 class ActionScheme extends React.Component {
   constructor(props) {
@@ -30,27 +32,44 @@ class ActionScheme extends React.Component {
   render() {
     return (
       <div>
-        <label>
-          In current circumstance R:
-          <input type="text" name="circumstance" value={this.state.circumstance} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          We should perform action A:
-          <input type="text" name="action" value={this.state.action} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          Which will result in a new circumstance S:
-          <input type="text" name="newCircumstance" value={this.state.newCircumstance} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          Which will achieve goal G:
-          <input type="text" name="goal" value={this.state.goal} onChange={this.handleInputChange} />
-        </label><br/>
-        <label>
-          That will promote value V:
-          <input type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
-        </label><br/>
-        <input type="submit" value="Submit" onClick={this.handleClick.bind(this)}/>
+        <Form.Group>
+          <Form.Label>
+            In current circumstance R:
+          </Form.Label>
+          <Form.Control required type="text" name="circumstance" value={this.state.circumstance} onChange={this.handleInputChange} />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>
+            We should perform action A:
+          </Form.Label>
+          <Form.Control required type="text" name="action" value={this.state.action} onChange={this.handleInputChange} />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>
+            Which will result in a new circumstance S:
+          </Form.Label>
+          <Form.Control required type="text" name="newCircumstance" value={this.state.newCircumstance} onChange={this.handleInputChange} />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>
+            Which will achieve goal G:
+          </Form.Label>
+          <Form.Control required type="text" name="goal" value={this.state.goal} onChange={this.handleInputChange} />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>
+            That will promote value V:
+          </Form.Label>
+          <Form.Control required type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
+        </Form.Group>
+        
+        <Button variant="primary" type="submit" onClick={this.handleClick.bind(this)}>
+          Submit
+        </Button>
       </div>
     )
   }
