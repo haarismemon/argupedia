@@ -1,0 +1,22 @@
+.navbar-right .nav-link {
+    display: inline-block;
+}
+  
+.navbar-right {
+    position: absolute;
+    right: 0px;
+}
+  
+.navbar .navbar-nav .nav-link.active, 
+    .navbar .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.5);
+}
+  
+.navbar .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.75);
+}
+  
+.navbar .navbar-nav .nav-link.active-link {
+    color: #fff;
+    font-weight: 500;
+}
