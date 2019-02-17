@@ -27,8 +27,7 @@ class PasswordChangeForm extends Component {
     event.preventDefault();
     const { currentPassword, passwordOne, passwordTwo } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+    const isInvalid = passwordOne !== passwordTwo;
 
     if(isInvalid) {
       this.setState({
@@ -66,6 +65,8 @@ class PasswordChangeForm extends Component {
 
   render() {
     const { currentPassword, passwordOne, passwordTwo, error, passwordChanged } = this.state;
+
+    const isInvalid = passwordOne === '' || passwordTwo === '';
 
     return (
       <div className="row password-change-page">
@@ -108,7 +109,7 @@ class PasswordChangeForm extends Component {
                 placeholder="Confirm New Password"
               />
               <br/>
-              <Button type="submit">
+              <Button disabled={isInvalid} type="submit">
                 Change Password
               </Button>
             </form>
