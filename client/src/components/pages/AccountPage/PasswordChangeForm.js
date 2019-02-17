@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+import FormControl from 'react-bootstrap/FormControl'
 
 import { withFirebase } from '../../Firebase';
+import './AccountPage.css'
 
 let INITIAL_STATE = {
   passwordOne: '',
@@ -43,30 +47,37 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="New Password"
-        />
-        <br/>
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm New Password"
-        />
-        <br/>
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
+      <div className="row forgot-page">
+        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <Card className="card-forgot my-5 text-center">
+            <h3 className="card-title">Change Password Form</h3>
+            <form onSubmit={this.onSubmit} className="form-forgot">
+              <FormControl
+                name="passwordOne"
+                value={passwordOne}
+                onChange={this.onChange}
+                type="password"
+                placeholder="New Password"
+              />
+              <FormControl
+                name="passwordTwo"
+                value={passwordTwo}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Confirm New Password"
+              />
+              <br/>
+              <Button disabled={isInvalid} type="submit">
+                Reset My Password
+              </Button>
 
-        {error && <p>{error.message}</p>}
-        {passwordChanged && <p>Password has been successfully changed.</p>}
-      </form>
+              {error && <p>{error.message}</p>}
+              {passwordChanged && <p>Password has been successfully changed.</p>}
+            </form>
+          </Card>
+      </div>
+    </div>
+
     );
   }
 }

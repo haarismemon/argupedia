@@ -1,17 +1,14 @@
-.sign-up-page .card {
+.forgot-page .card-forgot {
     border-radius: 1em;
-}
-
-.card-signup {
     padding: 2rem;
     width: 100%;
 }
 
-.card-signup .card-title {
+.card-forgot .card-title {
     margin-bottom: 30px;
 }
 
-.form-signup .form-control {
+.form-forgot .form-control {
     height: 50px;
     margin: 5px;
 }
