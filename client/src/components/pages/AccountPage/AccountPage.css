@@ -1,14 +1,14 @@
-.forgot-page .card-forgot {
+.password-change-page .card-password-change {
     border-radius: 1em;
     padding: 2rem;
     width: 100%;
 }
 
-.card-forgot .card-title {
+.card-password-change .card-title {
     margin-bottom: 30px;
 }
 
-.form-forgot .form-control {
+.form-password-change .form-control {
     height: 50px;
     margin: 5px;
 }

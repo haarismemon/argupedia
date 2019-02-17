@@ -13,7 +13,7 @@ import ArgumentListPage from './components/Pages/ArgumentListPage'
 import ArgumentDetails from './components/Pages/ArgumentDetailsPage'
 import SignUpPage from './components/Pages/SignUpPage'
 import SignInPage from './components/Pages/SignInPage'
-import ForgotPasswordPage from './components/Pages/SignInPage/ForgotPasswordForm'
+import ForgotPasswordPage from './components/Pages/SignInPage/ForgotPassword'
 import AccountPage from './components/Pages/AccountPage'
 import ErrorPage from './components/Pages/ErrorPage'
 

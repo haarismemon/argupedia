@@ -66,7 +66,7 @@ class SignInFormBase extends Component {
     return (
       <div>
         {error && 
-          <Alert variant="warning">
+          <Alert variant="danger">
             {error.message}
           </Alert>
         }
