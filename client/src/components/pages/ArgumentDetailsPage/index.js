@@ -124,10 +124,10 @@ class ArgumentDetails extends React.Component {
       setTimeout(() => {
         this.state.network.fit({
           animation: {
-            duration: 5000
+            duration: 4000
           }
         })
-      }, 3000);
+      }, 2000);
     }
 
     let options = {

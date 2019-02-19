@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
-import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
 
 import { withFirebase } from '../../Firebase';
