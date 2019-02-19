@@ -5,27 +5,50 @@ const database = 'debatably-db'
 
 mongoose.connect(`${server}/${database}`, (err) => {
   console.log('Successfully connected')
-})
+});
 
-let ArgumentSchema = new mongoose.Schema({
+let options = { discriminatorKey: 'scheme' };
+
+let argumentSchema = new mongoose.Schema({
   originalId: String,
   parentId: String,
   ancestorIds: [String],
   uid: { type: String, required: true },
   criticalQuestion: String,
   agree: Boolean,
-  scheme: { type: String, required: true },
   title: { type: String, required: true },
-  circumstance: String, //action
-  action: String, //action
-  newCircumstance: String, //action
-  goal: String, //action
-  value: String, //action
-  source: String, //expert
-  domain: String, //expert
-  assertion: String, //expert
-  proposition: String //popular
-})
-ArgumentSchema.set('timestamps', true)
+}, options);
+argumentSchema.set('timestamps', true);
 
-module.exports = mongoose.model('Argument', ArgumentSchema)
+let BaseArgumentModel = mongoose.model('Argument', argumentSchema);
+
+
+// **** Argument schemes **** //
+
+actionSchema = new mongoose.Schema({
+  circumstance: String, 
+  action: String, 
+  newCircumstance: String, 
+  goal: String, 
+  value: String
+}, options);
+ActionArgumentModel = BaseArgumentModel.discriminator('action', actionSchema);
+
+expertSchema = new mongoose.Schema({
+  source: String,
+  domain: String,
+  assertion: String
+}, options);
+ExpertArgumentModel = BaseArgumentModel.discriminator('expert', expertSchema);
+
+popularSchema = new mongoose.Schema({
+  proposition: String
+}, options);
+PopularArgumentModel = BaseArgumentModel.discriminator('popular', popularSchema);
+
+module.exports = {
+  BaseArgumentModel,
+  ActionArgumentModel,
+  ExpertArgumentModel,
+  PopularArgumentModel
+} 

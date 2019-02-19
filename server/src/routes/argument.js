@@ -1,4 +1,4 @@
-let ArgumentModel = require('../models/argument.model')
+let models = require('../models/argument.model')
 let express = require('express')
 let router = express.Router()
 
@@ -8,7 +8,24 @@ router.post('/argument', (req, res) => {
     return res.status(400).send('Request body is missing')
   }
 
-  let model = new ArgumentModel(req.body)
+  let model;
+
+  switch (req.body.scheme) {
+    case "action":
+      model = new models.ActionArgumentModel(req.body);
+      break;
+    case "expert":
+      model = new models.ExpertArgumentModel(req.body);
+      break;
+    case "popular":
+      model = new models.PopularArgumentModel(req.body);
+      break;
+    default:
+      model = new models.BaseArgumentModel(req.body);
+      break;
+  }  
+
+  // let model = new ArgumentModel(req.body)
   model.save()
     .then(doc => {
       if(!doc || doc.length === 0) {
@@ -30,7 +47,7 @@ router.get('/argument', (req, res) => {
 
   let query = { _id: req.query.id }
 
-  ArgumentModel.findOne(query)
+  models.BaseArgumentModel.findOne(query)
     .then(doc => {
       res.json(doc)
     })
@@ -43,7 +60,7 @@ router.get('/argument', (req, res) => {
 router.get('/argument/list', (req, res) => {
   let query = { parentId: null }
 
-  ArgumentModel.find(query)
+  models.BaseArgumentModel.find(query)
     .then(doc => {
       res.json(doc)
     })
@@ -60,7 +77,7 @@ router.put('/argument', (req, res) => {
 
   let query = { _id: req.query.id }
 
-  ArgumentModel.findOneAndUpdate(query, req.body)
+  models.BaseArgumentModel.findOneAndUpdate(query, req.body)
     .then(doc => {
       res.json(doc)
     })
@@ -77,7 +94,7 @@ router.delete('/argument', (req, res) => {
 
   let query = { _id: req.query.id }
 
-  ArgumentModel.findOneAndRemove(query)
+  models.BaseArgumentModel.findOneAndRemove(query)
     .then(doc => {
       res.json(doc)
     })
@@ -102,7 +119,7 @@ router.get('/argument/descendents', (req, res) => {
     ]
   }
 
-  ArgumentModel.find(query, (err, arguments) => {
+  models.BaseArgumentModel.find(query, (err, arguments) => {
     let data = arguments.reduce((obj, argument) => {
       argument = argument.toJSON()
       argument.children = []
@@ -132,7 +149,7 @@ router.get('/argument/network', (req, res) => {
     ]
   }
 
-  ArgumentModel.find(query, (err, arguments) => {
+  models.BaseArgumentModel.find(query, (err, arguments) => {
     let nodesAndAttacks = generateNodesAndAttacks(arguments);
 
     // categorises the arguments into labels: IN, OUT, and UNDEC
@@ -253,9 +270,6 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
     }
     
     currentLabelling = newLabelling;
-
-    console.log(currentLabelling);
-    
   }
 
   // assign remaining arguments to the undecided label
