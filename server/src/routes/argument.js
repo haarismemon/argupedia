@@ -285,15 +285,23 @@ function colourArgumentNodes(labelledNodes) {
   labelledNodes.in.forEach(inNode => {
     inNode.color = {
       background: "lime",
-      border: "darkGreen"
+      border: "darkGreen",
+      highlight: {
+        background: "mediumSeaGreen",
+        border: "darkGreen"
+      }
     };
     colouredNodes.push(inNode);
   });
   
   labelledNodes.out.forEach(outNode => {
     outNode.color = {
-      background: "red",
-      border: "maroon"
+      background: "orangered",
+      border: "maroon",
+      highlight: {
+        background: "crimson",
+        border: "maroon"
+      }
     };
     outNode.font = {
       color: "white"
