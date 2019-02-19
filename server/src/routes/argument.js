@@ -145,31 +145,49 @@ router.get('/argument/network', (req, res) => {
   })
 })
 
-function colourArgumentNodes(labelledNodes) {
-  let colouredNodes = []
+function generateNodesAndAttacks(arguments) {
+  let nodesAndAttacks = {
+    nodes: [],
+    edges: []
+  };
 
-  labelledNodes.in.forEach(inNode => {
-    inNode.color = {
-      background: "lime",
-      border: "darkGreen"
-    };
-    colouredNodes.push(inNode);
-  });
-  
-  labelledNodes.out.forEach(outNode => {
-    outNode.color = {
-      background: "red",
-      border: "maroon"
-    };
-    outNode.font = {
-      color: "white"
+  arguments.forEach(argument => {
+    let nodeTitle = argument.title ;
+    nodeTitle = addNewlineInLabel(nodeTitle);
+
+    nodesAndAttacks.nodes.push({ 
+      id: argument._id, 
+      label: nodeTitle
+    })
+
+    let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
+    argumentLabel = addNewlineInLabel(argumentLabel);
+
+    if(argument.parentId != null) {
+      if(argument._id != '5c570b4a90cebb4864b4a9c2') {
+        nodesAndAttacks.edges.push({ 
+          from: argument._id, 
+          to: argument.parentId,
+          label: argumentLabel
+        })
+      } else {
+        // dummy edge from parent to child (child to parent already existing)
+        nodesAndAttacks.edges.push({ 
+          from: argument._id, 
+          to: argument.parentId,
+          label: argumentLabel,
+          smooth: {type: 'curvedCW', roundness: 0.3}
+        }, { 
+          from: argument.parentId, 
+          to: argument._id,
+          label: "Alternative action (negative)",
+          smooth: {type: 'curvedCW', roundness: 0.3}
+        })
+      }
     }
-    colouredNodes.push(outNode);
-  });
-  
-  colouredNodes = colouredNodes.concat(labelledNodes.undec);
+  })
 
-  return colouredNodes;
+  return nodesAndAttacks;
 }
 
 function groundedLabellingAlgorithm(nodesAndAttacks) {
@@ -199,7 +217,8 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
       
       let allAttackingArgumentsAreOut = true;
       allAttackingArguments.forEach(attackingArgumentId => {
-        if(!currentLabelling.out.some(a => a.id === attackingArgumentId)) {
+        // if attackingArgumentId is not in OUT then set to false
+        if(!currentLabelling.out.some(a => a.id == attackingArgumentId)) {
           allAttackingArgumentsAreOut = false;
         }
       });
@@ -217,7 +236,7 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
       
       let oneAttackingArgumentIsIn = false;    
       allAttackingArguments.forEach(attackingArgumentId => {
-        if(newLabelling.in.some(a => a.id === attackingArgumentId)) {
+        if(newLabelling.in.some(a => a.id == attackingArgumentId)) {
           oneAttackingArgumentIsIn = true;
         }
       });
@@ -234,6 +253,9 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
     }
     
     currentLabelling = newLabelling;
+
+    console.log(currentLabelling);
+    
   }
 
   // assign remaining arguments to the undecided label
@@ -241,6 +263,33 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
 
   return currentLabelling;
 
+}
+
+function colourArgumentNodes(labelledNodes) {
+  let colouredNodes = []
+
+  labelledNodes.in.forEach(inNode => {
+    inNode.color = {
+      background: "lime",
+      border: "darkGreen"
+    };
+    colouredNodes.push(inNode);
+  });
+  
+  labelledNodes.out.forEach(outNode => {
+    outNode.color = {
+      background: "red",
+      border: "maroon"
+    };
+    outNode.font = {
+      color: "white"
+    }
+    colouredNodes.push(outNode);
+  });
+  
+  colouredNodes = colouredNodes.concat(labelledNodes.undec);
+
+  return colouredNodes;
 }
 
 function calculateUnlabelledArguments(currentLabelling, allNodes) {
@@ -262,36 +311,6 @@ function getAllAttackingArguments(nodesAndAttacks, node) {
   });
 
   return attackingArguments;
-}
-
-function generateNodesAndAttacks(arguments) {
-  let nodesAndAttacks = {
-    nodes: [],
-    edges: []
-  };
-
-  arguments.forEach(argument => {
-    let nodeTitle = argument.title ;
-    nodeTitle = addNewlineInLabel(nodeTitle);
-
-    nodesAndAttacks.nodes.push({ 
-      id: argument._id, 
-      label: nodeTitle
-    })
-
-    let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
-    argumentLabel = addNewlineInLabel(argumentLabel);
-
-    if(argument.parentId != null) {
-      nodesAndAttacks.edges.push({ 
-        from: argument._id, 
-        to: argument.parentId,
-        label: argumentLabel
-      })
-    }
-  })
-
-  return nodesAndAttacks;
 }
 
 function addNewlineInLabel(label) {
