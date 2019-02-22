@@ -1,31 +1,55 @@
-import React from 'react'
+import React from 'react';
 
 import CriticalQuestion from '../CriticalQuestion'
+import SCHEMES from '../../../../constants/schemes'
 
-const ActionDetailScheme = (props) => {
-  return (
-    <div>
+class ActionDetailScheme extends React.Component {
+  state = {
+    criticalQuestions: null
+  }
+
+  componentDidMount() {
+    /* eslint-disable no-unused-vars */
+    let { circumstance, action, newCircumstance, goal, value } = this.props;
+    let criticalQuestions = SCHEMES.action.criticalQuestions;
+
+    criticalQuestions.forEach(cq => {
+      /* eslint-disable no-eval */
+      cq.question = eval('`' + cq.question + '`');
+    });
+    
+    this.setState({criticalQuestions});
+  }
+
+  render() {
+    let { criticalQuestions } = this.state;
+
+    return (
       <div>
-        <div>In current circumstance R: {props.circumstance}</div>
-        <div>We should perform action A: {props.action}</div>
-        <div>Which will result in a new circumstance S: {props.newCircumstance}</div>
-        <div>Which will achieve goal G: {props.goal}</div>
-        <div>That will promote value V: {props.value}</div>
-      </div>
-      {props.showCriticalQuestions ?
         <div>
-          <hr/>
-          <h6>Critical Questions</h6>
-          <ul>
-            <li><CriticalQuestion question={`Is the current circumstance '${props.circumstance}' true?`} {...props}/></li>
-            <li><CriticalQuestion question={`Does the action '${props.action}' achieve the goal of '${props.goal}'?`} {...props}/></li>
-            <li><CriticalQuestion question={`Is there an alternative action that achieves the goal '${props.goal}'?`} {...props}/></li>
-          </ul>
+          <div>In current circumstance R: {this.props.circumstance}</div>
+          <div>We should perform action A: {this.props.action}</div>
+          <div>Which will result in a new circumstance S: {this.props.newCircumstance}</div>
+          <div>Which will achieve goal G: {this.props.goal}</div>
+          <div>That will promote value V: {this.props.value}</div>
         </div>
-        : null
-      }
-    </div>
-  )
+        {this.props.showCriticalQuestions && criticalQuestions !== null ?
+          <div>
+            <hr/>
+            <h6>Critical Questions</h6>
+            <ul>
+              {
+                criticalQuestions.map(cq => {
+                  return (<li key={cq.question}><CriticalQuestion question={cq.question} {...this.props}/></li>)
+                })
+              }
+            </ul>
+          </div>
+          : null
+        }
+      </div>
+    );
+  }
 }
 
 export default ActionDetailScheme

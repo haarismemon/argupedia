@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
 import PopularDetailScheme from './ArgumentDetailSchemes/PopularDetailScheme'
+import SCHEMES from '../../../constants/schemes'
 
 class ArgumentView extends React.Component {
   state = {
@@ -41,21 +42,12 @@ class ArgumentView extends React.Component {
     const isArgumentPositive = this.state.argument.agree ? "Positive" : "Negative"
 
     let schemeName = this.state.argument.scheme;
-    switch(schemeName) {
-      case("action"):
-        schemeName = "Argument for Action"
-        break
-      case("expert"):
-        schemeName = "Argument from Expert Opinion"
-        break
-      case("popular"):
-        schemeName = "Argument from Popular Opinion"
-        break
-      default:
-        schemeName = this.state.argument.scheme
-        break
-    }
+    const scheme = SCHEMES[schemeName];
 
+    if(scheme !== undefined) {
+      schemeName = scheme.name;
+    }
+    
     const cardTitle = this.state.argument.title;
     const cardSubtitle = !this.state.isPreview ?
                           (`${argumentNotRoot ? `${isArgumentPositive} = ` : ''} ${schemeName}`) :
