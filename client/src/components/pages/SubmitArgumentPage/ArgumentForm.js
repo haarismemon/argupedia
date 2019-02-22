@@ -76,12 +76,13 @@ class ArgumentForm extends React.Component {
           <Form.Label>
             Argument scheme
           </Form.Label>
-          {/* TODO: Create a for loop instead of hardcoding the options (check out the function 'map') */}
           <Form.Control required as="select" name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
             <option value="" disabled hidden>Select your argument scheme option</option>
-            <option value={SCHEMES.action}>{SCHEMES.action.name}</option>
-            <option value={SCHEMES.expert}>{SCHEMES.action.name}</option>
-            <option value={SCHEMES.popular}>{SCHEMES.action.name}</option>
+            {
+              Object.values(SCHEMES).map(argumentScheme => 
+                <option value={argumentScheme.scheme} key={argumentScheme.scheme}>{argumentScheme.name}</option>
+              )
+            }
           </Form.Control>
         </Form.Group>
         <Form.Group>
