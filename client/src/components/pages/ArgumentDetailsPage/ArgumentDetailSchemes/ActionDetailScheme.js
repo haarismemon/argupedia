@@ -11,13 +11,15 @@ class ActionDetailScheme extends React.Component {
   componentDidMount() {
     /* eslint-disable no-unused-vars */
     let { circumstance, action, newCircumstance, goal, value } = this.props;
-    let criticalQuestions = SCHEMES.action.criticalQuestions;
+    let questionTags = SCHEMES.action.criticalQuestions;
 
-    criticalQuestions = criticalQuestions.map(cq => {
-      cq = QUESTIONS[cq];
+    let criticalQuestions = {};
+
+    questionTags.forEach(tag => {
+      const cq = QUESTIONS[tag];
       /* eslint-disable no-eval */
       cq.question = eval('`' + cq.question + '`');
-      return cq;
+      criticalQuestions[tag] = cq;
     });
     
     this.setState({criticalQuestions});
@@ -25,15 +27,16 @@ class ActionDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
+    let { circumstance, action, newCircumstance, goal, value } = this.props;
 
     return (
       <div>
         <div>
-          <div>In current circumstance R: {this.props.circumstance}</div>
-          <div>We should perform action A: {this.props.action}</div>
-          <div>Which will result in a new circumstance S: {this.props.newCircumstance}</div>
-          <div>Which will achieve goal G: {this.props.goal}</div>
-          <div>That will promote value V: {this.props.value}</div>
+          <div>In current circumstance R: {circumstance}</div>
+          <div>We should perform action A: {action}</div>
+          <div>Which will result in a new circumstance S: {newCircumstance}</div>
+          <div>Which will achieve goal G: {goal}</div>
+          <div>That will promote value V: {value}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null ?
           <div>
@@ -41,8 +44,17 @@ class ActionDetailScheme extends React.Component {
             <h6>Critical Questions</h6>
             <ul>
               {
-                criticalQuestions.map(cq => {
-                  return (<li key={cq.question}><CriticalQuestion question={cq.question} {...this.props}/></li>)
+                Object.keys(criticalQuestions).map(questionTag => {
+                  const criticalQuestion = criticalQuestions[questionTag];
+                  return (
+                    <li key={criticalQuestion.question}>
+                      <CriticalQuestion 
+                        question={criticalQuestion.question} 
+                        questionTag={questionTag}
+                        {...this.props}
+                      />
+                    </li>
+                  )
                 })
               }
             </ul>

@@ -11,13 +11,15 @@ class PopularDetailScheme extends React.Component {
   componentDidMount() {
     /* eslint-disable no-unused-vars */
     let { proposition } = this.props;
-    let criticalQuestions = SCHEMES.popular.criticalQuestions;
+    let questionTags = SCHEMES.popular.criticalQuestions;
 
-    criticalQuestions = criticalQuestions.map(cq => {
-      cq = QUESTIONS[cq];
+    let criticalQuestions = {};
+
+    questionTags.forEach(tag => {
+      const cq = QUESTIONS[tag];
       /* eslint-disable no-eval */
       cq.question = eval('`' + cq.question + '`');
-      return cq;
+      criticalQuestions[tag] = cq;
     });
     
     this.setState({criticalQuestions});
@@ -38,8 +40,17 @@ class PopularDetailScheme extends React.Component {
             <h6>Critical Questions</h6>
             <ul>
               {
-                criticalQuestions.map(cq => {
-                  return (<li key={cq.question}><CriticalQuestion question={cq.question} {...this.props}/></li>)
+                Object.keys(criticalQuestions).map(questionTag => {
+                  const criticalQuestion = criticalQuestions[questionTag];
+                  return (
+                    <li key={criticalQuestion.question}>
+                      <CriticalQuestion 
+                        question={criticalQuestion.question} 
+                        questionTag={questionTag}
+                        {...this.props}
+                      />
+                    </li>
+                  )
                 })
               }
             </ul>

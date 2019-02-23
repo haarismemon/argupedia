@@ -14,6 +14,7 @@ let argumentSchema = new mongoose.Schema({
   parentId: String,
   ancestorIds: [String],
   uid: { type: String, required: true },
+  criticalQuestionTag: String,
   criticalQuestion: String,
   agree: Boolean,
   title: { type: String, required: true },

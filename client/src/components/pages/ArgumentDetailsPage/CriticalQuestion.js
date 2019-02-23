@@ -23,6 +23,7 @@ class CriticalQuestion extends React.Component {
       this.props.history.push({
         pathname: ROUTES.SUBMIT_ARGUMENT,
         state: {
+          criticalQuestionTag: this.props.questionTag,
           criticalQuestion: this.props.question,
           agree: isAgree,
           parentId: this.props._id,

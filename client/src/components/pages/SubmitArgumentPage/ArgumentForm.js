@@ -16,6 +16,7 @@ class ArgumentForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      criticalQuestionTag: this.props.criticalQuestionTag,
       criticalQuestion: this.props.criticalQuestion,
       agree: this.props.agree,
       scheme: '',
@@ -117,6 +118,7 @@ class ArgumentForm extends React.Component {
 }
 
 ArgumentForm.propTypes = {
+  criticalQuestionTag: PropTypes.string,
   criticalQuestion: PropTypes.string,
   agree: PropTypes.bool,
   parentId: PropTypes.string,
