@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
 import PopularDetailScheme from './ArgumentDetailSchemes/PopularDetailScheme'
-import SCHEMES from '../../../constants/schemes'
+import {SCHEMES} from '../../../constants/schemes';
 
 class ArgumentView extends React.Component {
   state = {

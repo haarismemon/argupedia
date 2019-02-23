@@ -9,7 +9,7 @@ import Alert from 'react-bootstrap/Alert'
 import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
 import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
-import SCHEMES from '../../../constants/schemes'
+import {SCHEMES} from '../../../constants/schemes';
 
 class ArgumentForm extends React.Component {
 

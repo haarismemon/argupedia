@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CriticalQuestion from '../CriticalQuestion'
-import SCHEMES from '../../../../constants/schemes'
+import {SCHEMES, QUESTIONS} from '../../../../constants/schemes'
 
 class ActionDetailScheme extends React.Component {
   state = {
@@ -13,9 +13,11 @@ class ActionDetailScheme extends React.Component {
     let { circumstance, action, newCircumstance, goal, value } = this.props;
     let criticalQuestions = SCHEMES.action.criticalQuestions;
 
-    criticalQuestions.forEach(cq => {
+    criticalQuestions = criticalQuestions.map(cq => {
+      cq = QUESTIONS[cq];
       /* eslint-disable no-eval */
       cq.question = eval('`' + cq.question + '`');
+      return cq;
     });
     
     this.setState({criticalQuestions});
