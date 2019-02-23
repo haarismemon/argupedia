@@ -172,7 +172,7 @@ class ArgumentDetails extends React.Component {
         }
         {this.state.showNetwork ?
           <div>
-            <p>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
+            <p className="network-info">Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
             <div id="argument-network">
               <Graph 
                 graph={this.state.networkData} 

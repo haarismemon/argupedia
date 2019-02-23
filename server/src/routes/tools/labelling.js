@@ -25,7 +25,8 @@ function convertArgumentsToNodesAndAttacks(arguments) {
         const schemeName = schemes.SCHEMES[argument.scheme].name        
         nodesAndAttacks.nodes.push({ 
             id: argument._id, 
-            label: nodeTitle + `\n(${schemeName})`
+            label: nodeTitle + `\n(${schemeName})`,
+            borderWidth: 2
         })
 
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
@@ -40,21 +41,23 @@ function convertArgumentsToNodesAndAttacks(arguments) {
                 nodesAndAttacks.edges.push({ 
                     from: argument._id, 
                     to: argument.parentId,
-                    label: attackLabel
+                    label: attackLabel,
+                    width: 2
                 })
             } else {
-
                 // dummy edge from parent to child (child to parent already existing)
                 nodesAndAttacks.edges.push({ 
                     from: argument._id, 
                     to: argument.parentId,
                     label: attackLabel,
-                    smooth: {type: 'curvedCW', roundness: 0.35}
+                    smooth: {type: 'curvedCW', roundness: 0.35},
+                    width: 2
                 }, { 
                     from: argument.parentId, 
                     to: argument._id,
                     label: attackLabel,
-                    smooth: {type: 'curvedCW', roundness: 0.35}
+                    smooth: {type: 'curvedCW', roundness: 0.35},
+                    width: 2
                 })
             }
         }
@@ -164,7 +167,12 @@ function colourArgumentNodes(labelledNodes) {
         colouredNodes.push(outNode);
     });
 
-    colouredNodes = colouredNodes.concat(labelledNodes.undec);
+    labelledNodes.undec.forEach(undec => {
+        undec.color = {
+            background: "white",
+        };
+        colouredNodes.push(undec);
+    });
 
     return colouredNodes;
 }
