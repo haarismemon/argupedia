@@ -1,3 +1,5 @@
+const schemes = require('./schemes.js');
+
 function generateLabelledNodesAndAttacks(arguments) {
     let nodesAndAttacks = convertArgumentsToNodesAndAttacks(arguments);
 
@@ -20,33 +22,39 @@ function convertArgumentsToNodesAndAttacks(arguments) {
         let nodeTitle = argument.title ;
         nodeTitle = addNewlineInLabel(nodeTitle);
 
+        const schemeName = schemes.SCHEMES[argument.scheme].name        
         nodesAndAttacks.nodes.push({ 
             id: argument._id, 
-            label: nodeTitle
+            label: nodeTitle + `\n(${schemeName})`
         })
 
-        let argumentLabel = argument.criticalQuestion + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')';
-        argumentLabel = addNewlineInLabel(argumentLabel);
+        const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
+        
+        let isSymmetric = false;
+        if(criticalQuestion !== undefined) {
+            isSymmetric = criticalQuestion.symmetric;
+            
+            attackLabel = addNewlineInLabel(criticalQuestion.title + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')');
 
-        if(argument.parentId != null) {
-            if(argument._id != '5c570b4a90cebb4864b4a9c2') {
-                    nodesAndAttacks.edges.push({ 
+            if(!isSymmetric) {
+                nodesAndAttacks.edges.push({ 
                     from: argument._id, 
                     to: argument.parentId,
-                    label: argumentLabel
+                    label: attackLabel
                 })
             } else {
+
                 // dummy edge from parent to child (child to parent already existing)
-                    nodesAndAttacks.edges.push({ 
+                nodesAndAttacks.edges.push({ 
                     from: argument._id, 
                     to: argument.parentId,
-                    label: argumentLabel,
-                    smooth: {type: 'curvedCW', roundness: 0.3}
+                    label: attackLabel,
+                    smooth: {type: 'curvedCW', roundness: 0.35}
                 }, { 
                     from: argument.parentId, 
                     to: argument._id,
-                    label: "Alternative action (negative)",
-                    smooth: {type: 'curvedCW', roundness: 0.3}
+                    label: attackLabel,
+                    smooth: {type: 'curvedCW', roundness: 0.35}
                 })
             }
         }
