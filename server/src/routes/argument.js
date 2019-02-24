@@ -151,7 +151,7 @@ router.get('/argument/network', (req, res) => {
   }
 
   models.BaseArgumentModel.find(query, (err, arguments) => {
-    let nodesAndAttacks = labelling.generateLabelledNodesAndAttacks(arguments);
+    let nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments);
     return res.json(nodesAndAttacks)
   })
 })

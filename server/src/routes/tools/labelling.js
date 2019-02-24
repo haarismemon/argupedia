@@ -1,19 +1,19 @@
 const schemes = require('./schemes.js');
 
-function generateLabelledNodesAndAttacks(arguments) {
-    let nodesAndAttacks = convertArgumentsToNodesAndAttacks(arguments);
+function generateLabelledNodesAndEdges(arguments) {
+    let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments);
 
     // categorises the arguments into labels: IN, OUT, and UNDEC
-    const labelledNodes = groundedLabellingAlgorithm(nodesAndAttacks);
+    const labelledNodes = groundedLabellingAlgorithm(nodesAndEdges);
 
     // update the nodes with label colours
-    nodesAndAttacks.nodes = colourArgumentNodes(labelledNodes);
+    nodesAndEdges.nodes = colourArgumentNodes(labelledNodes);
 
-    return nodesAndAttacks;
+    return nodesAndEdges;
 }
 
-function convertArgumentsToNodesAndAttacks(arguments) {
-    let nodesAndAttacks = {
+function convertArgumentsToNodesAndEdges(arguments) {
+    let nodesAndEdges = {
         nodes: [],
         edges: []
     };
@@ -23,7 +23,7 @@ function convertArgumentsToNodesAndAttacks(arguments) {
         nodeTitle = addNewlineInLabel(nodeTitle);
 
         const schemeName = schemes.SCHEMES[argument.scheme].name        
-        nodesAndAttacks.nodes.push({ 
+        nodesAndEdges.nodes.push({ 
             id: argument._id, 
             label: nodeTitle + `\n(${schemeName})`,
             borderWidth: 2
@@ -37,21 +37,21 @@ function convertArgumentsToNodesAndAttacks(arguments) {
             isSymmetric = criticalQuestion.symmetric;
             if(isSymmetric) {
                 const firstEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
-                nodesAndAttacks.edges.push(firstEdge)
+                nodesAndEdges.edges.push(firstEdge)
                 const secondEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, true);
-                nodesAndAttacks.edges.push(secondEdge)
+                nodesAndEdges.edges.push(secondEdge)
             } else {
                 const edge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
-                nodesAndAttacks.edges.push(edge)
+                nodesAndEdges.edges.push(edge)
             }
         }
     })
 
-    return nodesAndAttacks;
+    return nodesAndEdges;
 }
 
-function groundedLabellingAlgorithm(nodesAndAttacks) {
-    const allNodes = nodesAndAttacks.nodes;
+function groundedLabellingAlgorithm(nodesAndEdges) {
+    const allNodes = nodesAndEdges.nodes;
 
     // start of with all labels being empty
     let currentLabelling = {
@@ -73,7 +73,7 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
         // label x IN if it is not labelled, and all arguments that attack x are out
         unlabelledArguments.forEach(node => {
             // get all arguments that attack the current node
-            const allAttackingArguments = getAllAttackingArguments(nodesAndAttacks, node);
+            const allAttackingArguments = getAllAttackingArguments(nodesAndEdges, node);
             
             let allAttackingArgumentsAreOut = true;
             allAttackingArguments.forEach(attackingArgumentId => {
@@ -92,7 +92,7 @@ function groundedLabellingAlgorithm(nodesAndAttacks) {
         // label x OUT if it is not labelled, and there is an argument that attacks it that is IN (in current iteration)
         unlabelledArguments.forEach(node => {
             // get all arguments that attack the current node
-            const allAttackingArguments = getAllAttackingArguments(nodesAndAttacks, node);
+            const allAttackingArguments = getAllAttackingArguments(nodesAndEdges, node);
             
             let oneAttackingArgumentIsIn = false;    
             allAttackingArguments.forEach(attackingArgumentId => {
@@ -166,10 +166,10 @@ function calculateUnlabelledArguments(currentLabelling, allNodes) {
     return allNodes.filter(argument => !union.has(argument));
 }
 
-function getAllAttackingArguments(nodesAndAttacks, node) {
+function getAllAttackingArguments(nodesAndEdges, node) {
     let attackingArguments = [];
 
-    nodesAndAttacks.edges.forEach(attack => {
+    nodesAndEdges.edges.forEach(attack => {
         const attackingArgument = attack.from;
         const attackedArgument = attack.to;
 
@@ -231,5 +231,5 @@ function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOpp
 }
 
 module.exports = {
-    generateLabelledNodesAndAttacks
+    generateLabelledNodesAndEdges
 }
