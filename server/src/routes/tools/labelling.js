@@ -31,34 +31,18 @@ function convertArgumentsToNodesAndAttacks(arguments) {
 
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
         
-        let isSymmetric = false;
         if(criticalQuestion !== undefined) {
-            isSymmetric = criticalQuestion.symmetric;
-            
             attackLabel = addNewlineInLabel(criticalQuestion.title + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')');
-
-            if(!isSymmetric) {
-                nodesAndAttacks.edges.push({ 
-                    from: argument._id, 
-                    to: argument.parentId,
-                    label: attackLabel,
-                    width: 2
-                })
+            
+            isSymmetric = criticalQuestion.symmetric;
+            if(isSymmetric) {
+                const firstEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
+                nodesAndAttacks.edges.push(firstEdge)
+                const secondEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, true);
+                nodesAndAttacks.edges.push(secondEdge)
             } else {
-                // dummy edge from parent to child (child to parent already existing)
-                nodesAndAttacks.edges.push({ 
-                    from: argument._id, 
-                    to: argument.parentId,
-                    label: attackLabel,
-                    smooth: {type: 'curvedCW', roundness: 0.35},
-                    width: 2
-                }, { 
-                    from: argument.parentId, 
-                    to: argument._id,
-                    label: attackLabel,
-                    smooth: {type: 'curvedCW', roundness: 0.35},
-                    width: 2
-                })
+                const edge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
+                nodesAndAttacks.edges.push(edge)
             }
         }
     })
@@ -215,6 +199,35 @@ function addNewlineInLabel(label) {
     })
 
     return result;
+}
+
+function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOppositeDirection) {
+    let edge = {
+        from: fromNode, 
+        to: toNode,
+        label: attackLabel,
+        width: 2
+    }
+
+    if(isSupport) {
+        edge.arrows = {
+            to: { enabled: true, scaleFactor: 1, type: 'circle' }
+        }
+    }
+
+    if(isSymmetric) {
+        edge.smooth = { type: 'curvedCW', roundness: 0.35 }
+
+        if(inOppositeDirection) {
+            const oppositeEdge = Object.assign({}, edge);;
+            oppositeEdge.from = toNode;
+            oppositeEdge.to = fromNode;
+
+            return oppositeEdge;
+        }
+    }
+
+    return edge;
 }
 
 module.exports = {
