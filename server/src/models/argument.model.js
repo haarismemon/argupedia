@@ -21,6 +21,7 @@ let argumentSchema = new mongoose.Schema({
   title: { type: String, required: true },
 }, options);
 argumentSchema.set('timestamps', true);
+argumentSchema.index({criticalQuestion: 'text', title: 'text'});
 
 let BaseArgumentModel = mongoose.model('Argument', argumentSchema);
 
@@ -34,6 +35,7 @@ actionSchema = new mongoose.Schema({
   goal: String, 
   value: String
 }, options);
+actionSchema.index({'$**': 'text'});
 ActionArgumentModel = BaseArgumentModel.discriminator('action', actionSchema);
 
 expertSchema = new mongoose.Schema({
@@ -41,11 +43,13 @@ expertSchema = new mongoose.Schema({
   domain: String,
   assertion: String
 }, options);
+expertSchema.index({'$**': 'text'});
 ExpertArgumentModel = BaseArgumentModel.discriminator('expert', expertSchema);
 
 popularSchema = new mongoose.Schema({
   proposition: String
 }, options);
+popularSchema.index({'$**': 'text'});
 PopularArgumentModel = BaseArgumentModel.discriminator('popular', popularSchema);
 
 module.exports = {
