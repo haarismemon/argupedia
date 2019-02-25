@@ -64,22 +64,27 @@ function addSupportRelations(nodesAndEdges) {
 
         // for each node x if it attacks any node y, then find if y supports any nodes z.
         nodesAndEdges.nodes.forEach(nodeX => {
-            //find all nodes that x attacks
-            const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
-            
-            allAttackedNodesByX.forEach(nodeY => {
-                const allSupportedNodesByY = attackedAndSupportedNodes[nodeY].support;
+            if(attackedAndSupportedNodes[nodeX.id]) {
+                //find all nodes that x attacks
+                const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
                 
-                allSupportedNodesByY.forEach(nodeZ => {
-                    // for each z, creating a new special edge (be able to differentiate between normal edge by making it dashed) from x to z
-                    
-                    if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZ)) {
-                        const newAttackEdge = createEdge(nodeX.id, nodeZ, "", false, false, false, true);
-                        attackedAndSupportedNodes[nodeX.id].attack.push(nodeZ);
-                        currentTotalEdges.push(newAttackEdge);
+                allAttackedNodesByX.forEach(nodeY => {
+                    // console.log(nodeY, attackedAndSupportedNodes[nodeY]);
+                    if(attackedAndSupportedNodes[nodeY]) {
+                        const allSupportedNodesByY = attackedAndSupportedNodes[nodeY].support;
+                        
+                        allSupportedNodesByY.forEach(nodeZ => {
+                            // for each z, creating a new special edge (be able to differentiate between normal edge by making it dashed) from x to z
+                            
+                            if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZ)) {
+                                const newAttackEdge = createEdge(nodeX.id, nodeZ, "", false, false, false, true);
+                                attackedAndSupportedNodes[nodeX.id].attack.push(nodeZ);
+                                currentTotalEdges.push(newAttackEdge);
+                            }
+                        })
                     }
                 })
-            })
+            }
         });
 
         // check if the current iteration's edges are the same number as previous iteration. If so, stop; else continue.
