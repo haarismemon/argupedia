@@ -127,7 +127,7 @@ class ArgumentDetails extends React.Component {
             duration: 4000
           }
         })
-      }, 2000);
+      }, 3000);
     }
 
     let options = {
@@ -135,9 +135,9 @@ class ArgumentDetails extends React.Component {
         solver: 'repulsion',
         repulsion: {
           centralGravity: 0.001,
-          springLength: 250,
-          springConstant: 0.03,
-          nodeDistance: 350,
+          springLength: 400,
+          springConstant: 0.001,
+          nodeDistance: 700,
           damping: 0.15
         },
         barnesHut: {

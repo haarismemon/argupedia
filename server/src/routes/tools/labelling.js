@@ -3,6 +3,8 @@ const schemes = require('./schemes.js');
 function generateLabelledNodesAndEdges(arguments) {
     let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments);
 
+    nodesAndEdges = addSupportRelations(nodesAndEdges);
+
     // categorises the arguments into labels: IN, OUT, and UNDEC
     const labelledNodes = groundedLabellingAlgorithm(nodesAndEdges);
 
@@ -19,12 +21,13 @@ function convertArgumentsToNodesAndEdges(arguments) {
     };
 
     arguments.forEach(argument => {
+        const argumentId = argument._id.toString();
         let nodeTitle = argument.title ;
         nodeTitle = addNewlineInLabel(nodeTitle);
 
         const schemeName = schemes.SCHEMES[argument.scheme].name        
         nodesAndEdges.nodes.push({ 
-            id: argument._id, 
+            id: argumentId, 
             label: nodeTitle + `\n(${schemeName})`,
             borderWidth: 2
         })
@@ -36,18 +39,94 @@ function convertArgumentsToNodesAndEdges(arguments) {
             
             isSymmetric = criticalQuestion.symmetric;
             if(isSymmetric) {
-                const firstEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
+                const firstEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, false, false);
                 nodesAndEdges.edges.push(firstEdge)
-                const secondEdge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, true);
+                const secondEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, true, false);
                 nodesAndEdges.edges.push(secondEdge)
             } else {
-                const edge = createEdge(argument._id, argument.parentId, attackLabel, argument.agree, isSymmetric, false);
+                const edge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, false, false);
                 nodesAndEdges.edges.push(edge)
             }
         }
     })
 
     return nodesAndEdges;
+}
+
+function addSupportRelations(nodesAndEdges) {
+    // convert data into map with a node as the key, and the value is a list of all nodes it attacks
+    let attackedAndSupportedNodes = allAttackedAndSupportedArguments(nodesAndEdges);
+
+    let breakLoop = false;
+    // repeat iteration until number of edges are the same from the previous iteration
+    while(!breakLoop) {
+        let currentTotalEdges = nodesAndEdges.edges.slice();
+
+        // for each node x if it attacks any node y, then find if y supports any nodes z.
+        nodesAndEdges.nodes.forEach(nodeX => {
+            //find all nodes that x attacks
+            const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
+            
+            allAttackedNodesByX.forEach(nodeY => {
+                const allSupportedNodesByY = attackedAndSupportedNodes[nodeY].support;
+                
+                allSupportedNodesByY.forEach(nodeZ => {
+                    // for each z, creating a new special edge (be able to differentiate between normal edge by making it dashed) from x to z
+                    
+                    if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZ)) {
+                        const newAttackEdge = createEdge(nodeX.id, nodeZ, "", false, false, false, true);
+                        attackedAndSupportedNodes[nodeX.id].attack.push(nodeZ);
+                        currentTotalEdges.push(newAttackEdge);
+                    }
+                })
+            })
+        });
+
+        // check if the current iteration's edges are the same number as previous iteration. If so, stop; else continue.
+        if(currentTotalEdges.length === nodesAndEdges.edges.length) {
+            breakLoop = true;
+        }
+        nodesAndEdges.edges = currentTotalEdges;
+
+    }
+    // return new nodesAndEdges with same nodes, but with the new set of edges
+    return nodesAndEdges
+}
+
+function allAttackedAndSupportedArguments(nodesAndEdges) {
+    let allAttackedAndSupportedArguments = {}
+
+    nodesAndEdges.edges.forEach(edge => {
+        const attackingArgument = edge.from;
+        const attackedArgument = edge.to;
+        const isSupport = edge.isSupport;
+        delete edge.isSupport;
+
+        let currentAttackedArguments = allAttackedAndSupportedArguments[attackingArgument];
+        if(currentAttackedArguments) {
+            if(isSupport) {
+                currentAttackedArguments.support.push(attackedArgument);
+            } else {
+                currentAttackedArguments.attack.push(attackedArgument);
+            }
+        } else {
+            if(isSupport) {
+                currentAttackedArguments = {
+                    support: [ attackedArgument ],
+                    attack: []
+                }
+            } else {
+                currentAttackedArguments = {
+                    support: [],
+                    attack: [attackedArgument]
+                }
+            }
+        }
+
+        allAttackedAndSupportedArguments[attackingArgument] = currentAttackedArguments;
+    });
+
+    return allAttackedAndSupportedArguments;
 }
 
 function groundedLabellingAlgorithm(nodesAndEdges) {
@@ -201,12 +280,13 @@ function addNewlineInLabel(label) {
     return result;
 }
 
-function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOppositeDirection) {
+function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOppositeDirection, isDashed) {
     let edge = {
         from: fromNode, 
         to: toNode,
         label: attackLabel,
-        width: 2
+        width: 2,
+        isSupport
     }
 
     if(isSupport) {
@@ -225,6 +305,10 @@ function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOpp
 
             return oppositeEdge;
         }
+    }
+
+    if(isDashed) {
+        edge.dashes = true;
     }
 
     return edge;
