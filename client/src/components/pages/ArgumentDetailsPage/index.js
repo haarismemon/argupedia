@@ -171,7 +171,7 @@ class ArgumentDetails extends React.Component {
           <Button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
         }
         {this.state.showNetwork ?
-          <div>
+          <div id="network-page">
             <p className="network-info">Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
             <div id="argument-network">
               <Graph 

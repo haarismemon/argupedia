@@ -60,9 +60,9 @@ class ArgumentView extends React.Component {
         className={this.state.isPreview ? "argument-preview" : "argument-view"}>
         
         <Card.Header>
-          <Card.Title>{cardTitle}</Card.Title>
+          <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {this.state.argument.username}</span></div>
           <Card.Subtitle>{cardSubtitle}</Card.Subtitle>
-          </Card.Header>
+        </Card.Header>
         <Card.Body>
           {argumentNotRoot ?
             (

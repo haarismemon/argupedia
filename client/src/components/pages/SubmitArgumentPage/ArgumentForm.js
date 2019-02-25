@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+import {compose} from 'recompose'
 
 import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
 import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
 import {SCHEMES} from '../../../constants/schemes';
+import { withFirebase } from '../../Firebase';
 
 class ArgumentForm extends React.Component {
 
@@ -24,12 +26,22 @@ class ArgumentForm extends React.Component {
       parentId: this.props.parentId,
       originalId: this.props.originalId,
       uid: this.props.authUser.uid,
+      username: null,
       ancestorIds: this.props.ancestorIds,
       validated: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.firebase.user(this.state.uid).once('value', (snapshot) => {
+      const val = snapshot.val();
+      if(val !== null) {
+        this.setState({username: val.username});
+      }
+    });
   }
 
   handleInputChange(event) {
@@ -126,4 +138,4 @@ ArgumentForm.propTypes = {
   ancestorIds: PropTypes.array
 };
 
-export default withRouter(ArgumentForm)
+export default compose(withRouter, withFirebase)(ArgumentForm)
