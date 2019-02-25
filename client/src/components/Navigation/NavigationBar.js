@@ -4,12 +4,14 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavLink from 'react-bootstrap/NavLink';
 import { withRouter } from 'react-router-dom'
+import {compose} from 'recompose'
 
 import * as ROUTES from '../../constants/routes'
 import SignOutButton from './SignOutButton'
 import { AuthUserContext } from '../Session';
 
 import './Navigation.css';
+import { withFirebase } from '../Firebase';
 
 class NavigationBar extends React.Component {
     render() {
@@ -27,7 +29,7 @@ class NavigationBar extends React.Component {
                         <ActiveLink to={ROUTES.SUBMIT_ARGUMENT} currentPath={currentPath} text="Submit Argument"/>
                         <AuthUserContext.Consumer>
                             { authUser => 
-                                authUser ? <NavigationAuth currentPath={currentPath}/> : <NavigationNonAuth currentPath={currentPath}/>
+                                authUser ? <NavigationAuth user={authUser} currentPath={currentPath}/> : <NavigationNonAuth currentPath={currentPath}/>
                             }
                         </AuthUserContext.Consumer>
                     </Nav>
@@ -39,7 +41,10 @@ class NavigationBar extends React.Component {
 
 const NavigationAuth = (props) => (
     <div className="navbar-right">
-        <ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text="Account"/>
+        {props.user.displayName &&
+            <span className="account-label">Signed in as: <ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text={props.user.displayName}/></span>
+        }
+        
         <SignOutButton />
     </div>
 )
@@ -61,4 +66,4 @@ const ActiveLink = (props) => {
     )
 }
 
-export default withRouter(NavigationBar)
+export default compose(withRouter, withFirebase)(NavigationBar)
