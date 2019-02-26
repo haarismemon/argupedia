@@ -1,0 +1,28 @@
+.home-container {
+    width: 100%;
+    text-align: center;
+}
+
+.home-container h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 64px;
+}
+
+.search-form {
+    display: inline-block;
+    width: 100%;
+}
+
+#search-bar {
+    display: inline-block;
+    margin: 8px;
+    width: 50%;
+    height: 50px;
+}
+
+#search-button {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}

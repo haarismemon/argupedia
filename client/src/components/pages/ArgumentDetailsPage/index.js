@@ -25,6 +25,7 @@ class ArgumentDetails extends React.Component {
     const mode = params.get('mode')
 
     this.state = {
+      rootId: null,
       network: null,
       showNetwork: mode === constants.network.mode,
       networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
@@ -44,7 +45,9 @@ class ArgumentDetails extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     if(this.state.networkData !== {}) {
-      this.updateData(this.props.match.params.id)
+      const rootId = this.props.match.params.id;
+      this.setState({rootId});
+      this.updateData(rootId)
     }
   }
   
@@ -99,15 +102,17 @@ class ArgumentDetails extends React.Component {
   nodeSelectHandler = event => {
     let { nodes } = event;
 
-    const mode = constants.nest.mode
+    if(nodes[0] !== undefined) {
+      const mode = constants.nest.mode
 
-    this.setState({
-      showNetwork: mode === constants.network.mode,
-      networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
-    });
-    
-    this.props.history.push('/')
-    this.props.history.push(`/argument/${nodes[0]}`)
+      this.setState({
+        showNetwork: mode === constants.network.mode,
+        networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
+      });
+      
+      this.props.history.push('/')
+      this.props.history.push(`/argument/${nodes[0]}`)
+    }
   }
 
   originalArgumentLinkHandler() {
@@ -119,10 +124,12 @@ class ArgumentDetails extends React.Component {
   }
 
   render() {
+    const { network } = this.state;
+
     // after the nodes have been settled and after 2 seconds, make the network fit the screen
-    if(this.state.network) {
+    if(network) {
       setTimeout(() => {
-        this.state.network.fit({
+        network.fit({
           animation: {
             duration: 4000
           }

@@ -1,6 +1,10 @@
 const schemes = require('./schemes.js');
 
 function generateLabelledNodesAndEdges(arguments) {
+    if(!arguments) {
+        arguments = [];
+    }
+    
     let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments);
 
     nodesAndEdges = addSupportRelations(nodesAndEdges);

@@ -42,7 +42,7 @@ class NavigationBar extends React.Component {
 const NavigationAuth = (props) => (
     <div className="navbar-right">
         {props.user.displayName &&
-            <span className="account-label">Signed in as: <ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text={props.user.displayName}/></span>
+            <span className="account-label">Signed in as:<ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text={props.user.displayName}/></span>
         }
         
         <SignOutButton />

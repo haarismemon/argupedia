@@ -9,7 +9,8 @@ import {
 import NavigationBar from './components/Navigation/NavigationBar'
 
 import SubmitArgumentPage from './components/Pages/SubmitArgumentPage'
-import ArgumentListPage from './components/Pages/ArgumentListPage'
+import HomePage from './components/Pages/HomePage';
+import SearchResultsPage from './components/Pages/SearchResultsPage'
 import ArgumentDetails from './components/Pages/ArgumentDetailsPage'
 import SignUpPage from './components/Pages/SignUpPage'
 import SignInPage from './components/Pages/SignInPage'
@@ -27,8 +28,9 @@ const App = () => (
       <NavigationBar />
       <Container className="page-content">
         <Switch>
-          <Route path={ROUTES.HOME} component={ArgumentListPage} exact />
-          <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} exact />
+          <Route path={ROUTES.HOME} component={HomePage} exact />
+          <Route path={ROUTES.SEARCH} component={SearchResultsPage} />
+          <Route path={ROUTES.ARGUMENT_DETAILS} component={ArgumentDetails} />
           <Route path={ROUTES.SUBMIT_ARGUMENT} component={SubmitArgumentPage} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
           <Route path={ROUTES.SIGN_IN} component={SignInPage} />

@@ -108,6 +108,8 @@ router.delete('/argument', (req, res) => {
 router.get('/argument/descendents', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
+  } else if(req.query.id == 'undefined') {
+    return res.status(400).send('ID URL parameter is undefined')
   }
 
   let query = { "$or": [
@@ -157,11 +159,18 @@ router.get('/argument/network', (req, res) => {
 })
 
 router.get('/argument/search', (req, res) => {
-  if(!req.query.searchQuery) {
+  const searchQuery = req.query.searchQuery;
+
+  if(!searchQuery) {
     return res.status(400).send('Missing URL parameter: searchQuery')
   }
 
-  let query = { $text: { $search: req.query.searchQuery } }
+  let query = { $text: { $search: searchQuery } }
+
+  // if query is 'all', then return all root arguments
+  if(searchQuery === "all" || searchQuery === "/") {
+    query = { parentId: null }
+  }
 
   models.BaseArgumentModel.find(query)
     .then(doc => {
