@@ -13,6 +13,8 @@ import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
 import {SCHEMES} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
 
+import './ArgumentForm.css'
+
 class ArgumentForm extends React.Component {
 
   constructor(props) {
@@ -83,14 +85,14 @@ class ArgumentForm extends React.Component {
     const { validated } = this.state;
 
     return (
-      <Form onSubmit={this.handleSubmit} validated={validated}>
+      <Form onSubmit={this.handleSubmit} validated={validated} id="argument-form">
         {this.props.criticalQuestion ? <h4>{this.props.criticalQuestion} {this.props.agree ? "Agree" : "Disagree"}</h4> : null}
         <Form.Group>
           <Form.Label>
             Argument scheme
           </Form.Label>
           <Form.Control required as="select" name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
-            <option value="" disabled hidden>Select your argument scheme option</option>
+            <option value="" disabled hidden>Select a template to format your argument</option>
             {
               Object.values(SCHEMES).map(argumentScheme => 
                 <option value={argumentScheme.scheme} key={argumentScheme.scheme}>{argumentScheme.name}</option>
