@@ -10,7 +10,7 @@ class ActionDetailScheme extends React.Component {
 
   componentDidMount() {
     /* eslint-disable no-unused-vars */
-    let { circumstance, action, newCircumstance, goal, value } = this.props;
+    let { circumstance, action, newCircumstance, goal, value } = this.props.argument;
     let questionTags = SCHEMES.action.criticalQuestions;
 
     let criticalQuestions = {};
@@ -27,7 +27,7 @@ class ActionDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
-    let { circumstance, action, newCircumstance, goal, value } = this.props;
+    let { circumstance, action, newCircumstance, goal, value } = this.props.argument;
 
     return (
       <div>
@@ -51,6 +51,7 @@ class ActionDetailScheme extends React.Component {
                       <CriticalQuestion 
                         question={criticalQuestion.question} 
                         questionTag={questionTag}
+                        argument={this.props.argument}
                         {...this.props}
                       />
                     </li>

@@ -10,7 +10,7 @@ class ExpertDetailScheme extends React.Component {
 
   componentDidMount() {
     /* eslint-disable no-unused-vars */
-    let { source, domain, assertion } = this.props;
+    let { source, domain, assertion } = this.props.argument;
     let questionTags = SCHEMES.expert.criticalQuestions;
 
     let criticalQuestions = {};
@@ -27,7 +27,7 @@ class ExpertDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
-    let { source, domain, assertion } = this.props;
+    let { source, domain, assertion } = this.props.argument;
 
     return (
       <div>

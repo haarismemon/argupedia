@@ -28,7 +28,8 @@ class CriticalQuestion extends React.Component {
           agree: isAgree,
           parentId: this.props._id,
           originalId: this.props.originalId,
-          ancestorIds: this.props.ancestorIds
+          ancestorIds: this.props.ancestorIds,
+          parentArgument: this.props.argument
         }
       })
     } else {

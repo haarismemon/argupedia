@@ -7,7 +7,6 @@ import { AuthUserContext } from "../../Session";
 const SubmitArgumentPage = (props) => {
   return (
     <div id="submit-page">
-      <h1>Submit an argument</h1>
       <AuthUserContext.Consumer>
         {authUser =>
           <ArgumentForm {...props.location.state} authUser={authUser}/>

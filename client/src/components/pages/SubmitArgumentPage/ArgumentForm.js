@@ -14,6 +14,8 @@ import {SCHEMES} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
 
 import './ArgumentForm.css'
+import ArgumentView from '../ArgumentDetailsPage/ArgumentView';
+import { Card } from 'react-bootstrap';
 
 class ArgumentForm extends React.Component {
 
@@ -81,12 +83,31 @@ class ArgumentForm extends React.Component {
     }
   }
 
+  handleParentArgumentClick() {
+    this.props.history.push(`/argument/${this.props.parentArgument._id}`)
+  }
+
   render() {
     const { validated } = this.state;
 
     return (
       <Form onSubmit={this.handleSubmit} validated={validated} id="argument-form">
-        {this.props.criticalQuestion ? <h4>{this.props.criticalQuestion} {this.props.agree ? "Agree" : "Disagree"}</h4> : null}
+        {this.props.parentArgument &&
+          <div>
+            <h6>Preview of original argument:</h6>
+            <ArgumentView argument={this.props.parentArgument} isPreview={true} onClick={this.handleParentArgumentClick.bind(this)}/>
+            <hr/>
+          </div>
+        }
+        <h1>Submit an argument</h1>
+        {this.props.criticalQuestion ? 
+          <div>
+            <p>Critical Question being <strong>{this.props.agree ? "agreed" : "disagreed"}</strong> with:</p>
+            <Card className="critical-question-card">
+              <Card.Body>{this.props.criticalQuestion}</Card.Body>
+            </Card> 
+          </div>
+          : null}
         <Form.Group>
           <Form.Label>
             Argument scheme

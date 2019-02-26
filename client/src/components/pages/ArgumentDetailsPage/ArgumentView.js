@@ -57,7 +57,7 @@ class ArgumentView extends React.Component {
       <Card 
         id={this.state.argument._id} 
         onClick={this.state.isPreview ? this.handleClick : null}
-        className={this.state.isPreview ? "argument-preview" : "argument-view"}>
+        className={this.state.isPreview ? "argument-preview argument-view-card" : "argument-view argument-view-card"}>
         
         <Card.Header>
           <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {this.state.argument.username}</span></div>
@@ -74,13 +74,13 @@ class ArgumentView extends React.Component {
           {{
               action: <ActionDetailScheme 
                         showCriticalQuestions={!this.state.isPreview} 
-                        {...this.state.argument} />,
+                        argument={this.state.argument} />,
               expert: <ExpertDetailScheme 
                         showCriticalQuestions={!this.state.isPreview} 
-                        {...this.state.argument}/>,
+                        argument={this.state.argument}/>,
               popular: <PopularDetailScheme 
                         showCriticalQuestions={!this.state.isPreview} 
-                        {...this.state.argument}/>
+                        argument={this.state.argument}/>
             }[this.state.argument.scheme]}
         </Card.Body>
       </Card>

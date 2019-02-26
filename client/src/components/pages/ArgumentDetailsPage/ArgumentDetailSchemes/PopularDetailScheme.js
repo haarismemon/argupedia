@@ -10,7 +10,7 @@ class PopularDetailScheme extends React.Component {
 
   componentDidMount() {
     /* eslint-disable no-unused-vars */
-    let { proposition } = this.props;
+    let { proposition } = this.props.argument;
     let questionTags = SCHEMES.popular.criticalQuestions;
 
     let criticalQuestions = {};
@@ -27,7 +27,7 @@ class PopularDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
-    let { proposition } = this.props;
+    let { proposition } = this.props.argument;
 
     return (
       <div>

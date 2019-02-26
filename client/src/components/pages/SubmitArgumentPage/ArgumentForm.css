@@ -1,8 +1,19 @@
-#submit-page h1 {
+#argument-form h1 {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 #argument-form {
     margin-left: 5%;
     margin-right: 5%;
+}
+
+#argument-form .argument-view-card {
+    margin-bottom: 40px;
+}
+
+#argument-form .critical-question-card {
+    margin-bottom: 30px;
+    border-radius: 1em;
+    background-color: rgb(0, 0, 0, 0.02);
 }
