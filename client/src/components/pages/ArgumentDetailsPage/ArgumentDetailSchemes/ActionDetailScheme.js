@@ -2,6 +2,7 @@ import React from 'react';
 
 import CriticalQuestion from '../CriticalQuestion'
 import {SCHEMES, QUESTIONS} from '../../../../constants/schemes'
+import { ListGroup } from 'react-bootstrap';
 
 class ActionDetailScheme extends React.Component {
   state = {
@@ -42,23 +43,23 @@ class ActionDetailScheme extends React.Component {
           <div>
             <hr/>
             <h6>Critical Questions</h6>
-            <ul>
+            <ListGroup>
               {
                 Object.keys(criticalQuestions).map(questionTag => {
                   const criticalQuestion = criticalQuestions[questionTag];
                   return (
-                    <li key={criticalQuestion.question}>
+                    <div key={criticalQuestion.question}>
                       <CriticalQuestion 
                         question={criticalQuestion.question} 
                         questionTag={questionTag}
                         argument={this.props.argument}
                         {...this.props}
                       />
-                    </li>
+                    </div>
                   )
                 })
               }
-            </ul>
+            </ListGroup>
           </div>
           : null
         }

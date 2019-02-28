@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import {Button, ListGroup} from 'react-bootstrap'
 import {withRouter} from 'react-router'
 import { compose } from 'recompose'
 
@@ -39,17 +39,17 @@ class CriticalQuestion extends React.Component {
 
   render() {
     return (
-      <div>
-        <p style={{display: 'inline'}}>{this.props.question}</p><br/>
-        <span>
+      <ListGroup.Item className="cq-list-group">
+        <p className="cq-text" style={{display: 'inline'}}>{this.props.question}</p>
+        <div className="cq-button-group">
           <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
-            <i class="far fa-thumbs-up"></i>
+            Agree <i class="far fa-thumbs-up"></i>
           </Button>
           <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
-          <i class="far fa-thumbs-down"></i>
+            Disagree <i class="far fa-thumbs-down"></i>
           </Button>
-        </span>
-      </div>
+        </div>
+      </ListGroup.Item>
     )
   }
 }
