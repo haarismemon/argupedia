@@ -38,50 +38,54 @@ class ArgumentView extends React.Component {
   }
 
   render() {
-    const argumentNotRoot = this.state.argument.criticalQuestion
-    const isArgumentPositive = this.state.argument.agree ? "Positive" : "Negative"
+    const {argument, isPreview} = this.state;
+    const {rootId} = this.props;
 
-    let schemeName = this.state.argument.scheme;
+    const argumentNotRoot = argument.criticalQuestion
+    const isArgumentPositive = argument.agree ? "Positive" : "Negative"
+
+    let schemeName = argument.scheme;
     const scheme = SCHEMES[schemeName];
 
     if(scheme !== undefined) {
       schemeName = scheme.name;
     }
     
-    const cardTitle = this.state.argument.title;
-    const cardSubtitle = !this.state.isPreview ?
+    const cardTitle = argument.title;
+    const cardSubtitle = !isPreview ?
                           (`${argumentNotRoot ? `${isArgumentPositive} = ` : ''} ${schemeName}`) :
                           schemeName;
 
     return (
       <Card 
-        id={this.state.argument._id} 
-        onClick={this.state.isPreview ? this.handleClick : null}
-        className={this.state.isPreview ? "argument-preview argument-view-card" : "argument-view argument-view-card"}>
+        id={argument._id} 
+        onClick={isPreview ? this.handleClick : null}
+        className={(isPreview ? "argument-preview argument-view-card" : 
+                      `argument-view argument-view-card ${rootId && rootId == argument._id ? "argument-view-root" : ""}`)}>
         
         <Card.Header>
-          <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {this.state.argument.username}</span></div>
+          <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {argument.username}</span></div>
           <Card.Subtitle>{cardSubtitle}</Card.Subtitle>
         </Card.Header>
         <Card.Body>
           {argumentNotRoot ?
             (
               <div>
-                Critical Question: {this.state.argument.criticalQuestion}
+                Critical Question: {argument.criticalQuestion}
               </div>
             )
             : null}
           {{
               action: <ActionDetailScheme 
-                        showCriticalQuestions={!this.state.isPreview} 
-                        argument={this.state.argument} />,
+                        showCriticalQuestions={!isPreview} 
+                        argument={argument} />,
               expert: <ExpertDetailScheme 
-                        showCriticalQuestions={!this.state.isPreview} 
-                        argument={this.state.argument}/>,
+                        showCriticalQuestions={!isPreview} 
+                        argument={argument}/>,
               popular: <PopularDetailScheme 
-                        showCriticalQuestions={!this.state.isPreview} 
-                        argument={this.state.argument}/>
-            }[this.state.argument.scheme]}
+                        showCriticalQuestions={!isPreview} 
+                        argument={argument}/>
+            }[argument.scheme]}
         </Card.Body>
       </Card>
     );

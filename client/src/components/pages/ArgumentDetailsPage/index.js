@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 
 import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
 import './ArgumentDetailsPage.css'
+import ArgumentView from './ArgumentView';
 
 const constants = {
   network: {
@@ -33,7 +34,8 @@ class ArgumentDetails extends React.Component {
         nodes: [],
         edges: []
       },
-      argumentNestData: {}
+      argumentNestData: {},
+      originalArgument: null
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
@@ -73,6 +75,16 @@ class ArgumentDetails extends React.Component {
         this.setState({
             argumentNestData: resp.data
         })
+
+        const originalId = resp.data[rootId].originalId;
+        if(originalId !== rootId) {
+          axios.get(`http://localhost:3001/argument?id=${originalId}`, {crossdomain: true})
+          .then(resp => {
+            this.setState({
+              originalArgument: resp.data
+            });
+          })
+        }
       }
     })
     .catch(console.error)
@@ -116,11 +128,9 @@ class ArgumentDetails extends React.Component {
   }
 
   originalArgumentLinkHandler() {
-    const rootId = this.props.match.params.id
-    const argument = this.state.argumentNestData[rootId]
-
-    this.props.history.push(`/argument/${argument.originalId}`)
-    this.updateData(argument.originalId)
+    this.props.history.push(`/argument/${this.state.originalArgument.originalId}`);
+    this.setState({originalArgument: null});
+    this.updateData(this.state.originalArgument.originalId)
   }
 
   render() {
@@ -173,9 +183,9 @@ class ArgumentDetails extends React.Component {
     return (
       <div>
         <h1>Argument</h1>
-        <Button id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
+        <Button variant="outline-success" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
         { originalId !== undefined && originalId !== argumentRootId &&
-          <Button onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
+          <Button variant="outline-success" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
         }
         {this.state.showNetwork ?
           <div id="network-page">
@@ -190,10 +200,26 @@ class ArgumentDetails extends React.Component {
           </div>
           :
           (this.state.argumentNestData && rootArgument !== undefined &&
-            <ArgumentNest 
-              level={0} 
-              rootId={argumentRootId} 
-              argumentData={this.state.argumentNestData}/>)
+            <div>
+              {this.state.originalArgument && this.state.originalArgument.id !== this.state.rootId &&
+                <div>
+                  <br/>
+                  <p>Preview of the original argument:</p>
+                  <ArgumentView 
+                    argument={this.state.originalArgument}
+                    isPreview={true}
+                    onClick={this.originalArgumentLinkHandler.bind(this)}/>
+                  <hr/>
+                </div>
+              }
+              <ArgumentNest 
+                level={0} 
+                rootId={argumentRootId} 
+                currentId={argumentRootId}
+                argumentData={this.state.argumentNestData}/>
+            </div>
+              
+          )
         }
       </div>
     )

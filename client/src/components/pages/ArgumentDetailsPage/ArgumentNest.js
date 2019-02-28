@@ -7,9 +7,9 @@ class ArgumentNest extends React.Component {
     super(props);
 
     let childrenArguments = [];
-    const rootArgument = this.props.argumentData[this.props.rootId];
+    const currentArgument = this.props.argumentData[this.props.currentId];
 
-    rootArgument.children.forEach(childrenId => {
+    currentArgument.children.forEach(childrenId => {
       const childArgument = this.props.argumentData[childrenId];
       childrenArguments.push(childArgument);
     })
@@ -21,16 +21,17 @@ class ArgumentNest extends React.Component {
   }
   
   render() {
-    const rootArgument = this.props.argumentData[this.props.rootId];
+    const {currentId, rootId} = this.props;
+    const currentArgument = this.props.argumentData[currentId];
 
     return (
       <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}}>
-        <ArgumentView argument={rootArgument} />
+        <ArgumentView argument={currentArgument} rootId={rootId}/>
         {this.state.childrenArguments.map(argument =>
           <ArgumentNest 
             key={argument._id} 
             level={this.props.level + 1} 
-            rootId={argument._id} 
+            currentId={argument._id} 
             argumentData={this.props.argumentData}/>
         )}
       </div>

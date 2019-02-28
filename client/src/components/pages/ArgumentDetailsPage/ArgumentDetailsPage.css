@@ -20,10 +20,18 @@
     margin-bottom: 1em;
 }
 
+.argument-view-root {
+    border: 2px solid black;
+}
+
 .argument-preview, .argument-view {
     border-radius: 1em;
 }
 
 .network-info {
     margin-top: 30px;
+}
+
+#network-toggle {
+    margin-right: 10px;
 }
