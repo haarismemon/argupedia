@@ -67,7 +67,7 @@ class ActionScheme extends React.Component {
           <Form.Control required type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
         </Form.Group>
         
-        <Button variant="primary" type="submit" onClick={this.handleClick.bind(this)}>
+        <Button variant="outline-success" type="submit" onClick={this.handleClick.bind(this)}>
           Submit
         </Button>
       </div>

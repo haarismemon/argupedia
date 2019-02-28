@@ -42,8 +42,12 @@ class CriticalQuestion extends React.Component {
       <div>
         <p style={{display: 'inline'}}>{this.props.question}</p><br/>
         <span>
-          <Button className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>Agree</Button>
-          <Button className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>Disagree</Button>
+          <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
+            <i class="far fa-thumbs-up"></i>
+          </Button>
+          <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
+          <i class="far fa-thumbs-down"></i>
+          </Button>
         </span>
       </div>
     )

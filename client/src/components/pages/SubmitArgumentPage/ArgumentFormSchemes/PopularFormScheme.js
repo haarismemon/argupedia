@@ -35,7 +35,7 @@ class ExpertScheme extends React.Component {
           <Form.Control required type="text" name="proposition" value={this.state.proposition} onChange={this.handleInputChange} />
         </Form.Group>
         
-        <Button variant="primary" type="submit" onClick={this.handleClick.bind(this)}>
+        <Button variant="outline-success" type="submit" onClick={this.handleClick.bind(this)}>
           Submit
         </Button>
       </div>

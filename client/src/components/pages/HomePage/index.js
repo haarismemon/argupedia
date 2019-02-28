@@ -45,7 +45,7 @@ class HomePage extends Component {
                         placeholder="Search"
                         id="search-bar"
                     />
-                    <Button variant="primary" type="submit" onClick={this.onSubmit} id="search-button">
+                    <Button variant="outline-info" type="submit" onClick={this.onSubmit} id="search-button">
                         <i className="fas fa-search" aria-hidden="true"></i>
                     </Button>
                 </form>

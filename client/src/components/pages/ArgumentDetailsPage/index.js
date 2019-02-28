@@ -172,20 +172,19 @@ class ArgumentDetails extends React.Component {
     }
 
     const argumentRootId = this.props.match.params.id;
-    const originalId = this.state.argumentNestData[argumentRootId] ? 
-      this.state.argumentNestData[argumentRootId].originalId : undefined;
     const rootArgument = this.state.argumentNestData[argumentRootId]
 
     if(this.state.network !== null) {
       this.state.network.fit()
     }
 
+    const isRootNotOriginalArgument = this.state.originalArgument && this.state.originalArgument.id !== this.state.rootId;
+
     return (
       <div>
-        <h1>Argument</h1>
-        <Button variant="outline-success" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
-        { originalId !== undefined && originalId !== argumentRootId &&
-          <Button variant="outline-success" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
+        <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
+        { isRootNotOriginalArgument &&
+          <Button variant="info" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
         }
         {this.state.showNetwork ?
           <div id="network-page">
@@ -201,10 +200,10 @@ class ArgumentDetails extends React.Component {
           :
           (this.state.argumentNestData && rootArgument !== undefined &&
             <div>
-              {this.state.originalArgument && this.state.originalArgument.id !== this.state.rootId &&
+              {isRootNotOriginalArgument &&
                 <div>
                   <br/>
-                  <p>Preview of the original argument:</p>
+                  <p>Preview of the original argument (click below to show full debate):</p>
                   <ArgumentView 
                     argument={this.state.originalArgument}
                     isPreview={true}

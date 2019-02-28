@@ -94,7 +94,7 @@ class ArgumentForm extends React.Component {
       <Form onSubmit={this.handleSubmit} validated={validated} id="argument-form">
         {this.props.parentArgument &&
           <div>
-            <h6>Preview of original argument:</h6>
+            <h6>Preview of the original argument:</h6>
             <ArgumentView argument={this.props.parentArgument} isPreview={true} onClick={this.handleParentArgumentClick.bind(this)}/>
             <hr/>
           </div>

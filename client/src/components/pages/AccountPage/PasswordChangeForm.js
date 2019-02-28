@@ -108,7 +108,7 @@ class PasswordChangeForm extends Component {
                 placeholder="Confirm New Password"
               />
               <br/>
-              <Button disabled={isInvalid} type="submit">
+              <Button variant="outline-info" disabled={isInvalid} type="submit" className="btn btn-lg btn-block">
                 Change Password
               </Button>
             </form>

@@ -4,9 +4,10 @@
   
 #argument-network {
     height: 700px;
-    border: 2px solid black;
+    border: 2px solid rgb(32, 163, 157);
     background-color: rgba(0, 0, 0, 0.06);
     cursor: grab;
+    border-radius: 1em;
 }
 
 .argument-preview {
@@ -21,11 +22,12 @@
 }
 
 .argument-view-root {
-    border: 2px solid black;
+    border: 2px solid lightseagreen;
 }
 
 .argument-preview, .argument-view {
     border-radius: 1em;
+    overflow: hidden;
 }
 
 .network-info {
@@ -34,4 +36,12 @@
 
 #network-toggle {
     margin-right: 10px;
+}
+
+.card-header {
+    background: rgba(204, 224, 226, 0.6);
+}
+
+.card-body {
+    background: rgba(226, 226, 226, 0.06);
 }
