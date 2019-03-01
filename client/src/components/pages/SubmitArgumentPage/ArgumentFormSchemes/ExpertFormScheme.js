@@ -2,6 +2,8 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import {SCHEMES} from '../../../../constants/schemes';
+
 class ExpertScheme extends React.Component {
   constructor(props) {
     super(props)
@@ -32,21 +34,21 @@ class ExpertScheme extends React.Component {
       <div>
         <Form.Group>
           <Form.Label>
-            There is a source E:
+            {SCHEMES.expert.inputQuestions.source}
           </Form.Label>
           <Form.Control required type="text" name="source" value={this.state.source} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            Who is an expert in subject domain D:
+            {SCHEMES.expert.inputQuestions.domain}
           </Form.Label>
           <Form.Control required type="text" name="domain" value={this.state.domain} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            The source makes the assestion A that:
+           {SCHEMES.expert.inputQuestions.assertion}
           </Form.Label>
           <Form.Control required type="text" name="assertion" value={this.state.assertion} onChange={this.handleInputChange} />
         </Form.Group>

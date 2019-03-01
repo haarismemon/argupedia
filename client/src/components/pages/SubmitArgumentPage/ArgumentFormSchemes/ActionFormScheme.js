@@ -2,6 +2,8 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
+import {SCHEMES} from '../../../../constants/schemes';
+
 class ActionScheme extends React.Component {
   constructor(props) {
     super(props)
@@ -34,35 +36,35 @@ class ActionScheme extends React.Component {
       <div>
         <Form.Group>
           <Form.Label>
-            In current circumstance R:
+            {SCHEMES.action.inputQuestions.circumstance}
           </Form.Label>
           <Form.Control required type="text" name="circumstance" value={this.state.circumstance} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            We should perform action A:
+            {SCHEMES.action.inputQuestions.action}
           </Form.Label>
           <Form.Control required type="text" name="action" value={this.state.action} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            Which will result in a new circumstance S:
+            {SCHEMES.action.inputQuestions.newCircumstance}
           </Form.Label>
           <Form.Control required type="text" name="newCircumstance" value={this.state.newCircumstance} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            Which will achieve goal G:
+            {SCHEMES.action.inputQuestions.goal}
           </Form.Label>
           <Form.Control required type="text" name="goal" value={this.state.goal} onChange={this.handleInputChange} />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>
-            That will promote value V:
+            {SCHEMES.action.inputQuestions.value}
           </Form.Label>
           <Form.Control required type="text" name="value" value={this.state.value} onChange={this.handleInputChange} />
         </Form.Group>

@@ -33,9 +33,9 @@ class ExpertDetailScheme extends React.Component {
     return (
       <div>
         <div>
-          <div>There is a source E: {source}</div>
-          <div>Who is an expert in subject domain D: {domain}</div>
-          <div>The source makes the assestion A that: {assertion}</div>
+          <div>{SCHEMES.expert.inputQuestions.source} {source}</div>
+          <div>{SCHEMES.expert.inputQuestions.domain} {domain}</div>
+          <div>{SCHEMES.expert.inputQuestions.assertion} {assertion}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null?
           <div>

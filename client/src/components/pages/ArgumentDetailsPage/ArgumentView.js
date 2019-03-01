@@ -70,9 +70,9 @@ class ArgumentView extends React.Component {
         <Card.Body>
           {argumentNotRoot ?
             (
-              <div>
+              <h6>
                 Critical Question: {argument.criticalQuestion}
-              </div>
+              </h6>
             )
             : null}
           {{

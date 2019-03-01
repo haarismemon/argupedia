@@ -33,7 +33,7 @@ class PopularDetailScheme extends React.Component {
     return (
       <div>
         <div>
-          <div>Proposition A is generally accepted as being true, that gives a reason in favour of A: {proposition}</div>
+          <div>{SCHEMES.popular.inputQuestions.proposition} {proposition}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null ?
           <div>

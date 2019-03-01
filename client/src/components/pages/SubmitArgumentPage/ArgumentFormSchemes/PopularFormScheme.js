@@ -2,6 +2,8 @@ import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
+import {SCHEMES} from '../../../../constants/schemes';
+
 class ExpertScheme extends React.Component {
   constructor(props) {
     super(props)
@@ -30,7 +32,7 @@ class ExpertScheme extends React.Component {
       <div>
         <Form.Group>
           <Form.Label>
-            Proposition A is generally accepted as being true, that gives a reason in favour of A:
+            {SCHEMES.popular.inputQuestions.proposition}
           </Form.Label> 
           <Form.Control required type="text" name="proposition" value={this.state.proposition} onChange={this.handleInputChange} />
         </Form.Group>

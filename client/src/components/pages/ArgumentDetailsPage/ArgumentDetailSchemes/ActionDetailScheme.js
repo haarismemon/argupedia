@@ -33,11 +33,11 @@ class ActionDetailScheme extends React.Component {
     return (
       <div>
         <div>
-          <div>In current circumstance R: {circumstance}</div>
-          <div>We should perform action A: {action}</div>
-          <div>Which will result in a new circumstance S: {newCircumstance}</div>
-          <div>Which will achieve goal G: {goal}</div>
-          <div>That will promote value V: {value}</div>
+          <div>{SCHEMES.action.inputQuestions.circumstance} {circumstance}</div>
+          <div>{SCHEMES.action.inputQuestions.action} {action}</div>
+          <div>{SCHEMES.action.inputQuestions.newCircumstance} {newCircumstance}</div>
+          <div>{SCHEMES.action.inputQuestions.goal} {goal}</div>
+          <div>{SCHEMES.action.inputQuestions.value} {value}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null ?
           <div>

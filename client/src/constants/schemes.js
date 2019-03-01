@@ -49,17 +49,32 @@ const SCHEMES = {
     action: {
         scheme: 'action',
         name: 'Argument for Action',
-        criticalQuestions: ['action1', 'action2', 'action3']
+        criticalQuestions: ['action1', 'action2', 'action3'],
+        inputQuestions: {
+            circumstance: "The current circumstance is...",
+            action: "By performing the following action... ",
+            newCircumstance: "Will result in the following new circumstance.... ",
+            goal: "This will achieve the goal.... ",
+            value: "Which will promote the following value... ",
+        }
     },
     expert: {
         scheme: 'expert',
         name: 'Argument from Expert Opinion',
-        criticalQuestions: ['expert1', 'expert2', 'expert3']
+        criticalQuestions: ['expert1', 'expert2', 'expert3'],
+        inputQuestions: {
+            source: "There is an expert who is... ",
+            domain: "Where the subject domain they are an expert in is... ",
+            assertion: "The source who is an expert makes the assertion... ",
+        }
     },
     popular: {
         scheme: 'popular',
         name: 'Argument from Popular Opinion',
-        criticalQuestions: ['popular1', 'popular2']
+        criticalQuestions: ['popular1', 'popular2'],
+        inputQuestions: {
+            proposition: "There is a proposition that is generally accepted as being true, which is... "
+        }
     }
 }
 
