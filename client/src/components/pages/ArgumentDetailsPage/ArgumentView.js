@@ -61,7 +61,7 @@ class ArgumentView extends React.Component {
         id={argument._id} 
         onClick={isPreview ? this.handleClick : null}
         className={(isPreview ? "argument-preview argument-view-card" : 
-                      `argument-view argument-view-card ${rootId && rootId == argument._id ? "argument-view-root" : ""}`)}>
+                      `argument-view argument-view-card ${rootId && rootId === argument._id ? "argument-view-root" : ""}`)}>
         
         <Card.Header>
           <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {argument.username}</span></div>
