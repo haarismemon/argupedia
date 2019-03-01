@@ -77,7 +77,7 @@ class ArgumentDetails extends React.Component {
         })
 
         const originalId = resp.data[rootId].originalId;
-        if(originalId !== rootId) {
+        if(originalId !== rootId && originalId !== undefined) {
           axios.get(`http://localhost:3001/argument?id=${originalId}`, {crossdomain: true})
           .then(resp => {
             this.setState({

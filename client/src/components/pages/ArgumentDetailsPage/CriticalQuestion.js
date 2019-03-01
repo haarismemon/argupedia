@@ -17,7 +17,7 @@ class CriticalQuestion extends React.Component {
 
   handleClick(isAgree) {
     const currentUserId = this.props.firebase.auth.currentUser ? this.props.firebase.auth.currentUser.uid : null;
-    const parentUserId = this.props.uid;
+    const parentUserId = this.props.argument.uid;
 
     if(parentUserId !== currentUserId) {
       this.props.history.push({
@@ -26,9 +26,9 @@ class CriticalQuestion extends React.Component {
           criticalQuestionTag: this.props.questionTag,
           criticalQuestion: this.props.question,
           agree: isAgree,
-          parentId: this.props._id,
-          originalId: this.props.originalId,
-          ancestorIds: this.props.ancestorIds,
+          parentId: this.props.argument._id,
+          originalId: this.props.argument.originalId,
+          ancestorIds: this.props.argument.ancestorIds,
           parentArgument: this.props.argument
         }
       })
@@ -43,10 +43,10 @@ class CriticalQuestion extends React.Component {
         <p className="cq-text" style={{display: 'inline'}}>{this.props.question}</p>
         <div className="cq-button-group">
           <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
-            Agree <i class="far fa-thumbs-up"></i>
+            Agree <i className="far fa-thumbs-up"></i>
           </Button>
           <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
-            Disagree <i class="far fa-thumbs-down"></i>
+            Disagree <i className="far fa-thumbs-down"></i>
           </Button>
         </div>
       </ListGroup.Item>
