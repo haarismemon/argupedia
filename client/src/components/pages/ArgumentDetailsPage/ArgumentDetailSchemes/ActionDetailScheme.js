@@ -28,7 +28,7 @@ class ActionDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
-    let { circumstance, action, newCircumstance, goal, value } = this.props.argument;
+    let { circumstance, action, newCircumstance, goal, value, link } = this.props.argument;
 
     return (
       <div>
@@ -40,7 +40,10 @@ class ActionDetailScheme extends React.Component {
           <div>{SCHEMES.action.inputQuestions.value} {value}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null ?
-          <div>
+          <div className="argument-view-cq">
+            {link &&
+              <p>Link to related evidence: <a href={link}>{link}</a></p>
+            }
             <hr/>
             <h6>Critical Questions</h6>
             <ListGroup>

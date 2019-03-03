@@ -16,11 +16,6 @@
     cursor: pointer;
 }
 
-.argument-view {
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
 .argument-view-root {
     border: 2px solid lightseagreen;
 }
@@ -44,4 +39,8 @@
 
 .card-body {
     background: rgba(226, 226, 226, 0.06);
+}
+
+.argument-view-cq {
+    margin-top: 10px;
 }

@@ -19,6 +19,7 @@ let argumentSchema = new mongoose.Schema({
   criticalQuestion: String,
   agree: Boolean,
   title: { type: String, required: true },
+  link: String,
 }, options);
 argumentSchema.set('timestamps', true);
 argumentSchema.index({criticalQuestion: 'text', title: 'text'});

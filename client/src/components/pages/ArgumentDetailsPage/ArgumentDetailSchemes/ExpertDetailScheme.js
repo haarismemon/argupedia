@@ -28,7 +28,7 @@ class ExpertDetailScheme extends React.Component {
 
   render() {
     let { criticalQuestions } = this.state;
-    let { source, domain, assertion } = this.props.argument;
+    let { source, domain, assertion, link } = this.props.argument;
 
     return (
       <div>
@@ -38,7 +38,10 @@ class ExpertDetailScheme extends React.Component {
           <div>{SCHEMES.expert.inputQuestions.assertion} {assertion}</div>
         </div>
         {this.props.showCriticalQuestions && criticalQuestions !== null?
-          <div>
+          <div className="argument-view-cq">
+            {link &&
+              <p>Link to related evidence: <a href={link}>{link}</a></p>
+            }
             <hr/>
             <h6>Critical Questions</h6>
             <ListGroup>

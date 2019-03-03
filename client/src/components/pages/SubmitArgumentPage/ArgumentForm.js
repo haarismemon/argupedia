@@ -27,12 +27,13 @@ class ArgumentForm extends React.Component {
       agree: this.props.agree,
       scheme: '',
       title: '',
+      link: '',
       parentId: this.props.parentId,
       originalId: this.props.originalId,
       uid: this.props.authUser.uid,
       username: null,
       ancestorIds: this.props.ancestorIds,
-      validated: false
+      validated: false,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -139,6 +140,19 @@ class ArgumentForm extends React.Component {
             <Alert variant="info">Please select an argument scheme above to continue.</Alert>
           </div>  
         }        
+        {this.state.scheme &&
+          <Form.Group>
+            <Form.Label>
+              Link to related evidence for argument being submitted 
+            </Form.Label>
+            <Form.Control 
+              type="url" 
+              name="link" 
+              value={this.state.link} 
+              onChange={this.handleInputChange}
+              placeholder="e.g. https://www.wikipedia.org/"/>
+          </Form.Group>
+        }
         {
           {
             action: <ActionFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
