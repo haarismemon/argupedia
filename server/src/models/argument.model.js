@@ -53,9 +53,49 @@ popularSchema = new mongoose.Schema({
 popularSchema.index({'$**': 'text'});
 PopularArgumentModel = BaseArgumentModel.discriminator('popular', popularSchema);
 
+positionToKnowSchema = new mongoose.Schema({
+  source: String,
+  proposition: String,
+}, options);
+positionToKnowSchema.index({'$**': 'text'});
+PositionToKnowArgumentModel = BaseArgumentModel.discriminator('positionToKnow', positionToKnowSchema);
+
+causeToEffectSchema = new mongoose.Schema({
+  cause: String,
+  effect: String,
+  evidence: String,
+}, options);
+causeToEffectSchema.index({'$**': 'text'});
+CauseToEffectArgumentModel = BaseArgumentModel.discriminator('causeToEffect', causeToEffectSchema);
+
+function getSchemeModel(scheme, body) {
+  let model;
+
+  switch (scheme) {
+    case "action":
+      model = new ActionArgumentModel(body);
+      break;
+    case "expert":
+      model = new ExpertArgumentModel(body);
+      break;
+    case "popular":
+      model = new PopularArgumentModel(body);
+      break;
+    case "positionToKnow":
+      model = new PositionToKnowArgumentModel(body);
+      break;
+    case "causeToEffect":
+      model = new CauseToEffectArgumentModel(body);
+      break;
+    default:
+      model = new BaseArgumentModel(body);
+      break;
+  }
+
+  return model;
+}
+
 module.exports = {
   BaseArgumentModel,
-  ActionArgumentModel,
-  ExpertArgumentModel,
-  PopularArgumentModel
+  getSchemeModel
 } 

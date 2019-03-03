@@ -42,7 +42,39 @@ const QUESTIONS = {
         question: "Are there good reasons for doubting the accuracy of '${proposition}'?",
         title: "Are there good reasons for doubting the accuracy of the proposition'?",
         symmetric: false
-    }
+    },
+
+    positionToKnow1: {
+        question: "Is '${source}' really in a position to know whether '${proposition}' is true?",
+        title: "Is the source really in a position to know whether the proposition is true?",
+        symmetric: false
+    },
+    positionToKnow2: {
+        question: "Is '${source}' an honest, trustworthy and reliable source?",
+        title: "Is the source an honest, trustworthy and reliable source?",
+        symmetric: false
+    },
+    positionToKnow3: {
+        question: "Did '${source}' really assert that '${proposition}' is true?",
+        title: "Did the source really assert that the proposition is true?",
+        symmetric: false
+    },
+
+    causeToEffect1: {
+        question: "How strong is the casual generalisation?",
+        title: "How strong is the casual generalisation?",
+        symmetric: false
+    },
+    causeToEffect2: {
+        question: "Is the '${evidence}' cited strong enough to warrant the generalisation as stated?",
+        title: "Is the evidence cited strong enough to warrant the generalisation as stated?",
+        symmetric: false
+    },
+    causeToEffect3: {
+        question: "Are there other factors that would or will intefere with or counteract the production of '${effect}' in this case?",
+        title: "Are there other factors that would or will intefere with or counteract the production of the effect in this case?",
+        symmetric: false
+    },
 }
 
 const SCHEMES = {
@@ -74,6 +106,25 @@ const SCHEMES = {
         criticalQuestions: ['popular1', 'popular2'],
         inputQuestions: {
             proposition: "There is a proposition that is generally accepted as being true, which is... "
+        }
+    },
+    positionToKnow: {
+        scheme: 'positionToKnow',
+        name: 'Argument from the Position to Know',
+        criticalQuestions: ['positionToKnow1', 'positionToKnow2', 'positionToKnow3'],
+        inputQuestions: {
+            source: "The source that is in a position to know is...",
+            proposition: "The source asserts that... "
+        }
+    },
+    causeToEffect: {
+        scheme: 'causeToEffect',
+        name: 'Argument from Cause to Effect',
+        criticalQuestions: ['causeToEffect1', 'causeToEffect2', 'causeToEffect3'],
+        inputQuestions: {
+            cause: "The cause that occurs is...",
+            effect: "Hence the effect that will (or might) occur is... ",
+            evidence: "The evidence to support the generalisation between the cause and effect is..."
         }
     }
 }

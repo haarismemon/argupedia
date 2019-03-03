@@ -6,6 +6,8 @@ import dateFormat from 'dateformat';
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
 import PopularDetailScheme from './ArgumentDetailSchemes/PopularDetailScheme'
+import PositionToKnowDetailScheme from './ArgumentDetailSchemes/PositionToKnowDetailScheme'
+import CauseToEffectDetailScheme from './ArgumentDetailSchemes/CauseToEffectDetailScheme'
 import {SCHEMES} from '../../../constants/schemes';
 
 class ArgumentView extends React.Component {
@@ -90,6 +92,12 @@ class ArgumentView extends React.Component {
                         showCriticalQuestions={!isPreview} 
                         argument={argument}/>,
               popular: <PopularDetailScheme 
+                        showCriticalQuestions={!isPreview} 
+                        argument={argument}/>,
+              positionToKnow: <PositionToKnowDetailScheme 
+                        showCriticalQuestions={!isPreview} 
+                        argument={argument}/>,
+              causeToEffect: <CauseToEffectDetailScheme 
                         showCriticalQuestions={!isPreview} 
                         argument={argument}/>
             }[argument.scheme]}

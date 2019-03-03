@@ -9,22 +9,7 @@ router.post('/argument', (req, res) => {
     return res.status(400).send('Request body is missing')
   }
 
-  let model;
-
-  switch (req.body.scheme) {
-    case "action":
-      model = new models.ActionArgumentModel(req.body);
-      break;
-    case "expert":
-      model = new models.ExpertArgumentModel(req.body);
-      break;
-    case "popular":
-      model = new models.PopularArgumentModel(req.body);
-      break;
-    default:
-      model = new models.BaseArgumentModel(req.body);
-      break;
-  }  
+  let model = models.getSchemeModel(req.body.scheme, req.body);
 
   // let model = new ArgumentModel(req.body)
   model.save()

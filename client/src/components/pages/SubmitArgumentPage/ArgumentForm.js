@@ -10,6 +10,8 @@ import {compose} from 'recompose'
 import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
 import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
+import PositionToKnowFormScheme from './ArgumentFormSchemes/PositionToKnowFormScheme'
+import CauseToEffectFormScheme from './ArgumentFormSchemes/CauseToEffectFormScheme'
 import {SCHEMES} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
 
@@ -157,7 +159,9 @@ class ArgumentForm extends React.Component {
           {
             action: <ActionFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
             expert: <ExpertFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
-            popular: <PopularFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>
+            popular: <PopularFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
+            positionToKnow: <PositionToKnowFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>,
+            causeToEffect: <CauseToEffectFormScheme clickHandler={this.handleChildClick.bind(this)} {...this.state}/>
           }[this.state.scheme]
         }
       </Form>
