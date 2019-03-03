@@ -4,11 +4,13 @@ import {Link} from 'react-router-dom'
 
 import * as ROUTES from '../../../constants/routes'
 import ArgumentView from '../ArgumentDetailsPage/ArgumentView'
+import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
 
 class SearchResultsPage extends React.Component {
   state = {
     results: [],
-    searchQuery: ''
+    searchQuery: '',
+    pageLoading: true
   }
   _isMounted = false;
 
@@ -24,7 +26,8 @@ class SearchResultsPage extends React.Component {
     .then(resp => {
       if(this._isMounted) {
         this.setState({
-            results: resp.data
+            results: resp.data,
+            pageLoading: false
         })
       }
     })
@@ -43,8 +46,12 @@ class SearchResultsPage extends React.Component {
   render() {
     const {results, searchQuery} = this.state;
 
-    return (
-      <div>
+    return this.state.pageLoading ? 
+      (<div className="loading-animation">
+        <h1>Loading...</h1>
+        <img src={loadingAnimation} alt="LoadingAnimation"/>
+      </div>) :
+      (<div>
         { results.length > 0 ? 
           (<div>
             <h3>Search Results for: '{searchQuery}'</h3>

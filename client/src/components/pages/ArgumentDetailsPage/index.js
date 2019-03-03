@@ -2,11 +2,12 @@ import React from 'react'
 import axios from 'axios'
 import Graph from 'vis-react'
 import Button from 'react-bootstrap/Button'
+import { Card } from 'react-bootstrap';
 
 import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
 import './ArgumentDetailsPage.css'
 import ArgumentView from './ArgumentView';
-import { Card } from 'react-bootstrap';
+import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
 
 const constants = {
   network: {
@@ -36,7 +37,8 @@ class ArgumentDetails extends React.Component {
         edges: []
       },
       argumentNestData: {},
-      originalArgument: null
+      originalArgument: null,
+      pageLoading: true
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
@@ -86,6 +88,8 @@ class ArgumentDetails extends React.Component {
             });
           })
         }
+
+        this.setState({pageLoading: false});
       }
     })
     .catch(console.error)
@@ -181,8 +185,12 @@ class ArgumentDetails extends React.Component {
 
     const isRootNotOriginalArgument = this.state.originalArgument && this.state.originalArgument.id !== this.state.rootId;
 
-    return (
-      <div>
+    return this.state.pageLoading ? 
+      (<div className="loading-animation">
+        <h1>Loading...</h1>
+        <img src={loadingAnimation} alt="LoadingAnimation"/>
+      </div>) :
+      (<div>
         <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
         { isRootNotOriginalArgument &&
           <Button variant="info" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
