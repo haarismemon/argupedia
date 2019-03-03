@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 import PropTypes from 'prop-types'
+import dateFormat from 'dateformat';
 
 import ActionDetailScheme from './ArgumentDetailSchemes/ActionDetailScheme'
 import ExpertDetailScheme from './ArgumentDetailSchemes/ExpertDetailScheme'
@@ -56,6 +57,9 @@ class ArgumentView extends React.Component {
                           (`${argumentNotRoot ? `${isArgumentPositive} = ` : ''} ${schemeName}`) :
                           schemeName;
 
+    const createdAtDate = Date.parse(argument.createdAt);
+    const submitDate = dateFormat(createdAtDate, 'dd mmmm yyyy "at" HH:MM');
+
     return (
       <Card 
         id={argument._id} 
@@ -65,7 +69,10 @@ class ArgumentView extends React.Component {
         
         <Card.Header>
           <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {argument.username}</span></div>
-          <Card.Subtitle>{cardSubtitle}</Card.Subtitle>
+          <Card.Subtitle>
+            {cardSubtitle}
+            <span className="submit-date">{submitDate}</span>
+          </Card.Subtitle>
         </Card.Header>
         <Card.Body>
           {argumentNotRoot ?
