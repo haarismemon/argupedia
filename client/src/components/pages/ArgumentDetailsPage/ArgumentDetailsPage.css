@@ -26,7 +26,8 @@
 }
 
 .network-info {
-    margin-top: 30px;
+    margin-top: 2em;
+    text-align: center;
 }
 
 #network-toggle {
@@ -52,4 +53,42 @@
 
 .argument-view-cq {
     margin-top: 10px;
+}
+
+.key-node {
+    width: 60px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.in-key-node {
+    background: lime;
+    border: 3px solid darkgreen;
+}
+
+.out-key-node {
+    background: orangered;
+    border: 3px solid maroon;
+}
+
+.undec-key-node {
+    background: white;
+    border: 3px solid black;
+}
+
+.col-sm {
+    text-align: center;
+}
+
+.key-label {
+    margin-left: 16px;
+}
+
+.key-card {
+    margin-top: 1em;
+    border-radius: 1em;
+    overflow: hidden;
 }

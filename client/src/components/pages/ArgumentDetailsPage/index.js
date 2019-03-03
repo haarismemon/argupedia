@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
 import './ArgumentDetailsPage.css'
 import ArgumentView from './ArgumentView';
+import { Card } from 'react-bootstrap';
 
 const constants = {
   network: {
@@ -188,7 +189,26 @@ class ArgumentDetails extends React.Component {
         }
         {this.state.showNetwork ?
           <div id="network-page">
-            <p className="network-info">Double click on a node to get more information. Selected argument becomes the root of the argument nest.</p>
+            <Card className="key-card">
+              <Card.Header>Argument Label Key</Card.Header>
+              <Card.Body className="container">
+                <div className="row">
+                  <div className="col-sm">
+                    <div className="key-node in-key-node"/>
+                    <label className="key-label">IN Label</label>
+                  </div>
+                  <div className="col-sm">
+                    <div className="key-node out-key-node"/>
+                    <label className="key-label">OUT Label</label>
+                  </div>
+                  <div className="col-sm">
+                    <div className="key-node undec-key-node"/>
+                    <label className="key-label">UNDEC Label</label>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+            <p className="network-info"><strong>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</strong></p>
             <div id="argument-network">
               <Graph 
                 graph={this.state.networkData} 
