@@ -25,7 +25,7 @@ class ArgumentNest extends React.Component {
     const currentArgument = this.props.argumentData[currentId];
 
     return (
-      <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}}>
+      <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}} className={`argument-nest nest-level-${this.props.level}`}>
         <ArgumentView argument={currentArgument} rootId={rootId}/>
         {this.state.childrenArguments.map(argument =>
           <ArgumentNest 

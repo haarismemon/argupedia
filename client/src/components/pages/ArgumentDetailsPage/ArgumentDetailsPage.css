@@ -41,6 +41,15 @@
     background: rgba(226, 226, 226, 0.06);
 }
 
+.argument-nest:not(.nest-level-0) {
+    border-left: 1px solid rgb(128, 128, 128, 0.15);
+    padding-top: 1em;
+}
+
+.nest-level-0 {
+    margin-top: 1em;
+}
+
 .argument-view-cq {
     margin-top: 10px;
 }
