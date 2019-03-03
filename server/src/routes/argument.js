@@ -181,6 +181,22 @@ router.get('/argument/search', (req, res) => {
     })
 })
 
+router.get('/argument/userSubmittedArguments', (req, res) => {
+  if(!req.query.uid) {
+    return res.status(400).send('Missing URL parameter: uid')
+  }
+
+  let query = { uid: req.query.uid }
+
+  models.BaseArgumentModel.find(query, req.body)
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 function updateDataWithCalculatedDescendents(data, arguments) {
   arguments.forEach(argument => {
       let parentArgument = data[argument.parentId]
