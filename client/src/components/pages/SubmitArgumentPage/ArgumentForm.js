@@ -87,8 +87,8 @@ class ArgumentForm extends React.Component {
 
       axios.post('http://localhost:3001/argument', {...this.state})
         .then((resp) => {
-          const newArgumentId = resp.data._id;
-          this.props.history.push(`/argument/${newArgumentId}`);
+          const redirectArgumentId = resp.data.originalId ? `${resp.data.originalId}?highlight=${resp.data._id}` : resp.data._id;
+          this.props.history.push(`/argument/${redirectArgumentId}`);
         });
     }
   }

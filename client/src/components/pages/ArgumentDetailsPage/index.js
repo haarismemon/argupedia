@@ -26,6 +26,7 @@ class ArgumentDetails extends React.Component {
     
     const params = new URLSearchParams(this.props.location.search)
     const mode = params.get('mode')
+    const highlightId = params.get('highlight')
 
     this.state = {
       rootId: null,
@@ -38,7 +39,8 @@ class ArgumentDetails extends React.Component {
       },
       argumentNestData: {},
       originalArgument: null,
-      pageLoading: true
+      pageLoading: true,
+      highlightId: highlightId
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
@@ -141,7 +143,7 @@ class ArgumentDetails extends React.Component {
   }
 
   render() {
-    const { network } = this.state;
+    const { network, highlightId } = this.state;
 
     // after the nodes have been settled and after 2 seconds, make the network fit the screen
     if(network) {
@@ -277,7 +279,8 @@ class ArgumentDetails extends React.Component {
                   level={0} 
                   rootId={argumentRootId} 
                   currentId={argumentRootId}
-                  argumentData={this.state.argumentNestData}/>
+                  argumentData={this.state.argumentNestData}
+                  highlightId={highlightId}/>
               </div>
                 
             )

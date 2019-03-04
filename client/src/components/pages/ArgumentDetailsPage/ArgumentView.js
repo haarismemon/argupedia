@@ -42,7 +42,7 @@ class ArgumentView extends React.Component {
 
   render() {
     const {argument, isPreview} = this.state;
-    const {rootId} = this.props;
+    const {rootId, highlightId} = this.props;
 
     const argumentNotRoot = argument.criticalQuestion
     const isArgumentPositive = argument.agree ? "Positive" : "Negative"
@@ -62,12 +62,24 @@ class ArgumentView extends React.Component {
     const createdAtDate = Date.parse(argument.createdAt);
     const submitDate = dateFormat(createdAtDate, 'dd mmmm yyyy "at" HH:MM');
 
+    let highlightArgument = ""; 
+    
+    if(highlightId) {
+      if(highlightId === argument._id) {
+        highlightArgument = "argument-view-highlight";
+      }
+    } else {
+      if (rootId && rootId === argument._id) {
+        highlightArgument = "argument-view-highlight";
+      }
+    }
+      
     return (
       <Card 
         id={argument._id} 
         onClick={isPreview ? this.handleClick : null}
         className={(isPreview ? "argument-preview argument-view-card" : 
-                      `argument-view argument-view-card ${rootId && rootId === argument._id ? "argument-view-root" : ""}`)}>
+                      `argument-view argument-view-card ${highlightArgument}`)}>
         
         <Card.Header>
           <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {argument.username}</span></div>

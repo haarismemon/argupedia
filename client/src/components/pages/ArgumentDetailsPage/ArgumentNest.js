@@ -21,18 +21,19 @@ class ArgumentNest extends React.Component {
   }
   
   render() {
-    const {currentId, rootId} = this.props;
+    const {currentId, rootId, highlightId} = this.props;
     const currentArgument = this.props.argumentData[currentId];
 
     return (
       <div style={this.props.level !== 0 ? {marginLeft: '60px'} : {}} className={`argument-nest nest-level-${this.props.level}`}>
-        <ArgumentView argument={currentArgument} rootId={rootId}/>
+        <ArgumentView argument={currentArgument} rootId={rootId} highlightId={highlightId}/>
         {this.state.childrenArguments.map(argument =>
           <ArgumentNest 
             key={argument._id} 
             level={this.props.level + 1} 
             currentId={argument._id} 
-            argumentData={this.props.argumentData}/>
+            argumentData={this.props.argumentData}
+            highlightId={highlightId}/>
         )}
       </div>
     );
