@@ -10,10 +10,7 @@ function generateLabelledNodesAndEdges(arguments) {
     nodesAndEdges = addSupportRelations(nodesAndEdges);
 
     // categorises the arguments into labels: IN, OUT, and UNDEC
-    const labelledNodes = groundedLabellingAlgorithm(nodesAndEdges);
-
-    // update the nodes with label colours
-    nodesAndEdges.nodes = colourArgumentNodes(labelledNodes);
+    groundedLabellingAlgorithm(nodesAndEdges);
 
     return nodesAndEdges;
 }
@@ -29,7 +26,7 @@ function convertArgumentsToNodesAndEdges(arguments) {
         let nodeTitle = argument.title ;
         nodeTitle = addNewlineInLabel(nodeTitle);
 
-        const schemeName = schemes.SCHEMES[argument.scheme].name        
+        const schemeName = schemes.SCHEMES[argument.scheme].name
         nodesAndEdges.nodes.push({ 
             id: argumentId, 
             label: nodeTitle + `\n(${schemeName})`,
@@ -173,6 +170,7 @@ function groundedLabellingAlgorithm(nodesAndEdges) {
 
             // if all are out, then add node to IN
             if(allAttackingArgumentsAreOut) {
+                node.group = 'inNode';
                 newLabelling.in.push(node);
             }
         });
@@ -191,6 +189,7 @@ function groundedLabellingAlgorithm(nodesAndEdges) {
 
             // if there is one attacking that is IN, then add node to OUT
             if(oneAttackingArgumentIsIn) {
+                node.group = 'outNode';
                 newLabelling.out.push(node);
             }
         });
@@ -206,52 +205,20 @@ function groundedLabellingAlgorithm(nodesAndEdges) {
     // assign remaining arguments to the undecided label
     currentLabelling.undec = calculateUnlabelledArguments(currentLabelling, allNodes);
 
-    return currentLabelling;
-}
-
-function colourArgumentNodes(labelledNodes) {
-    let colouredNodes = []
-
-    labelledNodes.in.forEach(inNode => {
-        inNode.color = {
-            background: "lime",
-            border: "darkGreen",
-            highlight: {
-                background: "mediumSeaGreen",
-                border: "darkGreen"
-            }
-        };
-        colouredNodes.push(inNode);
-    });
-
-    labelledNodes.out.forEach(outNode => {
-        outNode.color = {
-            background: "orangered",
-            border: "maroon",
-            highlight: {
-                background: "crimson",
-                border: "maroon"
-            }
-        };
-        outNode.font = {
-            color: "white"
-        }
-        colouredNodes.push(outNode);
-    });
-
-    labelledNodes.undec.forEach(undec => {
-        undec.color = {
-            background: "white",
-        };
-        colouredNodes.push(undec);
-    });
-
-    return colouredNodes;
+    nodesAndEdges.nodes = [...currentLabelling.in, ...currentLabelling.out, ...currentLabelling.undec];
 }
 
 function calculateUnlabelledArguments(currentLabelling, allNodes) {
     const union = new Set(currentLabelling.in.concat(currentLabelling.out));
-    return allNodes.filter(argument => !union.has(argument));
+    return allNodes.filter(argument => {
+        if(!union.has(argument)) {
+            argument.group = "undecNode";
+            return true;
+        } else {
+            return false;
+        }
+        
+    });
 }
 
 function getAllAttackingArguments(nodesAndEdges, node) {
@@ -318,7 +285,7 @@ function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOpp
     }
 
     if(isDashed) {
-        edge.dashes = true;
+        edge.dashes = [20];
     }
 
     return edge;

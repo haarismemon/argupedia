@@ -156,7 +156,7 @@ class ArgumentDetails extends React.Component {
       physics: {
         solver: 'repulsion',
         repulsion: {
-          centralGravity: 0.001,
+          centralGravity: 0.000001,
           springLength: 400,
           springConstant: 0.001,
           nodeDistance: 700,
@@ -169,6 +169,37 @@ class ArgumentDetails extends React.Component {
       interaction: {
         navigationButtons: true,
         zoomView: false
+      },
+      groups: {
+        inNode: {
+          color: {
+            background: "lime",
+            border: "darkGreen",
+            highlight: {
+                background: "mediumSeaGreen",
+                border: "darkGreen"
+            }
+          }
+        },
+        outNode: {
+          color: {
+              background: "orangered",
+              border: "maroon",
+              highlight: {
+                  background: "crimson",
+                  border: "maroon"
+              },
+              font: {
+                  color: "white"
+              }
+          }
+        },
+        undecNode: {
+          color: {
+              background: "white",
+              border: "black",
+          }
+        }
       }
     };
 
