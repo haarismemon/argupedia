@@ -39,7 +39,7 @@ class AccountPage extends Component {
         <PasswordChangeForm />
         <h3>Your submitted arguments:</h3>
         {this.state.pageLoading ? 
-          (<div className="loading-animation">
+          (<div className="loading-animation" style={{textAlign: 'center'}}>
             <h1>Loading...</h1>
             <img src={loadingAnimation} alt="LoadingAnimation"/>
           </div>) 

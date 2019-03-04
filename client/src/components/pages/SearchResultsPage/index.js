@@ -47,7 +47,7 @@ class SearchResultsPage extends React.Component {
     const {results, searchQuery} = this.state;
 
     return this.state.pageLoading ? 
-      (<div className="loading-animation">
+      (<div className="loading-animation" style={{textAlign: 'center'}}>
         <h1>Loading...</h1>
         <img src={loadingAnimation} alt="LoadingAnimation"/>
       </div>) :

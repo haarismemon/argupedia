@@ -106,17 +106,21 @@ router.get('/argument/descendents', (req, res) => {
       }
     ]
   }
-
+  
   models.BaseArgumentModel.find(query, (err, arguments) => {
-    let data = arguments.reduce((obj, argument) => {
-      argument = argument.toJSON()
-      argument.children = []
+    let data;
+    
+    if(arguments !== undefined) {
+      data = arguments.reduce((obj, argument) => {
+        argument = argument.toJSON()
+        argument.children = []
 
-      obj[argument._id] = argument
-      return obj
-    }, {})
+        obj[argument._id] = argument
+        return obj
+      }, {})
 
-    updateDataWithCalculatedDescendents(data, arguments)
+      updateDataWithCalculatedDescendents(data, arguments)
+    }
 
     return res.json(data)
   })
@@ -138,7 +142,8 @@ router.get('/argument/network', (req, res) => {
   }
 
   models.BaseArgumentModel.find(query, (err, arguments) => {
-    let nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments, req.query.id);
+    let nodesAndAttacks;
+    if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments, req.query.id);
     return res.json(nodesAndAttacks)
   })
 })
