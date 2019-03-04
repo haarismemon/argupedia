@@ -1,11 +1,11 @@
 const schemes = require('./schemes.js');
 
-function generateLabelledNodesAndEdges(arguments) {
+function generateLabelledNodesAndEdges(arguments, rootId) {
     if(!arguments) {
         arguments = [];
     }
     
-    let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments);
+    let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments, rootId);
 
     nodesAndEdges = addSupportRelations(nodesAndEdges);
 
@@ -15,7 +15,7 @@ function generateLabelledNodesAndEdges(arguments) {
     return nodesAndEdges;
 }
 
-function convertArgumentsToNodesAndEdges(arguments) {
+function convertArgumentsToNodesAndEdges(arguments, rootId) {
     let nodesAndEdges = {
         nodes: [],
         edges: []
@@ -26,12 +26,22 @@ function convertArgumentsToNodesAndEdges(arguments) {
         let nodeTitle = argument.title ;
         nodeTitle = addNewlineInLabel(nodeTitle);
 
-        const schemeName = schemes.SCHEMES[argument.scheme].name
-        nodesAndEdges.nodes.push({ 
+        const schemeName = schemes.SCHEMES[argument.scheme].name;
+        let node = { 
             id: argumentId, 
             label: nodeTitle + `\n(${schemeName})`,
             borderWidth: 2
-        })
+        };
+        if(argumentId == rootId) {
+            node.fixed = {
+                x: true,
+                y: true
+            }
+            node.x = 0;
+            node.y = 0;
+        }        
+
+        nodesAndEdges.nodes.push(node)
 
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
         
