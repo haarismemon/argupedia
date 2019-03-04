@@ -4,14 +4,15 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavLink from 'react-bootstrap/NavLink';
 import { withRouter } from 'react-router-dom'
+import NavItem from 'react-bootstrap/NavItem';
 import {compose} from 'recompose'
 
 import * as ROUTES from '../../constants/routes'
 import SignOutButton from './SignOutButton'
 import { AuthUserContext } from '../Session';
+import { withFirebase } from '../Firebase';
 
 import './Navigation.css';
-import { withFirebase } from '../Firebase';
 
 class NavigationBar extends React.Component {
     render() {
@@ -27,12 +28,12 @@ class NavigationBar extends React.Component {
                     <Nav className="mr-auto">
                         <ActiveLink to={ROUTES.HOME} currentPath={currentPath} text="Home"/>
                         <ActiveLink to={ROUTES.SUBMIT_ARGUMENT} currentPath={currentPath} text="Submit Argument"/>
-                        <AuthUserContext.Consumer>
-                            { authUser => 
-                                authUser ? <NavigationAuth user={authUser} currentPath={currentPath}/> : <NavigationNonAuth currentPath={currentPath}/>
-                            }
-                        </AuthUserContext.Consumer>
                     </Nav>
+                    <AuthUserContext.Consumer>
+                        { authUser => 
+                            authUser ? <NavigationAuth user={authUser} currentPath={currentPath}/> : <NavigationNonAuth currentPath={currentPath}/>
+                        }
+                    </AuthUserContext.Consumer>
                 </Navbar.Collapse>
             </Navbar>
         );
@@ -40,20 +41,22 @@ class NavigationBar extends React.Component {
 }
 
 const NavigationAuth = (props) => (
-    <div className="navbar-right">
+    <Nav>
         {props.user.displayName &&
-            <span className="account-label">Signed in as:<ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text={props.user.displayName}/></span>
+        <NavItem>
+            <Navbar.Text>Signed in as:&nbsp;</Navbar.Text>
+            <ActiveLink to={ROUTES.ACCOUNT} currentPath={props.currentPath} text={props.user.displayName}/>
+        </NavItem>
         }
-        
         <SignOutButton />
-    </div>
+    </Nav>
 )
 
 const NavigationNonAuth = (props) => (
-    <div className="navbar-right">
+    <Nav>
         <ActiveLink to={ROUTES.SIGN_IN} currentPath={props.currentPath} text="Sign In"/>
         <ActiveLink to={ROUTES.SIGN_UP} currentPath={props.currentPath} text="Sign Up"/>
-    </div>
+    </Nav>
 )
 
 const ActiveLink = (props) => {
