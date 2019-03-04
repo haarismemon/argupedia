@@ -72,17 +72,17 @@ function addSupportRelations(nodesAndEdges) {
                 //find all nodes that x attacks
                 const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
                 
-                allAttackedNodesByX.forEach(nodeY => {
+                allAttackedNodesByX.forEach(nodeYid => {
                     // console.log(nodeY, attackedAndSupportedNodes[nodeY]);
-                    if(attackedAndSupportedNodes[nodeY]) {
-                        const allSupportedNodesByY = attackedAndSupportedNodes[nodeY].support;
+                    if(attackedAndSupportedNodes[nodeYid]) {
+                        const allSupportedNodesByY = attackedAndSupportedNodes[nodeYid].support;
                         
-                        allSupportedNodesByY.forEach(nodeZ => {
+                        allSupportedNodesByY.forEach(nodeZid => {
                             // for each z, creating a new special edge (be able to differentiate between normal edge by making it dashed) from x to z
                             
-                            if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZ)) {
-                                const newAttackEdge = createEdge(nodeX.id, nodeZ, "", false, false, false, true);
-                                attackedAndSupportedNodes[nodeX.id].attack.push(nodeZ);
+                            if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZid)) {
+                                const newAttackEdge = createEdge(nodeX.id, nodeZid, "", false, false, false, true);
+                                attackedAndSupportedNodes[nodeX.id].attack.push(nodeZid);
                                 currentTotalEdges.push(newAttackEdge);
                             }
                         })
@@ -295,13 +295,14 @@ function createEdge(fromNode, toNode, attackLabel, isSupport, isSymmetric, inOpp
         to: toNode,
         label: attackLabel,
         width: 2,
+        arrows: {
+            to: { enabled: true, scaleFactor: 2, type: 'arrow' }
+        },
         isSupport
     }
 
     if(isSupport) {
-        edge.arrows = {
-            to: { enabled: true, scaleFactor: 1, type: 'circle' }
-        }
+        edge.arrows.to.type = 'circle';
     }
 
     if(isSymmetric) {
