@@ -9,20 +9,11 @@ function generateLabelledNodesAndEdges(arguments) {
 
     nodesAndEdges = addSupportRelations(nodesAndEdges);
 
-    const backupNodesMap = nodesAndEdges.nodes.reduce((obj, item) => {
-        obj[item['id']] = item
-        return obj;
-      }, {});
-
-    const supportedGroups = joinSupportedArguments(nodesAndEdges);
-
     // categorises the arguments into labels: IN, OUT, and UNDEC
     const labelledNodes = groundedLabellingAlgorithm(nodesAndEdges);
 
     // update the nodes with label colours
     nodesAndEdges.nodes = colourArgumentNodes(labelledNodes);
-
-    ungroupSupportedArguments(supportedGroups, backupNodesMap, nodesAndEdges);
 
     return nodesAndEdges;
 }
@@ -81,16 +72,17 @@ function addSupportRelations(nodesAndEdges) {
                 //find all nodes that x attacks
                 const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
                 
-                allAttackedNodesByX.forEach(nodeYid => {
-                    if(attackedAndSupportedNodes[nodeYid]) {
-                        const allSupportedNodesByY = attackedAndSupportedNodes[nodeYid].support;
+                allAttackedNodesByX.forEach(nodeY => {
+                    // console.log(nodeY, attackedAndSupportedNodes[nodeY]);
+                    if(attackedAndSupportedNodes[nodeY]) {
+                        const allSupportedNodesByY = attackedAndSupportedNodes[nodeY].support;
                         
-                        allSupportedNodesByY.forEach(nodeZid => {
+                        allSupportedNodesByY.forEach(nodeZ => {
                             // for each z, creating a new special edge (be able to differentiate between normal edge by making it dashed) from x to z
                             
-                            if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZid)) {
-                                const newAttackEdge = createEdge(nodeX.id, nodeZid, "", false, false, false, true);
-                                attackedAndSupportedNodes[nodeX.id].attack.push(nodeZid);
+                            if(!attackedAndSupportedNodes[nodeX.id].attack.includes(nodeZ)) {
+                                const newAttackEdge = createEdge(nodeX.id, nodeZ, "", false, false, false, true);
+                                attackedAndSupportedNodes[nodeX.id].attack.push(nodeZ);
                                 currentTotalEdges.push(newAttackEdge);
                             }
                         })
@@ -110,137 +102,6 @@ function addSupportRelations(nodesAndEdges) {
     return nodesAndEdges
 }
 
-function joinSupportedArguments(nodesAndEdges) {
-    const groups = {}
-
-    let nextGroupId = 1;
-
-    // sort the nodes into groups if they are supported
-    for(let i = 0; i < nodesAndEdges.edges.length; ++i) {
-        let edge = nodesAndEdges.edges[i];
-        let fromEdge = edge.from;
-        let toEdge = edge.to;
-
-        const groupIdForFromEdge = whichGroupIsNodeIn(groups, fromEdge);
-        const groupIdForToEdge = whichGroupIsNodeIn(groups, toEdge);
-        if(edge.isSupport) {
-            if(!groupIdForFromEdge && !groupIdForToEdge) {
-                groups[nextGroupId] = [fromEdge, toEdge];
-            } else if (!groupIdForFromEdge) {
-                groups[groupIdForToEdge].push(fromEdge);
-            } else if (!groupIdForToEdge) {
-                groups[groupIdForFromEdge].push(toEdge);
-            }
-        } 
-        
-        nextGroupId += 1;
-    };
-
-    // update the edges with the group id labels
-    for(let i = 0; i < nodesAndEdges.edges.length; ++i) {
-        let edge = nodesAndEdges.edges[i];
-        let fromEdge = edge.from;
-        let toEdge = edge.to;
-
-        // if the attacked argument (toEdge) is in a group, change the edge id to be the group id
-        const newGroupIdForFromEdge = whichGroupIsNodeIn(groups, fromEdge);
-        const newGroupIdForToEdge = whichGroupIsNodeIn(groups, toEdge);
-        
-        // if both nodes are part of a group, then leave unchanged to prevent unneccesary edges within a group
-        if(!(newGroupIdForFromEdge && newGroupIdForToEdge)) {
-            if(newGroupIdForFromEdge) {
-                edge.originalFrom = edge.from;
-                edge.from = newGroupIdForFromEdge;
-            }
-            if(newGroupIdForToEdge) {
-                edge.originalTo = edge.to;
-                edge.to = newGroupIdForToEdge;
-            }
-        }
-    }
-
-    let newNodes = [];
-    let alreadyAddedGroups = [];
-
-    nodesAndEdges.nodes.forEach(node => {
-        const groupId = whichGroupIsNodeIn(groups, node.id);
-        if(groupId) {
-            if(!alreadyAddedGroups.includes(groupId)) {
-                newNodes.push({
-                    id: groupId,
-                    label: groupId,
-                });
-                alreadyAddedGroups.push(groupId);
-            }
-        } else {
-            newNodes.push(node);
-        }
-    })
-
-    nodesAndEdges.nodes = newNodes;
-
-    return groups;
-}
-
-function ungroupSupportedArguments(supportedGroups, backupNodesMap, nodesAndEdges) {
-    let newNodesList = [];
-    let groupIdsList = [];
-
-    //go through the current nodes in nodesAndEdges.
-    nodesAndEdges.nodes.forEach(node => {
-        const nodeIdsInGroup = supportedGroups[node.id];
-        
-        //if a node exists in the supported groups list, then loop through all the nodes in the group (in supportedGroups) and add them back to nodesAndEdges whilst adding their new labels and colours
-        if(nodeIdsInGroup) {
-            const groupId = node.id;
-            delete node.id;
-            delete node.label;
-
-            groupIdsList.push(groupId);
-
-            nodeIdsInGroup.forEach(supportedNodeId => {
-                const originalNode = backupNodesMap[supportedNodeId];
-                const newNode = {...originalNode, ...node};
-                newNodesList.push(newNode);
-            });
-        } else {
-            newNodesList.push(node);
-        }
-    });
-
-    // go through the edges and replace the group ids with the actual node ids
-    for(let i in nodesAndEdges.edges) {
-        let edge = nodesAndEdges.edges[i];
-        const originalTo = edge.originalTo;
-        const originalFrom = edge.originalFrom;
-
-        if(originalTo) {
-            edge.to = originalTo;
-            delete edge.originalTo;
-        }
-        if(originalFrom) {
-            edge.from = originalFrom;
-            delete edge.originalFrom;
-        }
-    }
-
-    nodesAndEdges.nodes = newNodesList;
-}
-
-function whichGroupIsNodeIn(groups, nodeId) {
-    let foundGroupId;
-
-    Object.keys(groups).forEach(groupId => {
-        const group = groups[groupId];
-        
-        if(group.includes(nodeId)) {
-            foundGroupId = groupId;
-        }
-    })
-
-    return foundGroupId;
-}
-
 function allAttackedAndSupportedArguments(nodesAndEdges) {
     let allAttackedAndSupportedArguments = {}
 
@@ -248,7 +109,7 @@ function allAttackedAndSupportedArguments(nodesAndEdges) {
         const attackingArgument = edge.from;
         const attackedArgument = edge.to;
         const isSupport = edge.isSupport;
-        // delete edge.isSupport;
+        delete edge.isSupport;
 
         let currentAttackedArguments = allAttackedAndSupportedArguments[attackingArgument];
         if(currentAttackedArguments) {
