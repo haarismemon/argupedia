@@ -116,7 +116,6 @@ function allAttackedAndSupportedArguments(nodesAndEdges) {
         const attackingArgument = edge.from;
         const attackedArgument = edge.to;
         const isSupport = edge.isSupport;
-        delete edge.isSupport;
 
         let currentAttackedArguments = allAttackedAndSupportedArguments[attackingArgument];
         if(currentAttackedArguments) {
@@ -239,7 +238,7 @@ function getAllAttackingArguments(nodesAndEdges, node) {
         const attackedArgument = attack.to;
 
         // store the attacking argument, if the argument being attacked matches the id of the provided node
-        if(attackedArgument == node.id) {
+        if(attackedArgument == node.id && !attack.isSupport) {
             attackingArguments.push(attackingArgument);
         }
     });
