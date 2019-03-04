@@ -12,7 +12,7 @@ import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
 import PositionToKnowFormScheme from './ArgumentFormSchemes/PositionToKnowFormScheme'
 import CauseToEffectFormScheme from './ArgumentFormSchemes/CauseToEffectFormScheme'
-import {SCHEMES} from '../../../constants/schemes';
+import {SCHEMES, QUESTIONS} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
 
 import './ArgumentForm.css'
@@ -36,6 +36,7 @@ class ArgumentForm extends React.Component {
       username: null,
       ancestorIds: this.props.ancestorIds,
       validated: false,
+      ignoreSchemes: []
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -49,6 +50,11 @@ class ArgumentForm extends React.Component {
         this.setState({username: val.username});
       }
     });
+
+    if(this.props.criticalQuestionTag) {
+      const ignoreSchemes = QUESTIONS[this.props.criticalQuestionTag].ignoreSchemes;
+      this.setState({ignoreSchemes});
+    }
   }
 
   handleInputChange(event) {
@@ -91,6 +97,11 @@ class ArgumentForm extends React.Component {
     this.props.history.push(`/argument/${this.props.parentArgument._id}`)
   }
 
+  checkSchemeIsIgnored(scheme) {
+    const {ignoreSchemes} = this.state;
+    return ignoreSchemes.includes(scheme);
+  }
+
   render() {
     const { validated } = this.state;
 
@@ -115,12 +126,20 @@ class ArgumentForm extends React.Component {
         <Form.Group>
           <Form.Label>
             Argument scheme
+            {this.state.ignoreSchemes.length > 0 && 
+              <small><br/>Choice of schemes have been constrained to only allow ones that are appropriate for this specific critical question</small>
+            }
           </Form.Label>
           <Form.Control required as="select" name="scheme" value={this.state.scheme} onChange={this.handleInputChange}>
             <option value="" disabled hidden>Select a template to format your argument</option>
             {
               Object.values(SCHEMES).map(argumentScheme => 
-                <option value={argumentScheme.scheme} key={argumentScheme.scheme}>{argumentScheme.name}</option>
+                <option 
+                  value={argumentScheme.scheme} 
+                  key={argumentScheme.scheme} 
+                  disabled={this.checkSchemeIsIgnored(argumentScheme.scheme)}>
+                    {argumentScheme.name} {this.checkSchemeIsIgnored(argumentScheme.scheme) ? "(disabled)" : ""}
+                </option>
               )
             }
           </Form.Control>

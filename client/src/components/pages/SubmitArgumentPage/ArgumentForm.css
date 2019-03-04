@@ -17,3 +17,7 @@
     border-radius: 1em;
     background-color: rgb(0, 0, 0, 0.02);
 }
+
+small br {
+    line-height:150%;
+}

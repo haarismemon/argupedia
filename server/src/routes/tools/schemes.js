@@ -4,76 +4,90 @@ const QUESTIONS = {
     action1: {
         question: "Is the current circumstance '${circumstance}' true?",
         title: "Is the current circumstance true?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     action2: {
         question: "Does the action '${action}' achieve the goal of '${goal}'?",
         title: "Does the action achieve the goal?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     action3: {
         question: "Is there an alternative action that achieves the goal '${goal}'?",
         title: "Is there an alternative action that achieves the same goal?",
-        symmetric: true
+        symmetric: true,
+        ignoreSchemes: ['expert', 'popular', 'positionToKnow', 'causeToEffect']
     },
     
     expert1: {
-        question: "How credible is '${source}' an expert?",
+        question: "How credible is the source '${source}' an expert?",
         title: "How credible is the source an expert?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     expert2: {
-        question: "Is '${source}' an expert in the field that the assertion '${assertion}' is in?",
+        question: "Is the source '${source}' an expert in the field that the assertion '${assertion}' is in?",
         title: "Is the source an expert in the field of the assertion?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     expert3: {
         question: "Is the assertion '${assertion}' consistent with what other experts assert?",
         title: "Is the assertion consistent with what other experts assert?",
-        symmetric: true
+        symmetric: true,
+        ignoreSchemes: ['action']
     },
 
     popular1: {
-        question: "What evidence do we have for believing that '${proposition}' is generally accepted?",
+        question: "What evidence do we have for believing that the proposition '${proposition}' is generally accepted?",
         title: "What evidence do we have for believing that the proposition is generally accepted?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     popular2: {
-        question: "Are there good reasons for doubting the accuracy of '${proposition}'?",
+        question: "Are there good reasons for doubting the accuracy of the proposition '${proposition}'?",
         title: "Are there good reasons for doubting the accuracy of the proposition'?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
 
     positionToKnow1: {
-        question: "Is '${source}' really in a position to know whether '${proposition}' is true?",
+        question: "Is the source '${source}' really in a position to know whether the proposition '${proposition}' is true?",
         title: "Is the source really in a position to know whether the proposition is true?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     positionToKnow2: {
-        question: "Is '${source}' an honest, trustworthy and reliable source?",
+        question: "Is the source '${source}' an honest, trustworthy and reliable source?",
         title: "Is the source an honest, trustworthy and reliable source?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
     positionToKnow3: {
-        question: "Did '${source}' really assert that '${proposition}' is true?",
+        question: "Did the source '${source}' really assert that the proposition '${proposition}' is true?",
         title: "Did the source really assert that the proposition is true?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
 
     causeToEffect1: {
         question: "How strong is the casual generalisation?",
         title: "How strong is the casual generalisation?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action', 'causeToEffect']
     },
     causeToEffect2: {
-        question: "Is the '${evidence}' cited strong enough to warrant the generalisation as stated?",
+        question: "Is the evidence '${evidence}' cited strong enough to warrant the generalisation as stated?",
         title: "Is the evidence cited strong enough to warrant the generalisation as stated?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action', 'causeToEffect']
     },
     causeToEffect3: {
-        question: "Are there other factors that would or will intefere with or counteract the production of '${effect}' in this case?",
+        question: "Are there other factors that would or will intefere with or counteract the production of the effect '${effect}' in this case?",
         title: "Are there other factors that would or will intefere with or counteract the production of the effect in this case?",
-        symmetric: false
+        symmetric: false,
+        ignoreSchemes: ['action']
     },
 }
 
@@ -113,7 +127,7 @@ const SCHEMES = {
         name: 'Argument from the Position to Know',
         criticalQuestions: ['positionToKnow1', 'positionToKnow2', 'positionToKnow3'],
         inputQuestions: {
-            source: "The source that is in a position to know is...",
+            source: "The source, that is in a position to know, is...",
             proposition: "The source asserts that... "
         }
     },
