@@ -3,8 +3,7 @@ import axios from 'axios'
 import Button from 'react-bootstrap/Button'
 
 import './ArgumentDetailsPage.css'
-import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
-import ArgumentView from './ArgumentView';
+import ArgumentDetails from './ArgumentDetails';
 import ArgumentNetwork from './ArgumentNetwork';
 import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
 
@@ -43,6 +42,7 @@ class ArgumentDetailsPage extends React.Component {
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
     this.updateData = this.updateData.bind(this)
+    this.originalArgumentLinkHandler = this.originalArgumentLinkHandler.bind(this)
 
     this._isMounted = false;
   }
@@ -134,9 +134,9 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   originalArgumentLinkHandler() {
-    const originalId = this.state.originalArgument.originalId;
+    const originalId = this.state.originalArgument._id;
     this.props.history.push(`/argument/${originalId}`);
-    this.setState({originalArgument: null});
+    this.setState({originalArgument: null, rootId: originalId});
     this.updateData(originalId);
   }
 
@@ -155,7 +155,7 @@ class ArgumentDetailsPage extends React.Component {
         <div>
           <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{networkToggleText}</Button>
           { isRootNotOriginalArgument &&
-            <Button variant="info" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
+            <Button variant="info" onClick={this.originalArgumentLinkHandler}>Go back to original argument</Button>
           }
           {showNetwork ?
             <ArgumentNetwork 
@@ -163,26 +163,13 @@ class ArgumentDetailsPage extends React.Component {
               nodeSelectHandler={this.nodeSelectHandler} />
             :
             (argumentNestData && rootArgument !== undefined &&
-              <div>
-                {isRootNotOriginalArgument &&
-                  <div>
-                    <br/>
-                    <p>Preview of the original argument (click below to show full debate):</p>
-                    <ArgumentView 
-                      argument={originalArgument}
-                      isPreview={true}
-                      onClick={this.originalArgumentLinkHandler.bind(this)}/>
-                    <hr/>
-                  </div>
-                }
-                <ArgumentNest 
-                  level={0} 
-                  rootId={rootId} 
-                  currentId={rootId}
-                  argumentData={argumentNestData}
-                  highlightId={highlightId}/>
-              </div>
-                
+              <ArgumentDetails
+                argumentNestData={argumentNestData}
+                originalArgument={originalArgument}
+                rootId={rootId}
+                highlightId={highlightId}
+                isRootNotOriginalArgument={isRootNotOriginalArgument}
+                originalArgumentLinkHandler={this.originalArgumentLinkHandler} />  
             )
           }
         </div>
