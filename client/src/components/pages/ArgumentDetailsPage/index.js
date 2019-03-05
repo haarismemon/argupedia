@@ -1,12 +1,11 @@
 import React from 'react'
 import axios from 'axios'
-import Graph from 'vis-react'
 import Button from 'react-bootstrap/Button'
-import { Card } from 'react-bootstrap';
 
-import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
 import './ArgumentDetailsPage.css'
+import ArgumentNest from '../ArgumentDetailsPage/ArgumentNest'
 import ArgumentView from './ArgumentView';
+import ArgumentNetwork from './ArgumentNetwork';
 import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
 
 const constants = {
@@ -20,7 +19,7 @@ const constants = {
   }
 }
 
-class ArgumentDetails extends React.Component {
+class ArgumentDetailsPage extends React.Component {
   constructor(props) {
     super(props);
     
@@ -30,7 +29,6 @@ class ArgumentDetails extends React.Component {
 
     this.state = {
       rootId: null,
-      network: null,
       showNetwork: mode === constants.network.mode,
       networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
       networkData: {
@@ -61,7 +59,6 @@ class ArgumentDetails extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-  
 
   updateData(rootId) {
     axios.get(`http://localhost:3001/argument/network?id=${rootId}`, {crossdomain: true})
@@ -137,139 +134,42 @@ class ArgumentDetails extends React.Component {
   }
 
   originalArgumentLinkHandler() {
-    this.props.history.push(`/argument/${this.state.originalArgument.originalId}`);
+    const originalId = this.state.originalArgument.originalId;
+    this.props.history.push(`/argument/${originalId}`);
     this.setState({originalArgument: null});
-    this.updateData(this.state.originalArgument.originalId)
+    this.updateData(originalId);
   }
 
   render() {
-    const { network, highlightId } = this.state;
+    const { argumentNestData, originalArgument, networkData, highlightId, showNetwork, pageLoading, networkToggleText, rootId } = this.state;
 
-    // after the nodes have been settled and after 2 seconds, make the network fit the screen
-    if(network) {
-      setTimeout(() => {
-        network.fit({
-          animation: {
-            duration: 4000
-          }
-        })
-      }, 3000);
-    }
+    const rootArgument = argumentNestData[rootId]
+    const isRootNotOriginalArgument = originalArgument && originalArgument.id !== rootId;
 
-    let options = {
-      physics: {
-        solver: 'repulsion',
-        repulsion: {
-          centralGravity: 0.000001,
-          springLength: 400,
-          springConstant: 0.001,
-          nodeDistance: 700,
-          damping: 0.15
-        },
-        barnesHut: {
-          avoidOverlap: 1
-        }
-      },
-      interaction: {
-        navigationButtons: true,
-        zoomView: false
-      },
-      groups: {
-        inNode: {
-          color: {
-            background: "lime",
-            border: "darkGreen",
-            highlight: {
-                background: "mediumSeaGreen",
-                border: "darkGreen"
-            }
-          }
-        },
-        outNode: {
-          color: {
-              background: "orangered",
-              border: "maroon",
-              highlight: {
-                  background: "crimson",
-                  border: "maroon"
-              },
-              font: {
-                  color: "white"
-              }
-          }
-        },
-        undecNode: {
-          color: {
-              background: "white",
-              border: "black",
-          }
-        }
-      }
-    };
-
-    let events = {
-        doubleClick: this.nodeSelectHandler
-    }
-
-    const argumentRootId = this.props.match.params.id;
-    const rootArgument = this.state.argumentNestData[argumentRootId]
-
-    if(this.state.network !== null) {
-      this.state.network.fit()
-    }
-
-    const isRootNotOriginalArgument = this.state.originalArgument && this.state.originalArgument.id !== this.state.rootId;
-
-    return this.state.pageLoading ? 
+    return pageLoading ? 
       (<div className="loading-animation" style={{textAlign: 'center'}}>
         <h1>Loading...</h1>
         <img src={loadingAnimation} alt="LoadingAnimation"/>
       </div>) :
-      (this.state.argumentNestData && this.state.networkData ?
+      (argumentNestData && networkData ?
         <div>
-          <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{this.state.networkToggleText}</Button>
+          <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{networkToggleText}</Button>
           { isRootNotOriginalArgument &&
             <Button variant="info" onClick={this.originalArgumentLinkHandler.bind(this)}>Go back to original argument</Button>
           }
-          {this.state.showNetwork ?
-            <div id="network-page">
-              <Card className="key-card">
-                <Card.Header>Argument Label Key</Card.Header>
-                <Card.Body className="container">
-                  <div className="row">
-                    <div className="col-sm">
-                      <div className="key-node in-key-node"/>
-                      <label className="key-label">IN Label</label>
-                    </div>
-                    <div className="col-sm">
-                      <div className="key-node out-key-node"/>
-                      <label className="key-label">OUT Label</label>
-                    </div>
-                    <div className="col-sm">
-                      <div className="key-node undec-key-node"/>
-                      <label className="key-label">UNDEC Label</label>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-              <p className="network-info"><strong>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</strong></p>
-              <div id="argument-network">
-                <Graph 
-                  graph={this.state.networkData} 
-                  options={options} 
-                  events={events} 
-                  getNetwork={network => this.setState({network})} />
-              </div>
-            </div>
+          {showNetwork ?
+            <ArgumentNetwork 
+              networkData={networkData}
+              nodeSelectHandler={this.nodeSelectHandler} />
             :
-            (this.state.argumentNestData && rootArgument !== undefined &&
+            (argumentNestData && rootArgument !== undefined &&
               <div>
                 {isRootNotOriginalArgument &&
                   <div>
                     <br/>
                     <p>Preview of the original argument (click below to show full debate):</p>
                     <ArgumentView 
-                      argument={this.state.originalArgument}
+                      argument={originalArgument}
                       isPreview={true}
                       onClick={this.originalArgumentLinkHandler.bind(this)}/>
                     <hr/>
@@ -277,9 +177,9 @@ class ArgumentDetails extends React.Component {
                 }
                 <ArgumentNest 
                   level={0} 
-                  rootId={argumentRootId} 
-                  currentId={argumentRootId}
-                  argumentData={this.state.argumentNestData}
+                  rootId={rootId} 
+                  currentId={rootId}
+                  argumentData={argumentNestData}
                   highlightId={highlightId}/>
               </div>
                 
@@ -292,4 +192,4 @@ class ArgumentDetails extends React.Component {
   }
 }
 
-export default ArgumentDetails
+export default ArgumentDetailsPage
