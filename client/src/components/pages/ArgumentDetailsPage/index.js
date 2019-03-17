@@ -14,7 +14,7 @@ const constants = {
   },
   nest: {
     mode: 'nest',
-    string: 'Show Nested Arguments'
+    string: 'Show Debate'
   }
 }
 
