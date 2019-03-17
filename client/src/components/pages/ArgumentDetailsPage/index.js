@@ -4,13 +4,13 @@ import Button from 'react-bootstrap/Button'
 
 import './ArgumentDetailsPage.css'
 import ArgumentDetails from './ArgumentDetails';
-import ArgumentNetwork from './ArgumentNetwork';
+import ArgumentGraph from './ArgumentGraph';
 import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
 
 const constants = {
-  network: {
-    mode: 'network',
-    string: 'Show Argument Network'
+  graph: {
+    mode: 'graph',
+    string: 'Show Argument Graph'
   },
   nest: {
     mode: 'nest',
@@ -28,9 +28,9 @@ class ArgumentDetailsPage extends React.Component {
 
     this.state = {
       rootId: null,
-      showNetwork: mode === constants.network.mode,
-      networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
-      networkData: {
+      showGraph: mode === constants.graph.mode,
+      graphToggleText: mode === constants.graph.mode ? constants.nest.string : constants.graph.string,
+      graphData: {
         nodes: [],
         edges: []
       },
@@ -49,7 +49,7 @@ class ArgumentDetailsPage extends React.Component {
   
   componentDidMount() {
     this._isMounted = true;
-    if(this.state.networkData !== {}) {
+    if(this.state.graphData !== {}) {
       const rootId = this.props.match.params.id;
       this.setState({rootId});
       this.updateData(rootId)
@@ -65,7 +65,7 @@ class ArgumentDetailsPage extends React.Component {
     .then(resp => {
       if(this._isMounted) {
         this.setState({
-          networkData: resp.data
+          graphData: resp.data
         })
       }
     })
@@ -96,24 +96,24 @@ class ArgumentDetailsPage extends React.Component {
     .catch(console.error)
   }
 
-  handleNetworkToggle() {
+  handleGraphToggle() {
     let newToggleText = null;
 
-    if(this.state.showNetwork) {
-      newToggleText = constants.network.string
+    if(this.state.showGraph) {
+      newToggleText = constants.graph.string
       this.props.history.push({
         search: '?mode=' + constants.nest.mode
       })
     } else {
       newToggleText = constants.nest.string
       this.props.history.push({
-        search: '?mode=' + constants.network.mode
+        search: '?mode=' + constants.graph.mode
       })
     }
 
     this.setState({
-      showNetwork: !this.state.showNetwork,
-      networkToggleText: newToggleText
+      showGraph: !this.state.showGraph,
+      graphToggleText: newToggleText
     })
   }
 
@@ -124,8 +124,8 @@ class ArgumentDetailsPage extends React.Component {
       const mode = constants.nest.mode
 
       this.setState({
-        showNetwork: mode === constants.network.mode,
-        networkToggleText: mode === constants.network.mode ? constants.nest.string : constants.network.string,
+        showGraph: mode === constants.graph.mode,
+        graphToggleText: mode === constants.graph.mode ? constants.nest.string : constants.graph.string,
       });
       
       this.props.history.push('/')
@@ -141,7 +141,7 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   render() {
-    const { argumentNestData, originalArgument, networkData, highlightId, showNetwork, pageLoading, networkToggleText, rootId } = this.state;
+    const { argumentNestData, originalArgument, graphData: graphData, highlightId, showGraph: showGraph, pageLoading, graphToggleText: graphToggleText, rootId } = this.state;
 
     const rootArgument = argumentNestData[rootId]
     const isRootNotOriginalArgument = originalArgument && originalArgument.id !== rootId;
@@ -151,15 +151,15 @@ class ArgumentDetailsPage extends React.Component {
         <h1>Loading...</h1>
         <img src={loadingAnimation} alt="LoadingAnimation"/>
       </div>) :
-      (argumentNestData && networkData ?
+      (argumentNestData && graphData ?
         <div>
-          <Button variant="info" id="network-toggle" onClick={this.handleNetworkToggle.bind(this)}>{networkToggleText}</Button>
+          <Button variant="info" id="graph-toggle" onClick={this.handleGraphToggle.bind(this)}>{graphToggleText}</Button>
           { isRootNotOriginalArgument &&
             <Button variant="info" onClick={this.originalArgumentLinkHandler}>Go back to original argument</Button>
           }
-          {showNetwork ?
-            <ArgumentNetwork 
-              networkData={networkData}
+          {showGraph ?
+            <ArgumentGraph 
+              graphData={graphData}
               nodeSelectHandler={this.nodeSelectHandler} />
             :
             (argumentNestData && rootArgument !== undefined &&

@@ -2,7 +2,7 @@
     margin-left: 0.5em
 }
   
-#argument-network {
+#argument-graph {
     height: 700px;
     border: 2px solid rgb(32, 163, 157);
     background-color: rgba(0, 0, 0, 0.06);
@@ -29,12 +29,12 @@
     float: right;
 }
 
-.network-info {
+.graph-info {
     margin-top: 2em;
     text-align: center;
 }
 
-#network-toggle {
+#graph-toggle {
     margin-right: 10px;
 }
 

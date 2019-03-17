@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Graph from 'vis-react';
 import { Card } from 'react-bootstrap';
 
-class ArgumentNetwork extends Component {
+class ArgumentGraph extends Component {
     state = {
         network: null
     }
 
     render() {
         const {network} = this.state;
-        const {networkData} = this.props;
+        const {graphData} = this.props;
 
         // after the nodes have been settled and after 2 seconds, make the network fit the screen
         if(network) {
@@ -77,12 +77,12 @@ class ArgumentNetwork extends Component {
             doubleClick: this.props.nodeSelectHandler
         }
         
-        if(this.state.network !== null) {
-            this.state.network.fit()
+        if(network !== null) {
+            network.fit()
         }
 
         return (
-            <div id="network-page">
+            <div id="graph-page">
               <Card className="key-card">
                 <Card.Header>Argument Label Key</Card.Header>
                 <Card.Body className="container">
@@ -102,10 +102,10 @@ class ArgumentNetwork extends Component {
                   </div>
                 </Card.Body>
               </Card>
-              <p className="network-info"><strong>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</strong></p>
-              <div id="argument-network">
+              <p className="graph-info"><strong>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</strong></p>
+              <div id="argument-graph">
                 <Graph 
-                  graph={networkData} 
+                  graph={graphData} 
                   options={options} 
                   events={events} 
                   getNetwork={network => this.setState({network})} />
@@ -115,4 +115,4 @@ class ArgumentNetwork extends Component {
     }
 }
 
-export default ArgumentNetwork;
+export default ArgumentGraph;

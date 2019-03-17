@@ -80,7 +80,6 @@ function addSupportRelations(nodesAndEdges) {
                 const allAttackedNodesByX = attackedAndSupportedNodes[nodeX.id].attack;
                 
                 allAttackedNodesByX.forEach(nodeYid => {
-                    // console.log(nodeY, attackedAndSupportedNodes[nodeY]);
                     if(attackedAndSupportedNodes[nodeYid]) {
                         const allSupportedNodesByY = attackedAndSupportedNodes[nodeYid].support;
                         
