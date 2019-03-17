@@ -46,7 +46,7 @@ function convertArgumentsToNodesAndEdges(arguments, rootId) {
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
         
         if(criticalQuestion !== undefined) {
-            attackLabel = addNewlineInLabel(criticalQuestion.title + ' (' + (argument.agree ? 'Agree' : 'Disagree') + ')');
+            attackLabel = addNewlineInLabel(criticalQuestion.title + ' (' + (argument.agree ? 'Support' : 'Attack') + ')');
             
             isSymmetric = criticalQuestion.symmetric;
             if(isSymmetric) {

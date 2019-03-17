@@ -43,10 +43,10 @@ class CriticalQuestion extends React.Component {
         <p className="cq-text" style={{display: 'inline'}}>{this.props.question}</p>
         <div className="cq-button-group">
           <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
-            Agree <i className="far fa-thumbs-up"></i>
+            Support <i className="far fa-thumbs-up"></i>
           </Button>
           <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
-            Disagree <i className="far fa-thumbs-down"></i>
+            Attack <i className="far fa-thumbs-down"></i>
           </Button>
         </div>
       </ListGroup.Item>
