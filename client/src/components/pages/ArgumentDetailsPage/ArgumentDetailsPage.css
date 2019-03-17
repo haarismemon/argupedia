@@ -29,8 +29,7 @@
     float: right;
 }
 
-.graph-info {
-    margin-top: 2em;
+.graph-instructions {
     text-align: center;
 }
 
@@ -91,8 +90,14 @@
     margin-left: 16px;
 }
 
-.key-card {
+.info-card {
     margin-top: 1em;
+    margin-bottom: 1.5em;
     border-radius: 1em;
     overflow: hidden;
+}
+
+#info-toggle-header {
+    cursor: pointer;
+    text-align: center;
 }

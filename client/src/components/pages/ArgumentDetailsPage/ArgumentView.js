@@ -45,7 +45,7 @@ class ArgumentView extends React.Component {
     const {rootId, highlightId} = this.props;
 
     const argumentNotRoot = argument.criticalQuestion
-    const isArgumentPositive = argument.agree ? "Positive" : "Negative"
+    const isArgumentSupport = argument.agree ? "Supporting Argument" : "Attacking Argument";
 
     let schemeName = argument.scheme;
     const scheme = SCHEMES[schemeName];
@@ -54,10 +54,9 @@ class ArgumentView extends React.Component {
       schemeName = scheme.name;
     }
     
-    const cardTitle = argument.title;
-    const cardSubtitle = !isPreview ?
-                          (`${argumentNotRoot ? `${isArgumentPositive} = ` : ''} ${schemeName}`) :
-                          schemeName;
+    const cardTitle = !isPreview ?
+                          (`${argumentNotRoot ? `${isArgumentSupport}: ` : ''} ${argument.title}`) :
+                          argument.title;
 
     const createdAtDate = Date.parse(argument.createdAt);
     const submitDate = dateFormat(createdAtDate, 'dd mmmm yyyy "at" HH:MM');
@@ -84,7 +83,7 @@ class ArgumentView extends React.Component {
         <Card.Header>
           <div className="card-title"><span className="card-title h5">{cardTitle}</span><span className="card-title h6"> ~ submitted by {argument.username}</span></div>
           <Card.Subtitle>
-            {cardSubtitle}
+            {schemeName}
             <span className="submit-date">{submitDate}</span>
           </Card.Subtitle>
         </Card.Header>

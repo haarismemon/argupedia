@@ -141,7 +141,7 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   render() {
-    const { argumentNestData, originalArgument, graphData: graphData, highlightId, showGraph: showGraph, pageLoading, graphToggleText: graphToggleText, rootId } = this.state;
+    const { argumentNestData, originalArgument, graphData, highlightId, showGraph, pageLoading, graphToggleText, rootId } = this.state;
 
     const rootArgument = argumentNestData[rootId]
     const isRootNotOriginalArgument = originalArgument && originalArgument.id !== rootId;

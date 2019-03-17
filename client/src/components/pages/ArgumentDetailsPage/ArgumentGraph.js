@@ -4,7 +4,14 @@ import { Card } from 'react-bootstrap';
 
 class ArgumentGraph extends Component {
     state = {
-        network: null
+        network: null,
+        showInformation: false
+    }
+
+    showInformation() {
+        this.setState({
+            showInformation: !this.state.showInformation
+        });
     }
 
     render() {
@@ -83,9 +90,9 @@ class ArgumentGraph extends Component {
 
         return (
             <div id="graph-page">
-              <Card className="key-card">
-                <Card.Header>Argument Label Key</Card.Header>
-                <Card.Body className="container">
+              <Card className="info-card">
+                <Card.Header id="info-toggle-header" onClick={this.showInformation.bind(this)}>Labelling and Graph Information</Card.Header>
+                <Card.Body className={`container ${this.state.showInformation ? "" : "collapse"}`}>
                   <div className="row">
                     <div className="col-sm">
                       <div className="key-node in-key-node"/>
@@ -100,9 +107,16 @@ class ArgumentGraph extends Component {
                       <label className="key-label">UNDEC Label</label>
                     </div>
                   </div>
+                  <hr/>
+                  <div>
+                    <div className="graph-instructions">
+                        1. Double click on a node to see the details of the selected argument.<br/>
+                        2. To change the layout of the graph, simply single click and hold on a node and drag to any position. <br/>
+                        3. To navigate around the argument graph use the navigation buttons at the bottom such as zoom and fit to screen.
+                     </div>
+                  </div>
                 </Card.Body>
               </Card>
-              <p className="graph-info"><strong>Double click on a node to get more information. Selected argument becomes the root of the argument nest.</strong></p>
               <div id="argument-graph">
                 <Graph 
                   graph={graphData} 
