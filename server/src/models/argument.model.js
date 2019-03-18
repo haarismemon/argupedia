@@ -13,6 +13,7 @@ let argumentSchema = new mongoose.Schema({
   originalId: String,
   parentId: String,
   ancestorIds: [String],
+  likes: [String],
   uid: { type: String, required: true },
   username: { type: String, required: true },
   criticalQuestionTag: String,

@@ -3,6 +3,7 @@ import React from 'react';
 import CriticalQuestion from '../CriticalQuestion'
 import {SCHEMES, QUESTIONS} from '../../../../constants/schemes'
 import { ListGroup } from 'react-bootstrap';
+import LikeButton from '../LikeButton';
 
 class PositionToKnowDetailScheme extends React.Component {
   state = {
@@ -41,6 +42,7 @@ class PositionToKnowDetailScheme extends React.Component {
             {link &&
               <p>Link to related evidence: <a href={link}>{link}</a></p>
             }
+            <LikeButton argument={this.props.argument} handleLikeButtonClick={this.props.handleLikeButtonClick}/>
             <hr/>
             <h6>Critical Questions</h6>
             <ListGroup>

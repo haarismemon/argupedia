@@ -1,4 +1,5 @@
 let express = require('express')
+var cors = require('cors')
 let app = express()
 
 let argumentRoute = require('./routes/argument')
@@ -7,6 +8,8 @@ let bodyParser = require('body-parser')
 
 // taking any json string and creating an attribute called body (req.body)
 app.use(bodyParser.json())
+
+app.use(cors());
 
 // adds the requests made to the server to the logs
 app.use((req, res, next) => {

@@ -114,3 +114,9 @@
     margin-top: auto;
     margin-bottom: auto;
 }
+
+.like-count {
+    font-weight: 450;
+    display: inline-block;
+    width: 60px;
+}

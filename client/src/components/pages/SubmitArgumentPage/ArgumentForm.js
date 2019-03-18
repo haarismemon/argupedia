@@ -35,6 +35,7 @@ class ArgumentForm extends React.Component {
       uid: this.props.authUser.uid,
       username: null,
       ancestorIds: this.props.ancestorIds,
+      likes: [],
       validated: false,
       ignoreSchemes: []
     }

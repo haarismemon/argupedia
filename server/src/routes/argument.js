@@ -50,7 +50,7 @@ router.put('/api/argument', (req, res) => {
 
   let query = { _id: req.query.id }
 
-  models.BaseArgumentModel.findOneAndUpdate(query, req.body)
+  models.BaseArgumentModel.findOneAndUpdate(query, req.body, {new: true})
     .then(doc => {
       res.json(doc)
     })
@@ -130,6 +130,9 @@ router.get('/api/arguments/network', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
+  // if(!req.query.useVoting) {
+  //   return res.status(400).send('Missing URL parameter: useVoting')
+  // }
 
   let query = { "$or": [
       { _id: req.query.id },
@@ -143,7 +146,7 @@ router.get('/api/arguments/network', (req, res) => {
 
   models.BaseArgumentModel.find(query, (err, arguments) => {
     let nodesAndAttacks;
-    if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments, req.query.id);
+    if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments, req.query.id, req.query.useVoting);
     return res.json(nodesAndAttacks)
   })
 })

@@ -29,6 +29,7 @@ class CriticalQuestion extends React.Component {
           parentId: this.props.argument._id,
           originalId: this.props.argument.originalId,
           ancestorIds: this.props.argument.ancestorIds,
+          likes: this.props.argument.likes,
           parentArgument: this.props.argument
         }
       })
