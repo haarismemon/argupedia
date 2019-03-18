@@ -101,3 +101,16 @@
     cursor: pointer;
     text-align: center;
 }
+
+.cq-list-group {
+    padding: 0.5em;
+}
+
+.cq-button-group {
+    text-align: right;
+}
+
+.cq-question {
+    margin-top: auto;
+    margin-bottom: auto;
+}

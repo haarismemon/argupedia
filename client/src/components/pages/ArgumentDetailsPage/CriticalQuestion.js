@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, ListGroup} from 'react-bootstrap'
+import {Button, ListGroup, Container, Row, Col} from 'react-bootstrap'
 import {withRouter} from 'react-router'
 import { compose } from 'recompose'
 
@@ -40,15 +40,23 @@ class CriticalQuestion extends React.Component {
   render() {
     return (
       <ListGroup.Item className="cq-list-group">
-        <p className="cq-text" style={{display: 'inline'}}>{this.props.question}</p>
-        <div className="cq-button-group">
-          <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
-            Support <i className="far fa-thumbs-up"></i>
-          </Button>
-          <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
-            Attack <i className="far fa-thumbs-down"></i>
-          </Button>
-        </div>
+        <Container>
+          <Row>
+            <Col className="cq-question">
+              <p className="cq-text" style={{display: 'inline'}}>{this.props.question}</p>
+            </Col>
+            <Col xs={3.5}>
+              <div className="cq-button-group">
+                <Button variant="success" className="cq-button" id="yesButton" onClick={this.agreeArgumentClick}>
+                  Support <i className="far fa-thumbs-up"></i>
+                </Button>
+                <Button variant="danger" className="cq-button" id="noButton" onClick={this.disagreeArgumentClick}>
+                  Attack <i className="far fa-thumbs-down"></i>
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </ListGroup.Item>
     )
   }
