@@ -4,7 +4,7 @@ let router = express.Router()
 let labelling = require('./tools/labelling')
 
 // create new argument
-router.post('/argument', (req, res) => {
+router.post('/api/argument', (req, res) => {
   if(!req.body) {
     return res.status(400).send('Request body is missing')
   }
@@ -26,7 +26,7 @@ router.post('/argument', (req, res) => {
 })
 
 // get an argument
-router.get('/argument', (req, res) => {
+router.get('/api/argument', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
@@ -42,21 +42,8 @@ router.get('/argument', (req, res) => {
     })
 })
 
-// get a list of all root arguments
-router.get('/argument/list', (req, res) => {
-  let query = { parentId: null }
-
-  models.BaseArgumentModel.find(query)
-    .then(doc => {
-      res.json(doc)
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
-})
-
 // update argument
-router.put('/argument', (req, res) => {
+router.put('/api/argument', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
@@ -73,7 +60,7 @@ router.put('/argument', (req, res) => {
 })
 
 // delete argument
-router.delete('/argument', (req, res) => {
+router.delete('/api/argument', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
@@ -89,8 +76,21 @@ router.delete('/argument', (req, res) => {
     })
 })
 
+// get a list of all root arguments
+router.get('/api/arguments/all', (req, res) => {
+  let query = { parentId: null }
+
+  models.BaseArgumentModel.find(query)
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 // get all arguments with their children as a key value, where the _id is the key
-router.get('/argument/descendents', (req, res) => {
+router.get('/api/arguments/descendents', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   } else if(req.query.id == 'undefined') {
@@ -126,7 +126,7 @@ router.get('/argument/descendents', (req, res) => {
   })
 })
 
-router.get('/argument/network', (req, res) => {
+router.get('/api/arguments/network', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
@@ -148,7 +148,7 @@ router.get('/argument/network', (req, res) => {
   })
 })
 
-router.get('/argument/search', (req, res) => {
+router.get('/api/arguments/search', (req, res) => {
   const searchQuery = req.query.searchQuery;
 
   if(!searchQuery) {
@@ -171,7 +171,7 @@ router.get('/argument/search', (req, res) => {
     })
 })
 
-router.get('/argument/userSubmittedArguments', (req, res) => {
+router.get('/api/arguments/userSubmittedArguments', (req, res) => {
   if(!req.query.uid) {
     return res.status(400).send('Missing URL parameter: uid')
   }

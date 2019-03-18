@@ -85,7 +85,7 @@ class ArgumentForm extends React.Component {
         this.setState({ ancestorIds: newAncestorIds, validated: true });
       }
 
-      axios.post('http://localhost:3001/argument', {...this.state})
+      axios.post('http://localhost:3001/api/argument', {...this.state})
         .then((resp) => {
           const redirectArgumentId = resp.data.originalId ? `${resp.data.originalId}?highlight=${resp.data._id}` : resp.data._id;
           this.props.history.push(`/argument/${redirectArgumentId}`);

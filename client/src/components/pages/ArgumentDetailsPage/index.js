@@ -61,7 +61,7 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   updateData(rootId) {
-    axios.get(`http://localhost:3001/argument/network?id=${rootId}`, {crossdomain: true})
+    axios.get(`http://localhost:3001/api/arguments/network?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
         this.setState({
@@ -71,7 +71,7 @@ class ArgumentDetailsPage extends React.Component {
     })
     .catch(console.error)
     
-    axios.get(`http://localhost:3001/argument/descendents?id=${rootId}`, {crossdomain: true})
+    axios.get(`http://localhost:3001/api/arguments/descendents?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
         this.setState({
@@ -81,7 +81,7 @@ class ArgumentDetailsPage extends React.Component {
         if(resp.data[rootId]) {
           const originalId = resp.data[rootId].originalId;
           if(originalId !== rootId && originalId !== undefined) {
-            axios.get(`http://localhost:3001/argument?id=${originalId}`, {crossdomain: true})
+            axios.get(`http://localhost:3001/api/argument?id=${originalId}`, {crossdomain: true})
             .then(resp => {
               this.setState({
                 originalArgument: resp.data

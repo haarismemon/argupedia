@@ -22,7 +22,7 @@ class SearchResultsPage extends React.Component {
 
     this.setState({searchQuery});
 
-    Axios.get(`http://localhost:3001/argument/search?searchQuery=${searchQuery}`, {crossdomain: true})
+    Axios.get(`http://localhost:3001/api/arguments/search?searchQuery=${searchQuery}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
         this.setState({

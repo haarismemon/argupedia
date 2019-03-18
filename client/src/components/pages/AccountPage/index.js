@@ -16,7 +16,7 @@ class AccountPage extends Component {
 
   componentDidMount() {
     const uid = this.props.firebase.auth.currentUser.uid;
-    Axios.get(`http://localhost:3001/argument/userSubmittedArguments?uid=${uid}`, {crossdomain: true})
+    Axios.get(`http://localhost:3001/api/arguments/userSubmittedArguments?uid=${uid}`, {crossdomain: true})
     .then(resp => {
       this.setState({
           submittedArguments: resp.data,
