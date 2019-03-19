@@ -1,11 +1,11 @@
 const schemes = require('./schemes.js');
 
-function generateLabelledNodesAndEdges(arguments, rootId) {
-    if(!arguments) {
-        arguments = [];
+function generateLabelledNodesAndEdges(argumentsMap, rootId, useLikes) {
+    if(!argumentsMap) {
+        argumentsMap = {};
     }
     
-    let nodesAndEdges = convertArgumentsToNodesAndEdges(arguments, rootId);
+    let nodesAndEdges = convertArgumentsToNodesAndEdges(argumentsMap, rootId, useLikes);
 
     nodesAndEdges = addSupportRelations(nodesAndEdges);
 
@@ -15,11 +15,13 @@ function generateLabelledNodesAndEdges(arguments, rootId) {
     return nodesAndEdges;
 }
 
-function convertArgumentsToNodesAndEdges(arguments, rootId) {
+function convertArgumentsToNodesAndEdges(argumentsMap, rootId, useLikes) {
     let nodesAndEdges = {
         nodes: [],
         edges: []
     };
+
+    const arguments = Object.values(argumentsMap);
 
     arguments.forEach(argument => {
         const argumentId = argument._id.toString();
@@ -46,14 +48,33 @@ function convertArgumentsToNodesAndEdges(arguments, rootId) {
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
         
         if(criticalQuestion !== undefined) {
-            attackLabel = addNewlineInLabel(criticalQuestion.title + ' (' + (argument.agree ? 'Support' : 'Attack') + ')');
+            attackLabel = addNewlineInLabel(`${criticalQuestion.title} (${argument.agree ? 'Support' : 'Attack'})`);
             
             isSymmetric = criticalQuestion.symmetric;
             if(isSymmetric) {
                 const firstEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, false, false);
-                nodesAndEdges.edges.push(firstEdge)
                 const secondEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, true, false);
-                nodesAndEdges.edges.push(secondEdge)
+
+                if(useLikes) {
+                    const firstLikeCount = argument.likes.length;
+                    const secondLikeCount = argumentsMap[argument.parentId].likes.length;
+
+                    if(firstLikeCount > secondLikeCount) {
+                        delete firstEdge.smooth
+                        nodesAndEdges.edges.push(firstEdge)
+                    } else if (secondLikeCount > firstLikeCount) {
+                        delete secondEdge.smooth
+                        nodesAndEdges.edges.push(secondEdge)
+                    } else {
+                        nodesAndEdges.edges.push(firstEdge)
+                        nodesAndEdges.edges.push(secondEdge)
+                    }
+
+                } else {
+                    nodesAndEdges.edges.push(firstEdge)
+                    nodesAndEdges.edges.push(secondEdge)
+                }
+
             } else {
                 const edge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, false, false);
                 nodesAndEdges.edges.push(edge)

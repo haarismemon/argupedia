@@ -37,11 +37,13 @@ class ArgumentDetailsPage extends React.Component {
       argumentNestData: {},
       originalArgument: null,
       pageLoading: true,
-      highlightId: highlightId
+      highlightId: highlightId,
+      isLike: false
     }
 
     this.nodeSelectHandler = this.nodeSelectHandler.bind(this)
     this.updateData = this.updateData.bind(this)
+    this.updateGraphData = this.updateGraphData.bind(this)
     this.originalArgumentLinkHandler = this.originalArgumentLinkHandler.bind(this)
 
     this._isMounted = false;
@@ -61,15 +63,7 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   updateData(rootId) {
-    axios.get(`http://localhost:3001/api/arguments/network?id=${rootId}`, {crossdomain: true})
-    .then(resp => {
-      if(this._isMounted) {
-        this.setState({
-          graphData: resp.data
-        })
-      }
-    })
-    .catch(console.error)
+    this.updateGraphData(rootId, false);
     
     axios.get(`http://localhost:3001/api/arguments/descendents?id=${rootId}`, {crossdomain: true})
     .then(resp => {
@@ -91,6 +85,18 @@ class ArgumentDetailsPage extends React.Component {
         }
 
         this.setState({pageLoading: false});
+      }
+    })
+    .catch(console.error)
+  }
+
+  updateGraphData = (rootId, useLikes) => {
+    axios.get(`http://localhost:3001/api/arguments/network?id=${rootId}&useLikes=${useLikes}`, {crossdomain: true})
+    .then(resp => {
+      if(this._isMounted) {
+        this.setState({
+          graphData: resp.data
+        })
       }
     })
     .catch(console.error)
@@ -140,6 +146,10 @@ class ArgumentDetailsPage extends React.Component {
     this.updateData(originalId);
   }
 
+  saveLikeCheckBox = (isLike) => {
+    this.setState({isLike: isLike});
+  }
+
   render() {
     const { argumentNestData, originalArgument, graphData, highlightId, showGraph, pageLoading, graphToggleText, rootId } = this.state;
 
@@ -160,7 +170,11 @@ class ArgumentDetailsPage extends React.Component {
           {showGraph ?
             <ArgumentGraph 
               graphData={graphData}
-              nodeSelectHandler={this.nodeSelectHandler} />
+              nodeSelectHandler={this.nodeSelectHandler}
+              rootId={rootId}
+              updateGraphData={this.updateGraphData}
+              saveLikeCheckBox={this.saveLikeCheckBox}
+              isLike={this.state.isLike} />
             :
             (argumentNestData && rootArgument !== undefined &&
               <ArgumentDetails

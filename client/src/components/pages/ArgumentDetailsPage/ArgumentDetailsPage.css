@@ -120,3 +120,11 @@
     display: inline-block;
     width: 60px;
 }
+
+.like-button {
+    width: 170px;
+}
+
+.like-form {
+    text-align: center;
+}

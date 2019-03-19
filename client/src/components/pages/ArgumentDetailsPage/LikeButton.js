@@ -53,7 +53,7 @@ class LikeButton extends Component {
         return (
             <div>
                 <span className="like-count">{likeCount + likeString}</span>
-                <Button variant="info" onClick={this.handleClick}>
+                <Button variant="info" onClick={this.handleClick} className="like-button">
                     {likeButton ? 
                         (<div>Like Argument <i className="far fa-heart"></i></div>) : 
                         (<div>Unlike Argument <i className="fas fa-heart"></i></div>)

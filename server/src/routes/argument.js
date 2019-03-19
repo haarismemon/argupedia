@@ -130,9 +130,9 @@ router.get('/api/arguments/network', (req, res) => {
   if(!req.query.id) {
     return res.status(400).send('Missing URL parameter: id')
   }
-  // if(!req.query.useVoting) {
-  //   return res.status(400).send('Missing URL parameter: useVoting')
-  // }
+  if(!req.query.useLikes) {
+    return res.status(400).send('Missing URL parameter: useLikes')
+  }
 
   let query = { "$or": [
       { _id: req.query.id },
@@ -145,8 +145,13 @@ router.get('/api/arguments/network', (req, res) => {
   }
 
   models.BaseArgumentModel.find(query, (err, arguments) => {
+    let argumentsMap = {};
+    arguments.forEach((argument) => {
+      argumentsMap[argument._id] = argument;
+    });
+
     let nodesAndAttacks;
-    if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(arguments, req.query.id, req.query.useVoting);
+    if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(argumentsMap, req.query.id, (req.query.useLikes === 'true'));
     return res.json(nodesAndAttacks)
   })
 })

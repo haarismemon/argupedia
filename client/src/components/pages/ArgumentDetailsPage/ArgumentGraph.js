@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import Graph from 'vis-react';
 import { Card } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 class ArgumentGraph extends Component {
     state = {
         network: null,
-        showInformation: false
+        showInformation: false,
+        useLikes: false
+    }
+    componentDidMount() {
+        this.setState({useLikes: this.props.isLike});
     }
 
     showInformation() {
         this.setState({
             showInformation: !this.state.showInformation
+        });
+    }
+
+    handleInputChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.props.saveLikeCheckBox(value);
+
+        this.setState({
+            [name]: value
+        }, () => {
+            this.props.updateGraphData(this.props.rootId, this.state.useLikes);
         });
     }
 
@@ -117,6 +136,16 @@ class ArgumentGraph extends Component {
                   </div>
                 </Card.Body>
               </Card>
+              <div>
+              <Form.Group controlId="formBasicChecbox" className="like-form">
+                <Form.Check 
+                    name="useLikes"
+                    type="checkbox" 
+                    label="Check to use number of likes to decide the accepted arguments between symmetrically (two-way) attacking arguments"
+                    checked={this.state.useLikes}
+                    onChange={this.handleInputChange} />
+              </Form.Group>
+              </div>
               <div id="argument-graph">
                 <Graph 
                   graph={graphData} 
