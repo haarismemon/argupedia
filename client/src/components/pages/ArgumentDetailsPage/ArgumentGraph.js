@@ -141,7 +141,7 @@ class ArgumentGraph extends Component {
                 <Form.Check 
                     name="useLikes"
                     type="checkbox" 
-                    label="Check to use number of likes to decide the accepted arguments between symmetrically (two-way) attacking arguments"
+                    label="Check to use number of likes to decide the accepted arguments between symmetrically (two-way) undecided attacking arguments"
                     checked={this.state.useLikes}
                     onChange={this.handleInputChange} />
               </Form.Group>
