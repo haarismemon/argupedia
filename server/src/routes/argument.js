@@ -76,11 +76,11 @@ router.delete('/api/argument', (req, res) => {
     })
 })
 
-// get a list of all root arguments
-router.get('/api/arguments/all', (req, res) => {
+// get a list of the top five debates
+router.get('/api/arguments/topDebates', (req, res) => {
   let query = { parentId: null }
 
-  models.BaseArgumentModel.find(query)
+  models.BaseArgumentModel.find(query).limit(5)
     .then(doc => {
       res.json(doc)
     })

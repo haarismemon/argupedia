@@ -25,6 +25,24 @@
 #search-button {
     display: inline-block;
     height: 50px;
-    width: 50px;
+    width: 100px;
     border-radius: 1em;
+    margin-top: 0.5em;
+}
+
+.existing-debates-list {
+    display: inline-block;
+    width: 70%;
+    margin-top: 50px;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.existing-debates-list .card-header {
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.existing-debates-list .list-group-item {
+    cursor: pointer;
 }
