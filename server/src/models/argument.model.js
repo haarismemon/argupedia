@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-const schemes = require('../routes/tools/schemes.js');
+const schemes = require('../tools/schemes.js');
 
 let options = { discriminatorKey: 'scheme' };
 
