@@ -1,13 +1,6 @@
 let mongoose = require('mongoose');
 const schemes = require('../routes/tools/schemes.js');
 
-const server = 'mongodb://localhost:27017'
-const database = 'debatably-db'
-
-mongoose.connect(`${server}/${database}`, (err) => {
-  console.log('Successfully connected')
-});
-
 let options = { discriminatorKey: 'scheme' };
 
 let argumentSchema = new mongoose.Schema({

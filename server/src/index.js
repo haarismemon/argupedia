@@ -1,4 +1,5 @@
 let express = require('express')
+let mongoose = require('mongoose')
 var cors = require('cors')
 let app = express()
 
@@ -20,6 +21,13 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next()
 })
+
+const server = 'mongodb://localhost:27017'
+const database = 'debatably-db'
+
+mongoose.connect(`${server}/${database}`, (err) => {
+  console.log('Successfully connected')
+});
 
 // /argument CRUD api requests
 app.use(argumentRoute)
