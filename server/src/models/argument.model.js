@@ -1,4 +1,5 @@
-let mongoose = require('mongoose')
+let mongoose = require('mongoose');
+const schemes = require('../routes/tools/schemes.js');
 
 const server = 'mongodb://localhost:27017'
 const database = 'debatably-db'
@@ -38,7 +39,7 @@ actionSchema = new mongoose.Schema({
   value: String
 }, options);
 actionSchema.index({'$**': 'text'});
-ActionArgumentModel = BaseArgumentModel.discriminator('action', actionSchema);
+ActionArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.action.scheme, actionSchema);
 
 expertSchema = new mongoose.Schema({
   source: String,
@@ -46,20 +47,20 @@ expertSchema = new mongoose.Schema({
   assertion: String
 }, options);
 expertSchema.index({'$**': 'text'});
-ExpertArgumentModel = BaseArgumentModel.discriminator('expert', expertSchema);
+ExpertArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.expert.scheme, expertSchema);
 
 popularSchema = new mongoose.Schema({
   proposition: String
 }, options);
 popularSchema.index({'$**': 'text'});
-PopularArgumentModel = BaseArgumentModel.discriminator('popular', popularSchema);
+PopularArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.popular.scheme, popularSchema);
 
 positionToKnowSchema = new mongoose.Schema({
   source: String,
   proposition: String,
 }, options);
 positionToKnowSchema.index({'$**': 'text'});
-PositionToKnowArgumentModel = BaseArgumentModel.discriminator('positionToKnow', positionToKnowSchema);
+PositionToKnowArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.positionToKnow.scheme, positionToKnowSchema);
 
 causeToEffectSchema = new mongoose.Schema({
   cause: String,
@@ -67,25 +68,25 @@ causeToEffectSchema = new mongoose.Schema({
   evidence: String,
 }, options);
 causeToEffectSchema.index({'$**': 'text'});
-CauseToEffectArgumentModel = BaseArgumentModel.discriminator('causeToEffect', causeToEffectSchema);
+CauseToEffectArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.causeToEffect.scheme, causeToEffectSchema);
 
 function getSchemeModel(scheme, body) {
   let model;
 
   switch (scheme) {
-    case "action":
+    case schemes.SCHEMES.action.scheme:
       model = new ActionArgumentModel(body);
       break;
-    case "expert":
+    case schemes.SCHEMES.expert.scheme:
       model = new ExpertArgumentModel(body);
       break;
-    case "popular":
+    case schemes.SCHEMES.popular.scheme:
       model = new PopularArgumentModel(body);
       break;
-    case "positionToKnow":
+    case schemes.SCHEMES.positionToKnow.scheme:
       model = new PositionToKnowArgumentModel(body);
       break;
-    case "causeToEffect":
+    case schemes.SCHEMES.causeToEffect.scheme:
       model = new CauseToEffectArgumentModel(body);
       break;
     default:
