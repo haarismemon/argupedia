@@ -3,44 +3,47 @@ let labelling = require('../tools/labelling')
 
 exports.argument_create_post = (req, res) => {
     if(!req.body) {
-      return res.status(400).send('Request body is missing')
+      return res.status(400).send({error: 'Request body is missing'})
     }
   
     let model = models.getSchemeModel(req.body.scheme, req.body);
   
-    // let model = new ArgumentModel(req.body)
     model.save()
       .then(doc => {
         if(!doc || doc.length === 0) {
           return res.status(500).send(doc)
         }
-  
+        
         res.status(201).send(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
 exports.argument_detail_get = (req, res) => {
     if(!req.query.id) {
-      return res.status(400).send('Missing URL parameter: id')
+      return res.status(400).send({error: 'Missing URL parameter: id'})
     }
   
     let query = { _id: req.query.id }
-  
+    
     models.BaseArgumentModel.findOne(query)
       .then(doc => {
-        res.json(doc)
+        if(doc === null) {
+            res.status(500).json({error: 'Argument not found with given id'})
+        } else {        
+            res.status(200).json(doc)
+        }
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
 exports.argument_update_put = (req, res) => {
     if(!req.query.id) {
-      return res.status(400).send('Missing URL parameter: id')
+      return res.status(400).send({error: 'Missing URL parameter: id'})
     }
   
     let query = { _id: req.query.id }
@@ -50,13 +53,13 @@ exports.argument_update_put = (req, res) => {
         res.json(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
 exports.argument_delete = (req, res) => {
     if(!req.query.id) {
-      return res.status(400).send('Missing URL parameter: id')
+      return res.status(400).send({error: 'Missing URL parameter: id'})
     }
   
     let query = { _id: req.query.id }
@@ -66,7 +69,7 @@ exports.argument_delete = (req, res) => {
         res.json(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
@@ -78,13 +81,13 @@ exports.argument_list_top = (req, res) => {
         res.json(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
 exports.argument_list_descendents = (req, res) => {
     if(!req.query.id) {
-      return res.status(400).send('Missing URL parameter: id')
+      return res.status(400).send({error: 'Missing URL parameter: id'})
     } else if(req.query.id == 'undefined') {
       return res.status(400).send('ID URL parameter is undefined')
     }
@@ -103,7 +106,7 @@ exports.argument_list_descendents = (req, res) => {
       let data;
       
       if(arguments !== undefined) {
-        data = arguments.reduce((obj, argument) => {
+          data = arguments.reduce((obj, argument) => {
           argument = argument.toJSON()
           argument.children = []
   
@@ -113,26 +116,26 @@ exports.argument_list_descendents = (req, res) => {
   
         updateDataWithCalculatedDescendents(data, arguments)
       }
-  
+
       return res.json(data)
     })
 }
 
 exports.argument_list_network = (req, res) => {
     if(!req.query.id) {
-      return res.status(400).send('Missing URL parameter: id')
+      return res.status(400).send({error: 'Missing URL parameter: id'})
     }
     if(!req.query.useLikes) {
-      return res.status(400).send('Missing URL parameter: useLikes')
+      return res.status(400).send({error: 'Missing URL parameter: useLikes'})
     }
   
     let query = { "$or": [
         { _id: req.query.id },
         {"$or": [ 
-          { originalId: req.query.id },
-          { ancestorIds: req.query.id }
-        ]
-      }
+                { originalId: req.query.id },
+                { ancestorIds: req.query.id }
+            ]
+        }
       ]
     }
   
@@ -141,7 +144,7 @@ exports.argument_list_network = (req, res) => {
       arguments.forEach((argument) => {
         argumentsMap[argument._id] = argument;
       });
-  
+
       let nodesAndAttacks;
       if(arguments !== undefined) nodesAndAttacks = labelling.generateLabelledNodesAndEdges(argumentsMap, req.query.id, (req.query.useLikes === 'true'));
       return res.json(nodesAndAttacks)
@@ -152,7 +155,7 @@ exports.argument_list_search = (req, res) => {
     const searchQuery = req.query.searchQuery;
   
     if(!searchQuery) {
-      return res.status(400).send('Missing URL parameter: searchQuery')
+      return res.status(400).send({error: 'Missing URL parameter: searchQuery'})
     }
   
     let query = { $text: { $search: searchQuery } }
@@ -167,13 +170,13 @@ exports.argument_list_search = (req, res) => {
         res.json(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
 exports.argument_list_user_submitted = (req, res) => {
     if(!req.query.uid) {
-      return res.status(400).send('Missing URL parameter: uid')
+      return res.status(400).send({error: 'Missing URL parameter: uid'})
     }
   
     let query = { uid: req.query.uid }
@@ -183,7 +186,7 @@ exports.argument_list_user_submitted = (req, res) => {
         res.json(doc)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({error: err})
       })
 }
 
