@@ -20,7 +20,7 @@ argumentSchema.set('timestamps', true);
 argumentSchema.index({criticalQuestion: 'text', title: 'text'});
 
 let BaseArgumentModel = mongoose.model('Argument', argumentSchema);
-
+exports.BaseArgumentModel = BaseArgumentModel;
 
 // **** Argument schemes **** //
 
@@ -33,6 +33,7 @@ actionSchema = new mongoose.Schema({
 }, options);
 actionSchema.index({'$**': 'text'});
 ActionArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.action.scheme, actionSchema);
+exports.ActionArgumentModel = ActionArgumentModel;
 
 expertSchema = new mongoose.Schema({
   source: String,
@@ -41,12 +42,14 @@ expertSchema = new mongoose.Schema({
 }, options);
 expertSchema.index({'$**': 'text'});
 ExpertArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.expert.scheme, expertSchema);
+exports.ExpertArgumentModel = ExpertArgumentModel;
 
 popularSchema = new mongoose.Schema({
   proposition: String
 }, options);
 popularSchema.index({'$**': 'text'});
 PopularArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.popular.scheme, popularSchema);
+exports.PopularArgumentModel = PopularArgumentModel;
 
 positionToKnowSchema = new mongoose.Schema({
   source: String,
@@ -54,6 +57,7 @@ positionToKnowSchema = new mongoose.Schema({
 }, options);
 positionToKnowSchema.index({'$**': 'text'});
 PositionToKnowArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.positionToKnow.scheme, positionToKnowSchema);
+exports.PositionToKnowArgumentModel = PositionToKnowArgumentModel;
 
 causeToEffectSchema = new mongoose.Schema({
   cause: String,
@@ -62,6 +66,7 @@ causeToEffectSchema = new mongoose.Schema({
 }, options);
 causeToEffectSchema.index({'$**': 'text'});
 CauseToEffectArgumentModel = BaseArgumentModel.discriminator(schemes.SCHEMES.causeToEffect.scheme, causeToEffectSchema);
+exports.BaseArgumentModel = BaseArgumentModel;
 
 function getSchemeModel(scheme, body) {
   let model;
