@@ -33,7 +33,7 @@ class ArgumentForm extends React.Component {
       parentId: this.props.parentId,
       originalId: this.props.originalId,
       uid: this.props.authUser.uid,
-      username: null,
+      username: this.props.authUser.displayName,
       ancestorIds: this.props.ancestorIds,
       likes: [],
       validated: false,
@@ -45,13 +45,6 @@ class ArgumentForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.firebase.user(this.state.uid).once('value', (snapshot) => {
-      const val = snapshot.val();
-      if(val !== null) {
-        this.setState({username: val.username});
-      }
-    });
-
     if(this.props.criticalQuestionTag) {
       const ignoreSchemes = QUESTIONS[this.props.criticalQuestionTag].ignoreSchemes;
       this.setState({ignoreSchemes});
