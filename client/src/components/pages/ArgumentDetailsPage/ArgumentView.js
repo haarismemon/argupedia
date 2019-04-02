@@ -90,7 +90,7 @@ class ArgumentView extends React.Component {
     const scheme = SCHEMES[schemeName];
 
     if(scheme !== undefined) {
-      schemeName = scheme.name;
+      schemeName = `Scheme: ${scheme.name}`;
     }
     
     const cardTitle = !isPreview ?
