@@ -1,9 +1,9 @@
 import './App.css'
 import React from 'react'
 import {
-  BrowserRouter, 
   Route, 
-  Switch
+  Switch,
+  HashRouter
 } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
@@ -21,7 +21,7 @@ import { withAuthentication } from './components/Session/index'
 import * as ROUTES from './constants/routes'
 
 const App = () => (
-  <BrowserRouter>
+  <HashRouter>
     <div>
       <NavigationBar />
       <Container className="page-content">
@@ -38,7 +38,7 @@ const App = () => (
         </Switch>
       </Container>
     </div>
-  </BrowserRouter>
+  </HashRouter>
 )
       
 export default withAuthentication(App);
