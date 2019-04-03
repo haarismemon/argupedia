@@ -1,10 +1,7 @@
 import React from 'react'
 import {Button, ListGroup, Container, Row, Col} from 'react-bootstrap'
 import {withRouter} from 'react-router'
-import { compose } from 'recompose'
-
 import * as ROUTES from '../../../constants/routes'
-import { withFirebase } from "../../Firebase";
 
 class CriticalQuestion extends React.Component {
   agreeArgumentClick = event => {
@@ -16,26 +13,19 @@ class CriticalQuestion extends React.Component {
   }
 
   handleClick(isAgree) {
-    const currentUserId = this.props.firebase.auth.currentUser ? this.props.firebase.auth.currentUser.uid : null;
-    const parentUserId = this.props.argument.uid;
-
-    if(parentUserId !== currentUserId) {
-      this.props.history.push({
-        pathname: ROUTES.SUBMIT_ARGUMENT,
-        state: {
-          criticalQuestionTag: this.props.questionTag,
-          criticalQuestion: this.props.question,
-          agree: isAgree,
-          parentId: this.props.argument._id,
-          originalId: this.props.argument.originalId,
-          ancestorIds: this.props.argument.ancestorIds,
-          likes: this.props.argument.likes,
-          parentArgument: this.props.argument
-        }
-      })
-    } else {
-      alert('Unable to respond to an argument you have submitted.')
-    }
+    this.props.history.push({
+      pathname: ROUTES.SUBMIT_ARGUMENT,
+      state: {
+        criticalQuestionTag: this.props.questionTag,
+        criticalQuestion: this.props.question,
+        agree: isAgree,
+        parentId: this.props.argument._id,
+        originalId: this.props.argument.originalId,
+        ancestorIds: this.props.argument.ancestorIds,
+        likes: this.props.argument.likes,
+        parentArgument: this.props.argument
+      }
+    })
   }
 
   render() {
@@ -63,5 +53,5 @@ class CriticalQuestion extends React.Component {
   }
 }
 
-export default compose(withRouter, withFirebase)(CriticalQuestion)
+export default withRouter(CriticalQuestion)
 
