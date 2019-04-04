@@ -7,7 +7,6 @@ import Alert from 'react-bootstrap/Alert'
 
 import * as ROUTES from '../../../constants/routes'
 import { withFirebase } from '../../Firebase';
-
 import './SignInPage.css'
 
 const SignInPage = () => (

@@ -28,6 +28,7 @@ class PasswordChangeForm extends Component {
 
     const isInvalid = passwordOne !== passwordTwo;
 
+    // submit only when form is valid
     if(isInvalid) {
       this.setState({
         error: {
@@ -35,6 +36,7 @@ class PasswordChangeForm extends Component {
         }
       });
     } else {
+      // first verify current password, then update password with new one
       this.props.firebase
         .doSignIn(this.props.firebase.auth.currentUser.email, currentPassword)
         .then(() => {

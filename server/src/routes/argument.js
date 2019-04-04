@@ -21,10 +21,13 @@ router.get('/api/arguments/topDebates', argumentController.argument_list_top)
 // get all arguments with their children as a key value, where the _id is the key
 router.get('/api/arguments/descendents', argumentController.argument_list_descendents)
 
+// get the network data of a debate
 router.get('/api/arguments/network', argumentController.argument_list_network)
 
+// get a list of arguments that match the search query
 router.get('/api/arguments/search', argumentController.argument_list_search)
 
+// get a list of all the arguments a user has submitted
 router.get('/api/arguments/userSubmittedArguments', argumentController.argument_list_user_submitted)
 
 module.exports = router

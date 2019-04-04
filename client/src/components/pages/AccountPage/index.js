@@ -16,6 +16,8 @@ class AccountPage extends Component {
 
   componentDidMount() {
     const uid = this.props.firebase.auth.currentUser.uid;
+
+    // get a list of all arguments that the currently logged-in user has submitted
     Axios.get(`http://localhost:3001/api/arguments/userSubmittedArguments?uid=${uid}`, {crossdomain: true})
     .then(resp => {
       this.setState({

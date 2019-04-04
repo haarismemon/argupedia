@@ -16,6 +16,7 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
+        // get a list of the first five debates on the platform
         Axios.get('http://localhost:3001/api/arguments/topDebates', {crossdomain: true})
         .then(resp => {
             this.setState({

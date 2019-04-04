@@ -9,6 +9,7 @@ class ArgumentGraph extends Component {
         showInformation: false,
         useLikes: false
     }
+
     componentDidMount() {
         this.setState({useLikes: this.props.isLike});
     }
@@ -34,10 +35,10 @@ class ArgumentGraph extends Component {
     }
 
     render() {
-        const {network} = this.state;
-        const {graphData} = this.props;
+        const { network } = this.state;
+        const { graphData } = this.props;
 
-        // after the nodes have been settled and after 2 seconds, make the network fit the screen
+        // after the nodes have been settled after 3 seconds, make the network fit the screen
         if(network) {
             setTimeout(() => {
                 network.fit({
@@ -49,54 +50,54 @@ class ArgumentGraph extends Component {
         }
 
         let options = {
-        physics: {
-            solver: 'repulsion',
-            repulsion: {
-                centralGravity: 0.000001,
-                springLength: 400,
-                springConstant: 0.001,
-                nodeDistance: 700,
-                damping: 0.15
+            physics: {
+                solver: 'repulsion',
+                repulsion: {
+                    centralGravity: 0.000001,
+                    springLength: 400,
+                    springConstant: 0.001,
+                    nodeDistance: 700,
+                    damping: 0.15
+                },
+                barnesHut: {
+                    avoidOverlap: 1
+                }
             },
-            barnesHut: {
-                avoidOverlap: 1
-            }
-        },
-        interaction: {
-            navigationButtons: true,
-            zoomView: false
-        },
-        groups: {
-            inNode: {
-                color: {
-                    background: "lime",
-                    border: "darkGreen",
-                    highlight: {
-                        background: "mediumSeaGreen",
-                        border: "darkGreen"
+            interaction: {
+                navigationButtons: true,
+                zoomView: false
+            },
+            groups: {
+                inNode: {
+                    color: {
+                        background: "lime",
+                        border: "darkGreen",
+                        highlight: {
+                            background: "mediumSeaGreen",
+                            border: "darkGreen"
+                        }
+                    }
+                },
+                outNode: {
+                    color: {
+                        background: "orangered",
+                        border: "maroon",
+                        highlight: {
+                            background: "crimson",
+                            border: "maroon"
+                        },
+                        font: {
+                            color: "white"
+                        }
+                    }
+                },
+                undecNode: {
+                    color: {
+                        background: "white",
+                        border: "black",
                     }
                 }
-            },
-            outNode: {
-                color: {
-                    background: "orangered",
-                    border: "maroon",
-                    highlight: {
-                        background: "crimson",
-                        border: "maroon"
-                    },
-                    font: {
-                        color: "white"
-                    }
-                }
-            },
-            undecNode: {
-                color: {
-                    background: "white",
-                    border: "black",
-                }
             }
-        }
         };
 
         let events = {

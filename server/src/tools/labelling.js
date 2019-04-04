@@ -29,6 +29,7 @@ function convertArgumentsToNodesAndEdges(argumentsMap, rootId, useLikes) {
         nodeTitle = addNewlineInLabel(nodeTitle);
 
         const schemeName = schemes.SCHEMES[argument.scheme].name;
+        // create a node for the argument
         let node = { 
             id: argumentId, 
             label: nodeTitle + `\n(${schemeName})`,
@@ -47,14 +48,17 @@ function convertArgumentsToNodesAndEdges(argumentsMap, rootId, useLikes) {
 
         const criticalQuestion = schemes.QUESTIONS[argument.criticalQuestionTag];
         
+        // if the argument is attacking another argument, then create an edge
         if(criticalQuestion !== undefined) {
             attackLabel = addNewlineInLabel(`${criticalQuestion.title} (${argument.agree ? 'Support' : 'Attack'})`);
             
             isSymmetric = criticalQuestion.symmetric;
+            // if critical question is symmetric then create two edges, else create a single edge
             if(isSymmetric) {
                 const firstEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, false, false);
                 const secondEdge = createEdge(argumentId, argument.parentId, attackLabel, argument.agree, isSymmetric, true, false);
 
+                // if use likes is true, only create  an edge from the argument that has the highest number of likes
                 if(useLikes) {
                     const firstLikeCount = argument.likes.length;
                     const secondLikeCount = argumentsMap[argument.parentId].likes.length;
@@ -132,6 +136,7 @@ function addSupportRelations(nodesAndEdges) {
 function allAttackedAndSupportedArguments(nodesAndEdges) {
     let allAttackedAndSupportedArguments = {}
 
+    // sort each edge into supported and attacked list
     nodesAndEdges.edges.forEach(edge => {
         const attackingArgument = edge.from;
         const attackedArgument = edge.to;

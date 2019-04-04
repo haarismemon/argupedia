@@ -65,6 +65,7 @@ class ArgumentDetailsPage extends React.Component {
   updateData(rootId) {
     this.updateGraphData(rootId, false);
     
+    // get list of all the descendents for the root argument of the debate
     axios.get(`http://localhost:3001/api/arguments/descendents?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
@@ -75,6 +76,7 @@ class ArgumentDetailsPage extends React.Component {
         if(resp.data[rootId]) {
           const originalId = resp.data[rootId].originalId;
           if(originalId !== rootId && originalId !== undefined) {
+            // get the details for the original argument of the debate, if the root is not the original
             axios.get(`http://localhost:3001/api/argument?id=${originalId}`, {crossdomain: true})
             .then(resp => {
               this.setState({
@@ -91,6 +93,7 @@ class ArgumentDetailsPage extends React.Component {
   }
 
   updateGraphData = (rootId, useLikes) => {
+    // get the graph data for the root argument of the debate
     axios.get(`http://localhost:3001/api/arguments/network?id=${rootId}&useLikes=${useLikes}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {

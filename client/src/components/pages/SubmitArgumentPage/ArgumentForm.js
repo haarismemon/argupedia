@@ -2,9 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
-
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+import { Card } from 'react-bootstrap';
 import {compose} from 'recompose'
 
 import ActionFormScheme from './ArgumentFormSchemes/ActionFormScheme'
@@ -12,12 +12,10 @@ import ExpertFormScheme from './ArgumentFormSchemes/ExpertFormScheme'
 import PopularFormScheme from './ArgumentFormSchemes/PopularFormScheme'
 import PositionToKnowFormScheme from './ArgumentFormSchemes/PositionToKnowFormScheme'
 import CauseToEffectFormScheme from './ArgumentFormSchemes/CauseToEffectFormScheme'
+import ArgumentView from '../ArgumentDetailsPage/ArgumentView';
 import {SCHEMES, QUESTIONS} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
-
 import './ArgumentForm.css'
-import ArgumentView from '../ArgumentDetailsPage/ArgumentView';
-import { Card } from 'react-bootstrap';
 
 class ArgumentForm extends React.Component {
 

@@ -23,7 +23,6 @@ class ArgumentView extends React.Component {
 
     this._isMounted = false;
     this.handleLikeButtonClick = this.handleLikeButtonClick.bind(this);
-    // this.updateArgumentStoredHere = this.updateArgumentStoredHere.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +52,7 @@ class ArgumentView extends React.Component {
     const {argument} = this.state;
     const user = this.props.firebase.auth.currentUser;
     
+    // if the user is logged in, then handle the click of like button
     if (user) {
       let newLikes = argument.likes;
       let isLikeButton;
@@ -66,6 +66,7 @@ class ArgumentView extends React.Component {
 
       argument.isLikeButton = isLikeButton;
 
+      // update the array of likes for argument
       Axios.put(`http://localhost:3001/api/argument?id=${argument._id}`, {likes: newLikes})
         .then((resp) => {
           if(this._isMounted) {

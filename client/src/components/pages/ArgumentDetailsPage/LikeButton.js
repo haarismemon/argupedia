@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { withFirebase } from '../../Firebase';
 
-
 class LikeButton extends Component {
     state = {
         likeButton: true
