@@ -15,7 +15,8 @@ import CauseToEffectFormScheme from './ArgumentFormSchemes/CauseToEffectFormSche
 import ArgumentView from '../ArgumentDetailsPage/ArgumentView';
 import {SCHEMES, QUESTIONS} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
-import './ArgumentForm.css'
+import './ArgumentForm.css';
+import * as ROUTES from '../../../constants/routes';
 
 class ArgumentForm extends React.Component {
 
@@ -77,7 +78,7 @@ class ArgumentForm extends React.Component {
         this.setState({ ancestorIds: newAncestorIds, validated: true });
       }
 
-      axios.post('http://localhost:3001/api/argument', {...this.state})
+      axios.post(ROUTES.ARGUMENT_SINGLE, {...this.state})
         .then((resp) => {
           const redirectArgumentId = resp.data.originalId ? `${resp.data.originalId}?highlight=${resp.data._id}` : resp.data._id;
           this.props.history.push(`/argument/${redirectArgumentId}`);

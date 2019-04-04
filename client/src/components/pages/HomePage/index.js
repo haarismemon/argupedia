@@ -3,7 +3,8 @@ import Button from 'react-bootstrap/Button';
 import { FormControl, Card, ListGroup } from 'react-bootstrap';
 import Axios from 'axios'
 
-import './HomePage.css'
+import './HomePage.css';
+import * as ROUTES from '../../../constants/routes';
 
 class HomePage extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class HomePage extends Component {
 
     componentDidMount() {
         // get a list of the first five debates on the platform
-        Axios.get('http://localhost:3001/api/arguments/topDebates', {crossdomain: true})
+        Axios.get(ROUTES.ARGUMENT_LIST_TOP, {crossdomain: true})
         .then(resp => {
             this.setState({
                 topDebates: resp.data

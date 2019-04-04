@@ -7,6 +7,7 @@ import PasswordChangeForm from './PasswordChangeForm';
 import { withAuthorisation } from '../../Session';
 import { withFirebase } from '../../Firebase';
 import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
+import * as ROUTES from '../../../constants/routes';
 
 class AccountPage extends Component {
   state = {
@@ -18,7 +19,7 @@ class AccountPage extends Component {
     const uid = this.props.firebase.auth.currentUser.uid;
 
     // get a list of all arguments that the currently logged-in user has submitted
-    Axios.get(`http://localhost:3001/api/arguments/userSubmittedArguments?uid=${uid}`, {crossdomain: true})
+    Axios.get(`${ROUTES.ARGUMENT_LIST_USER_SUBMITTED}?uid=${uid}`, {crossdomain: true})
     .then(resp => {
       this.setState({
           submittedArguments: resp.data,

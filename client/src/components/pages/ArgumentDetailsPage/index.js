@@ -6,6 +6,7 @@ import './ArgumentDetailsPage.css'
 import ArgumentDetails from './ArgumentDetails';
 import ArgumentGraph from './ArgumentGraph';
 import loadingAnimation from '../../../resources/Reload-1s-100px.svg';
+import * as ROUTES from '../../../constants/routes';
 
 const constants = {
   graph: {
@@ -66,7 +67,7 @@ class ArgumentDetailsPage extends React.Component {
     this.updateGraphData(rootId, false);
     
     // get list of all the descendents for the root argument of the debate
-    axios.get(`http://localhost:3001/api/arguments/descendents?id=${rootId}`, {crossdomain: true})
+    axios.get(`${ROUTES.ARGUMENT_LIST_DESCENDENTS}?id=${rootId}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
         this.setState({
@@ -77,7 +78,7 @@ class ArgumentDetailsPage extends React.Component {
           const originalId = resp.data[rootId].originalId;
           if(originalId !== rootId && originalId !== undefined) {
             // get the details for the original argument of the debate, if the root is not the original
-            axios.get(`http://localhost:3001/api/argument?id=${originalId}`, {crossdomain: true})
+            axios.get(`${ROUTES.ARGUMENT_SINGLE}?id=${originalId}`, {crossdomain: true})
             .then(resp => {
               this.setState({
                 originalArgument: resp.data
@@ -94,7 +95,7 @@ class ArgumentDetailsPage extends React.Component {
 
   updateGraphData = (rootId, useLikes) => {
     // get the graph data for the root argument of the debate
-    axios.get(`http://localhost:3001/api/arguments/network?id=${rootId}&useLikes=${useLikes}`, {crossdomain: true})
+    axios.get(`${ROUTES.ARGUMENT_LIST_NETWORK}?id=${rootId}&useLikes=${useLikes}`, {crossdomain: true})
     .then(resp => {
       if(this._isMounted) {
         this.setState({

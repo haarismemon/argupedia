@@ -11,6 +11,7 @@ import PositionToKnowDetailScheme from './ArgumentDetailSchemes/PositionToKnowDe
 import CauseToEffectDetailScheme from './ArgumentDetailSchemes/CauseToEffectDetailScheme'
 import {SCHEMES} from '../../../constants/schemes';
 import { withFirebase } from '../../Firebase';
+import * as ROUTES from '../../../constants/routes';
 
 class ArgumentView extends React.Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class ArgumentView extends React.Component {
       argument.isLikeButton = isLikeButton;
 
       // update the array of likes for argument
-      Axios.put(`http://localhost:3001/api/argument?id=${argument._id}`, {likes: newLikes})
+      Axios.put(`${ROUTES.ARGUMENT_SINGLE}?id=${argument._id}`, {likes: newLikes})
         .then((resp) => {
           if(this._isMounted) {
             this.setState({
