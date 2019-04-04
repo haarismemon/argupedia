@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./src/tests"
   },
   "author": "Haaris Memon",
   "license": "ISC",
@@ -18,7 +18,8 @@
     "mocha": "^6.0.2",
     "mongodb": "^3.1.10",
     "mongoose": "^5.3.14",
-    "sinon": "^7.3.0"
+    "sinon": "^7.3.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.7"

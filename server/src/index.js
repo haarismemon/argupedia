@@ -34,3 +34,5 @@ app.use(argumentRoute)
 
 const PORT = 9000
 app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
+
+module.exports = app;
