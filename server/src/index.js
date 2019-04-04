@@ -32,5 +32,5 @@ mongoose.connect(`${server}/${database}`, (err) => {
 // /argument CRUD api requests
 app.use(argumentRoute)
 
-const PORT = 3001
+const PORT = 9000
 app.listen(PORT, () => console.info(`Server has started on ${PORT}`))

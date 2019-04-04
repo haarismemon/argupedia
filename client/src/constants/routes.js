@@ -7,7 +7,7 @@ export const FORGOT_PASSWORD = '/forgot-password';
 export const ARGUMENT_DETAILS = '/argument/:id';
 export const SUBMIT_ARGUMENT = '/submit';
 
-export const SERVER_API = 'http://localhost:3001';
+export const SERVER_API = 'http://localhost:9000';
 export const ARGUMENT_SINGLE = SERVER_API + '/api/argument';
 export const ARGUMENT_LIST_TOP = SERVER_API + '/api/arguments/topDebates';
 export const ARGUMENT_LIST_DESCENDENTS = SERVER_API + '/api/arguments/descendents';
