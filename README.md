@@ -69,6 +69,11 @@ You must have Node installed on your machine. To install Node, go to the followi
     ```
 4. You should now be able to open the application in a web browser by navigating to: http://localhost:5000
 
+## Example User Credentials
+You are able to either register onto the application to create a new account, or use the following credentials:
+* Email Address: dummyaccount@mail.com
+* Password: password
+
 
 ## Open-Source Library Acknowledgements
 - axios
