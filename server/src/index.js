@@ -30,6 +30,9 @@ mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
   console.log('Successfully connected')
 });
 
+// argument CRUD api requests
+app.use(argumentRoute)
+
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
 
@@ -37,8 +40,6 @@ if(process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
   })
 }
-// argument CRUD api requests
-app.use(argumentRoute)
 
 const PORT = process.env.PORT || 9000
 app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
