@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "mocha ./src/tests",
-    "install": "cd ../client && npm install && npm run build && cd ../server"
+    "test": "mocha ./src/tests"
   },
   "author": "Haaris Memon",
   "license": "ISC",
