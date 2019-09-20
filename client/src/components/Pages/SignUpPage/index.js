@@ -9,8 +9,6 @@ import { withFirebase } from '../../Firebase'
 import * as ROUTES from '../../../constants/routes'
 import './SignUpPage.css'
 
-console.log('code', process.env.REACT_APP_ACCOUNT_ACCESS_CODE);
-
 const SignUpPage = () => (
   <div className="row sign-up-page">
     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -41,6 +39,9 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault()
     const { username, email, passwordOne, passwordTwo, accessCode } = this.state
+    this.setState({
+      error: null
+    });
 
     const isPasswordInvalid = passwordOne !== passwordTwo;
     console.log(process.env.REACT_APP_ACCOUNT_ACCESS_CODE);
