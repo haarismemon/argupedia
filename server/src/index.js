@@ -1,6 +1,7 @@
 let express = require('express')
 let mongoose = require('mongoose')
 var cors = require('cors')
+const path = require('path')
 let app = express()
 
 let argumentRoute = require('./routes/argument')
@@ -29,9 +30,13 @@ mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
   console.log('Successfully connected')
 });
 
-const path = require('path')
-app.use(express.static(path.join(__dirname, '../../client/build')))
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
 
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
+  })
+}
 // argument CRUD api requests
 app.use(argumentRoute)
 
