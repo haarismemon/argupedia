@@ -26,22 +26,29 @@ app.use((req, res, next) => {
 const server = 'mongodb://localhost:27017'
 const database = 'debatably-db'
 
+// connect to the database before starting the application server
 mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
-  console.log('Successfully connected')
+  if (err) {
+    console.log('Database connection failed')
+    console.log(err);
+    process.exit(1);
+  }
+
+  console.log('Database connection successful')
+
+    // argument CRUD api requests
+  app.use(argumentRoute)
+
+  if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
+
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
+    })
+  }
+
+  const PORT = process.env.PORT || 9000
+  app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
 });
-
-// argument CRUD api requests
-app.use(argumentRoute)
-
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
-  })
-}
-
-const PORT = process.env.PORT || 9000
-app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
 
 module.exports = app;
