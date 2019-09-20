@@ -25,14 +25,17 @@ app.use((req, res, next) => {
 const server = 'mongodb://localhost:27017'
 const database = 'debatably-db'
 
-mongoose.connect(`${server}/${database}`, (err) => {
+mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
   console.log('Successfully connected')
 });
 
-// /argument CRUD api requests
+const path = require('path')
+app.use(express.static(path.join(__dirname, '../../client/build')))
+
+// argument CRUD api requests
 app.use(argumentRoute)
 
-const PORT = 9000
+const PORT = process.env.PORT || 9000
 app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
 
 module.exports = app;
