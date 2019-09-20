@@ -39,12 +39,8 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault()
     const { username, email, passwordOne, passwordTwo, accessCode } = this.state
-    this.setState({
-      error: null
-    });
 
     const isPasswordInvalid = passwordOne !== passwordTwo;
-    console.log(process.env.REACT_APP_ACCOUNT_ACCESS_CODE);
     const isAccessCodeInvalid = accessCode != process.env.REACT_APP_ACCOUNT_ACCESS_CODE;
 
     if (isAccessCodeInvalid) {
