@@ -41,7 +41,9 @@ class SignUpFormBase extends Component {
     const { username, email, passwordOne, passwordTwo, accessCode } = this.state
 
     const isPasswordInvalid = passwordOne !== passwordTwo;
+    console.log(process.env.ACCOUNT_ACCESS_CODE);
     const isAccessCodeInvalid = accessCode != process.env.ACCOUNT_ACCESS_CODE;
+    
 
     if (isAccessCodeInvalid) {
       this.setState({
