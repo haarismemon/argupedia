@@ -1,0 +1,12 @@
+{
+    "name": "debatably-app",
+    "version": "0.1.0",
+    "engines": {
+        "node": "10.13.0",
+        "npm": "6.8.0"
+    },
+    "scripts": {
+        "start": "npm start --prefix server",
+        "heroku-postbuild": "npm install --prefix server && NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    }
+} 

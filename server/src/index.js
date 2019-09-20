@@ -1,6 +1,7 @@
 let express = require('express')
 let mongoose = require('mongoose')
 var cors = require('cors')
+const path = require('path')
 let app = express()
 
 let argumentRoute = require('./routes/argument')
@@ -25,14 +26,22 @@ app.use((req, res, next) => {
 const server = 'mongodb://localhost:27017'
 const database = 'debatably-db'
 
-mongoose.connect(`${server}/${database}`, (err) => {
+mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
   console.log('Successfully connected')
 });
 
-// /argument CRUD api requests
+// argument CRUD api requests
 app.use(argumentRoute)
 
-const PORT = 9000
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
+  })
+}
+
+const PORT = process.env.PORT || 9000
 app.listen(PORT, () => console.info(`Server has started on ${PORT}`))
 
 module.exports = app;

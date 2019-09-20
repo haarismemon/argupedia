@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "mocha ./src/tests"
   },
   "author": "Haaris Memon",
   "license": "ISC",
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.8.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
