@@ -7,11 +7,9 @@ export const FORGOT_PASSWORD = '/forgot-password';
 export const ARGUMENT_DETAILS = '/argument/:id';
 export const SUBMIT_ARGUMENT = '/submit';
 
-const PORT = process.env.PORT || 9000;
-export const SERVER_API = `http://localhost:${PORT}`;
-export const ARGUMENT_SINGLE = SERVER_API + '/api/argument';
-export const ARGUMENT_LIST_TOP = SERVER_API + '/api/arguments/topDebates';
-export const ARGUMENT_LIST_DESCENDENTS = SERVER_API + '/api/arguments/descendents';
-export const ARGUMENT_LIST_NETWORK = SERVER_API + '/api/arguments/network';
-export const ARGUMENT_LIST_SEARCH = SERVER_API + '/api/arguments/search';
-export const ARGUMENT_LIST_USER_SUBMITTED = SERVER_API + '/api/arguments/userSubmittedArguments';
+export const ARGUMENT_SINGLE = '/api/argument';
+export const ARGUMENT_LIST_TOP = '/api/arguments/topDebates';
+export const ARGUMENT_LIST_DESCENDENTS = '/api/arguments/descendents';
+export const ARGUMENT_LIST_NETWORK = '/api/arguments/network';
+export const ARGUMENT_LIST_SEARCH = '/api/arguments/search';
+export const ARGUMENT_LIST_USER_SUBMITTED = '/api/arguments/userSubmittedArguments';
