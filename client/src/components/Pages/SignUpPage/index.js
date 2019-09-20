@@ -25,6 +25,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  accessCode: '',
   error: null
 }
 
@@ -37,11 +38,18 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     event.preventDefault()
-    const { username, email, passwordOne, passwordTwo } = this.state
+    const { username, email, passwordOne, passwordTwo, accessCode } = this.state
 
-    const isInvalid = passwordOne !== passwordTwo 
+    const isPasswordInvalid = passwordOne !== passwordTwo;
+    const isAccessCodeInvalid = accessCode !== process.env.ACCOUNT_ACCESS_CODE;
 
-    if(isInvalid) {
+    if (isAccessCodeInvalid) {
+      this.setState({
+        error: {
+          message: "The access code is not valid. Unable to create account."
+        }
+      });
+    } else if(isPasswordInvalid) {
       this.setState({
         error: {
           message: "The passwords do not match."
@@ -77,12 +85,14 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      accessCode
       error
     } = this.state
 
     const isInvalid =
       passwordOne === '' ||
       passwordTwo === '' ||
+      accessCode === '' ||
       email === '' ||
       username === ''
 
@@ -124,6 +134,14 @@ class SignUpFormBase extends Component {
             value={passwordTwo}
             onChange={this.onChange}
             placeholder="Confirm Password"
+            className="form-control"
+          />
+          <input 
+            type="text" 
+            name="accessCode" 
+            value={accessCode}
+            onChange={this.onChange}
+            placeholder="Access Code to Create Account"
             className="form-control"
           /><br/>
           <Button variant="outline-info" 
