@@ -36,14 +36,14 @@ mongoose.connect(process.env.MONGODB_URI || `${server}/${database}`, (err) => {
 
   console.log('Database connection successful')
 
-    // argument CRUD api requests
+  // argument CRUD api requests
   app.use(argumentRoute)
 
   if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
+    app.use(express.static(path.join(__dirname, 'public')))
 
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'))
+      res.sendFile(path.join(__dirname, 'public', 'index.html'))
     })
   }
 
