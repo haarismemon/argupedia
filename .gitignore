@@ -1,2 +1,8 @@
 *.code-workspace
 .vscode
+.DS_Store
+.env*
+
+node_modules/
+/client/build/
+/server/public/

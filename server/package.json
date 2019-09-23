@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "mocha ./src/tests"
+    "start": "node index.js",
+    "test": "mocha ./tests"
   },
   "author": "Haaris Memon",
   "license": "ISC",
